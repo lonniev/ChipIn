@@ -17,6 +17,12 @@ export interface Lesson {
   tryThis: string;
   /** A question for the supper table. */
   ask: string;
+  /** A named list inside the lesson, such as the seven virtues. */
+  points?: { group?: string; name: string; says: string }[];
+  /** Places outside ChipIn. Each opens in a new tab. */
+  links?: { name: string; href: string; says: string }[];
+  /** Said under the links: what a family should check for itself. */
+  care?: string;
 }
 
 export const SATS_PER_BITCOIN = 100_000_000;
@@ -195,6 +201,143 @@ export const CHARACTER_LESSONS: ReadonlyArray<Lesson> = [
   },
 ];
 
+/** What sats are for, once earned: saving toward something, earning more, giving, and spending well. */
+export const USE_LESSONS: ReadonlyArray<Lesson> = [
+  {
+    slug: "what-to-save-for",
+    picture: "🎯",
+    title: "Why save, and for what?",
+    lines: [
+      "Saving turns many small rewards into one big thing.",
+      "A goal gives each chore a reason.",
+      "Pick something worth the wait.",
+    ],
+    more: [
+      "Save first for something you can reach in a few weeks, so you learn that it works.",
+      "A good tool is a fine first goal: a pocket knife, a fishing rod, a set of pencils.",
+      "Next, save for something that earns: seeds, a few laying hens, a mower to cut lawns with.",
+      "Things that earn are called capital, and they are how savings grow by work.",
+      "Keep some back for a rainy day, because things break when you least expect it.",
+      "Some families save for the far future: a first truck, a trade school, a piece of land.",
+      "Sats set aside for years may be worth more or less in dollars when you spend them.",
+    ],
+    tryThis: "Write down one goal for this month and one for this year, and what each costs in sats.",
+    ask: "What did you save for when you were my age?",
+    saying: { text: "There is treasure to be desired and oil in the dwelling of the wise; but a foolish man spendeth it up.", from: "Proverbs 21:20" },
+  },
+  {
+    slug: "where-else-to-earn",
+    picture: "🧺",
+    title: "Where else can I earn sats?",
+    lines: [
+      "Chores at home are one way.",
+      "Anyone with a Lightning wallet can pay you.",
+      "The surest way is to make or do something people want.",
+    ],
+    more: [
+      "Sell what you grow or make: eggs, vegetables, firewood, baking, a craft.",
+      "A sign with your wallet's code on it turns a farm stand into a shop that takes sats.",
+      "Offer work to neighbours: mowing, raking, shovelling snow, minding pets.",
+      "Ask grandparents and godparents to send birthday money as sats.",
+      "Some apps pay small amounts of sats for reading, listening or writing.",
+      "Those amounts are small, and each app has its own rules and its own reasons for paying.",
+      "Use them with a parent, and never give an app your wallet's secret words.",
+    ],
+    tryThis: "Think of one thing you could sell or one job you could do for a neighbour, and ask a parent about it.",
+    ask: "What could our family make or grow that someone would pay for?",
+    links: [
+      { name: "Orange Bible", href: "https://orangebible.com", says: "A Bible app that rewards daily reading with sats." },
+      { name: "Fountain", href: "https://fountain.fm", says: "A podcast app that pays sats for listening." },
+      { name: "Stacker News", href: "https://stacker.news", says: "A forum where good posts earn sats. For older children, with a parent." },
+    ],
+    care: "ChipIn does not run these and is not paid by them. Read each one's terms with a parent.",
+  },
+  {
+    slug: "where-to-give",
+    picture: "🕊️",
+    title: "Where can I give?",
+    lines: [
+      "Give first to people you can see.",
+      "Then to work you believe in, farther away.",
+      "Sats cross the world in a second, so a small gift can go a long way.",
+    ],
+    more: [
+      "Begin close to home: your church, a neighbour in need, a family having a hard season.",
+      "If your church does not take sats yet, give in the plate and offer to help them set it up.",
+      "A gift of time counts: a chore done for someone who cannot do it.",
+      "Farther off, some groups take sats directly and say what they do with them.",
+      "Before giving to anyone you do not know, ask a parent to look at who they are.",
+      "Give quietly, and do not keep count of thanks.",
+    ],
+    tryThis: "Choose one person or cause, and set aside a share of your next reward for them.",
+    ask: "Who has been generous to our family, and what did it mean to us?",
+    saying: { text: "God loveth a cheerful giver.", from: "2 Corinthians 9:7" },
+    links: [
+      { name: "Geyser", href: "https://geyser.fund", says: "People raising sats for projects, many of them schools and communities." },
+      { name: "OpenSats", href: "https://opensats.org", says: "Pays the people who build Bitcoin's free software." },
+    ],
+    care: "ChipIn does not vouch for any cause listed. Look into each one before you give.",
+  },
+  {
+    slug: "what-is-worth-buying",
+    picture: "🛒",
+    title: "What is worth buying?",
+    lines: [
+      "Buy things that last, teach, or help you work.",
+      "A thing that is gone in a day is rarely worth a week of chores.",
+      "Before you spend, wait one night.",
+    ],
+    more: [
+      "A book is worth buying: it can be read again and lent to a friend.",
+      "A tool is worth buying: it lets you do work you could not do before.",
+      "Seeds and animals are worth buying: they turn into food, and sometimes into more sats.",
+      "Good food is worth buying, most of all from a farmer you know.",
+      "A gift for someone else is worth buying.",
+      "Of anything you want, ask whether you will still be glad of it in a year.",
+      "More shops take sats each year, and a map shows the ones near you.",
+    ],
+    tryThis: "Look at the last three things you wanted, and ask of each whether you would still want it in a year.",
+    ask: "What is the best thing our family ever bought, and why?",
+    links: [
+      { name: "Good Brew", href: "https://cafe.tollbooth-dpyc.com/collections/books", says: "Books on money, farming and family, and coffee." },
+      { name: "BTC Map", href: "https://btcmap.org", says: "A map of shops and farms near you that take bitcoin." },
+    ],
+    care: "A listing may be out of date. Ask the shop before you go.",
+  },
+];
+
+/** The seven virtues, as a family might talk about them over chores. */
+export const VIRTUES_LESSON: Lesson = {
+  slug: "the-virtues",
+  picture: "🧭",
+  title: "The seven virtues",
+  lines: [
+    "A virtue is a good habit of the heart.",
+    "Christians have long taught seven: three given by God and four that anyone can practise.",
+    "Chores are a good place to practise them.",
+  ],
+  more: [
+    "The three theological virtues come from Saint Paul's first letter to the Corinthians.",
+    "The four cardinal virtues were named by the Greeks and taken up by Ambrose, Augustine and Aquinas.",
+    "Cardinal comes from the Latin for hinge: the rest of a good life swings on these four.",
+    "Other lists are taught beside these, and they agree more than they differ.",
+    "The fruit of the Spirit in Galatians 5 names love, joy, peace, patience, kindness, goodness, faithfulness, gentleness and self-control.",
+    "A virtue grows the way a muscle does, by being used a little every day.",
+  ],
+  points: [
+    { group: "Theological", name: "Faith", says: "Trusting God and his promises." },
+    { group: "Theological", name: "Hope", says: "Expecting good from God, and working toward it." },
+    { group: "Theological", name: "Charity", says: "Loving God and neighbour by giving of yourself. Paul calls it the greatest." },
+    { group: "Cardinal", name: "Prudence", says: "Choosing well: thinking before you take a chore or spend a sat." },
+    { group: "Cardinal", name: "Justice", says: "Giving each person their due: honest work for honest pay." },
+    { group: "Cardinal", name: "Fortitude", says: "Finishing the hard job when you would rather stop." },
+    { group: "Cardinal", name: "Temperance", says: "Mastering what you want: saving when you could spend." },
+  ],
+  saying: { text: "And now abideth faith, hope, charity, these three; but the greatest of these is charity.", from: "1 Corinthians 13:13" },
+  tryThis: "Pick one virtue for the week and notice each time a chore asks it of you.",
+  ask: "Which of the seven comes easiest to you, and which is hardest?",
+};
+
 export const WORDS: ReadonlyArray<{ word: string; means: string }> = [
   { word: "Bitcoin", means: "Money that lives on the internet and belongs to no bank or country." },
   { word: "Sat", means: "The smallest piece of a bitcoin. Short for satoshi." },
@@ -251,5 +394,5 @@ export const SHELVES: ReadonlyArray<{ title: string; books: Book[] }> = [
 export const BOOKSHELF_HREF = `${GOOD_BREW}/collections/books`;
 export const ORANGE_BIBLE_HREF = "https://orangebible.com";
 
-export const LESSONS: ReadonlyArray<Lesson> = [...MONEY_LESSONS, ...CHARACTER_LESSONS];
+export const LESSONS: ReadonlyArray<Lesson> = [...MONEY_LESSONS, ...CHARACTER_LESSONS, ...USE_LESSONS, VIRTUES_LESSON];
 export const lessonAt = (slug: string): Lesson | undefined => LESSONS.find((l) => l.slug === slug);

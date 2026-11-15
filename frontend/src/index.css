@@ -425,3 +425,7 @@ table.ledger tr.grade-given td { background: color-mix(in srgb, var(--gold) 22%,
 .growth-dot-ahead { fill: var(--gold); }
 .growth-label { font-size: 11px; fill: var(--tb-muted); }
 .growth-value { font-size: 13px; font-weight: 700; fill: var(--tb-ink); font-variant-numeric: tabular-nums; }
+
+.points { display: grid; gap: 0.625rem; }
+.points dt { font-weight: 700; font-size: 1.125rem; }
+.points dd { font-size: 1.0625rem; }
