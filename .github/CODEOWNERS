@@ -1,0 +1,9 @@
+# Everything needs the owner's review, except prose.
+* @lonniev
+*.md
+
+# WHAT A PLAUSIBLE EDIT COULD BREAK HERE: this page shows a Lightning invoice that a
+# parent pays from their own wallet. Review with that in mind:
+# - the invoice shown is the one Task Queue returned, unchanged (components/InvoicePanel);
+# - no key, nsec or wallet secret is ever read, stored or logged by this page;
+# - family names stay on the device (lib/family) and are sent nowhere.

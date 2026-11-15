@@ -1,0 +1,52 @@
+import { defineConfig } from 'vite'
+import react from '@vitejs/plugin-react'
+import tailwindcss from '@tailwindcss/vite'
+import { execSync } from 'child_process'
+import { readFileSync } from 'fs'
+import { agentGuide } from '@tollbooth-dpyc/web/agent-guide'
+
+const pkg = JSON.parse(readFileSync('./package.json', 'utf-8'))
+
+function resolveCommit(): string {
+  if (process.env.CF_PAGES_COMMIT_SHA) return process.env.CF_PAGES_COMMIT_SHA.slice(0, 7)
+  if (process.env.COMMIT_SHA) return process.env.COMMIT_SHA.slice(0, 7)
+  try {
+    return execSync('git rev-parse --short HEAD', { stdio: ['ignore', 'pipe', 'ignore'] }).toString().trim()
+  } catch {
+    return 'dev'
+  }
+}
+
+export default defineConfig({
+  plugins: [
+    react(), tailwindcss(),
+    agentGuide({
+      name: "ChipIn",
+      summary: "Chores for the household, paid in sats: post a chore with what each grade earns, grade the work, and pay by Lightning invoice.",
+      site: "https://chipin.tollbooth-dpyc.com",
+      mcpUrl: "https://taskqueue-mcp.fastmcp.app/mcp",
+      toolPrefix: "taskqueue",
+      source: "https://github.com/lonniev/ChipIn",
+      registryName: "io.github.lonniev/taskqueue-mcp",
+      body: "agent-guide.md",
+    }),
+  ],
+  define: {
+    __APP_VERSION__: JSON.stringify(pkg.version),
+    __BUILD_COMMIT__: JSON.stringify(resolveCommit()),
+    __BUILD_TIME__: JSON.stringify(new Date().toISOString()),
+  },
+  server: {
+    allowedHosts: ['.ts.net'],
+    proxy: {
+      '/mcp': {
+        target: 'https://taskqueue-mcp.fastmcp.app',
+        changeOrigin: true,
+        configure: (proxy) => proxy.on('proxyReq', (req) => {
+          if (!req.getHeader('authorization')) req.setHeader('authorization', 'Bearer anonymous')
+        }),
+      },
+    },
+  },
+  build: { outDir: 'dist' },
+})
