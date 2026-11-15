@@ -1,4 +1,4 @@
-/** What someone has earned from chores, from the list Task Queue gave. */
+/** What someone has earned from chores, from the list Task Booth gave. */
 
 interface Earning {
   performer: string | null;

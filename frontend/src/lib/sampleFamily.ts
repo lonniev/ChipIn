@@ -1,6 +1,6 @@
 /**
  * A sample family, for looking around before signing in and for look reviews.
- * Nothing here is sent to Task Queue, and none of these ids is a real key.
+ * Nothing here is sent to Task Booth, and none of these ids is a real key.
  */
 
 import type { Role, Standing } from "./moves.ts";

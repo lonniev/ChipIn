@@ -1,6 +1,6 @@
 /**
  * The invoice that pays a chore: a link any wallet opens, and the text to
- * copy. It is Task Queue's invoice, shown unchanged.
+ * copy. It is Task Booth's invoice, shown unchanged.
  */
 
 import { useState } from "react";

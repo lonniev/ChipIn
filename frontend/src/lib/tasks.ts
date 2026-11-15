@@ -1,4 +1,4 @@
-/** Task Queue's tools, as ChipIn calls them. A chore is a Task Queue task. */
+/** Task Booth's tools, as ChipIn calls them. A chore is a Task Booth task. */
 
 import { callTool } from "@tollbooth-dpyc/web";
 import type { Role, Standing } from "./moves.ts";
@@ -58,7 +58,7 @@ interface Answer {
   error?: string;
 }
 
-/** A Task Queue answer, or its refusal raised as the sentence Task Queue gave. */
+/** A Task Booth answer, or its refusal raised as the sentence Task Booth gave. */
 async function ask<T>(tool: string, args: Record<string, unknown> = {}): Promise<T> {
   const r = await callTool<T & Answer>(tool, args);
   if (r.ok !== true) throw new Error(r.error ?? `${tool} did not answer.`);

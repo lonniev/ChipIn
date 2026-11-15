@@ -1,6 +1,6 @@
 /**
  * What sats are worth in a family's own currency, today and ahead.
- * The prices are mempool.space's, passed on by Task Queue. The sums are ChipIn's.
+ * The prices are mempool.space's, passed on by Task Booth. The sums are ChipIn's.
  */
 
 import type { Point } from "./savings.ts";

@@ -1,6 +1,6 @@
 /**
  * Finding chores in a long list: search them, order them, and lay them on a
- * month. Pure functions over the list Task Queue gave.
+ * month. Pure functions over the list Task Booth gave.
  */
 
 import { splitPicture } from "./face.ts";
