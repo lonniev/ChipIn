@@ -20,6 +20,7 @@ export default function Home() {
         </div>
         <div className="flex flex-wrap gap-2">
           <Link to="/signin" className="chip chip-accent">Sign in with your npub</Link>
+          <Link to="/look" className="chip chip-money">Look around first</Link>
           <Link to="/guide" className="chip">How it works</Link>
           <Link to="/learn" className="chip">Learn about sats</Link>
         </div>

@@ -5,8 +5,10 @@
  */
 
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import { Check, Hand, MessageCircleQuestion, ThumbsUp, Undo2, X, Zap } from "lucide-react";
 import { formatSats } from "@tollbooth-dpyc/web";
+import { useLooking } from "../lib/LookContext";
 import { movesFor, type Move } from "../lib/moves";
 import { byReward } from "../lib/rubric";
 import { appeal, assess, decideAppeal, isPlain, move, reject, type Task } from "../lib/tasks";
@@ -48,11 +50,14 @@ export default function Actions({ task, onChanged, onPay, quick = false }: {
   const [asking, setAsking] = useState<Asking>(null);
   const [sure, setSure] = useState<Move | null>(null);
   const [reasons, setReasons] = useState("");
+  const looking = useLooking();
+  const [tried, setTried] = useState(false);
 
   const moves = movesFor(task).filter((m) => (quick ? isPlain(m) && !TAKES_BACK.includes(m) : true));
   if (!moves.length) return null;
 
   async function run(action: () => Promise<Task>) {
+    if (looking) return setTried(true);
     setBusy(true);
     setProblem("");
     try {
@@ -130,6 +135,7 @@ export default function Actions({ task, onChanged, onPay, quick = false }: {
           </div>
         </div>
       )}
+      {tried && <p className="muted text-right">This is a sample. <Link to="/signin" className="ent">Sign in</Link> to do it for real.</p>}
       {problem && <p className="error text-right">{problem}</p>}
     </div>
   );

@@ -6,6 +6,7 @@
 import { useState } from "react";
 import { ClipboardPaste, Send } from "lucide-react";
 import { formatSats } from "@tollbooth-dpyc/web";
+import { useLooking } from "../lib/LookContext";
 import { looksLikeInvoice } from "../lib/problems";
 import { handInInvoice, type Payout } from "../lib/tasks";
 
@@ -14,7 +15,10 @@ export default function RequestPanel({ taskId, sats, onTaken }: { taskId: string
   const [busy, setBusy] = useState(false);
   const [problem, setProblem] = useState("");
 
+  const looking = useLooking();
+
   async function send(invoice: string) {
+    if (looking) return setProblem("This is a sample. Sign in to be paid for real.");
     if (!looksLikeInvoice(invoice)) {
       setProblem("That is not a request from a wallet. Copy the whole thing and try again.");
       return;
@@ -31,6 +35,7 @@ export default function RequestPanel({ taskId, sats, onTaken }: { taskId: string
   }
 
   async function paste() {
+    if (looking) return setProblem("This is a sample. Sign in to be paid for real.");
     try {
       const copied = await navigator.clipboard.readText();
       setText(copied);

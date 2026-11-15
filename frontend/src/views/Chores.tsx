@@ -6,7 +6,7 @@ import { Bell, CalendarDays, CheckCheck, Hourglass, List, Plus, RefreshCw, Repea
 import { formatSats } from "@tollbooth-dpyc/web";
 import { useAppShell } from "@tollbooth-dpyc/web/react";
 import Actions from "../components/Actions";
-import { choreHref, PersonLink } from "../components/Links";
+import { PersonLink, useChoreHref } from "../components/Links";
 import MonthCalendar from "../components/MonthCalendar";
 import PiggyBank from "../components/PiggyBank";
 import StandingBadge from "../components/StandingBadge";
@@ -29,6 +29,7 @@ const LANES: { lane: Lane; title: string; icon: typeof Bell }[] = [
 function Card({ task, now, onChanged }: { task: Task; now: number; onChanged: (t: Task) => void }) {
   const { picture, rest } = splitPicture(task.title);
   const who = task.performer ?? task.purchaser;
+  const choreHref = useChoreHref();
   return (
     <li className={`chore chore-${laneOf(task)}`}>
       <Link to={choreHref(task.task_id)} className="chore-open">

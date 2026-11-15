@@ -41,6 +41,14 @@ export function FamilyProvider({ me, children }: { me: string; children: ReactNo
   return <Ctx.Provider value={value}>{children}</Ctx.Provider>;
 }
 
+/** A fixed family that touches no storage, for the sample pages. */
+export function SampleFamilyProvider({ me, members, children }: { me: string; members: Member[]; children: ReactNode }) {
+  const value = useMemo<Family>(() => ({
+    members, add: () => {}, remove: () => {}, name: (npub) => nameOf(members, npub, me),
+  }), [members, me]);
+  return <Ctx.Provider value={value}>{children}</Ctx.Provider>;
+}
+
 export function useFamily(): Family {
   const family = useContext(Ctx);
   if (!family) throw new Error("useFamily needs a FamilyProvider above it.");

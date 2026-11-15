@@ -14,6 +14,7 @@ const Family = lazy(() => import("./views/Family"));
 const Guide = lazy(() => import("./views/Guide"));
 const Home = lazy(() => import("./views/Home"));
 const Learn = lazy(() => import("./views/Learn"));
+const Look = lazy(() => import("./views/Look"));
 const LessonPage = lazy(() => import("./views/LessonPage"));
 const NewChore = lazy(() => import("./views/NewChore"));
 const Profile = lazy(() => import("./views/Profile"));
@@ -67,7 +68,8 @@ function Nav() {
     return (
       <header className="site-bar flex flex-wrap items-center gap-2 px-4 py-2.5">
         <Brand />
-        <Link to="/learn" className="chip ml-auto">Learn</Link>
+        <Link to="/look" className="chip ml-auto">Look around</Link>
+        <Link to="/learn" className="chip">Learn</Link>
         <Link to="/guide" className="chip">Guide</Link>
         <Link to="/signin" className="chip chip-accent">Sign in</Link>
       </header>
@@ -150,6 +152,9 @@ function Site() {
                 <Route path="wallet" element={<SignedIn><WalletPage /></SignedIn>} />
                 <Route path="profile" element={<SignedIn><Profile /></SignedIn>} />
                 <Route path="guide" element={<Guide />} />
+                <Route path="look" element={<Look />} />
+                <Route path="look/chores/:taskId" element={<Look />} />
+                <Route path="look/:page" element={<Look />} />
                 <Route path="learn" element={<Learn />} />
                 <Route path="learn/:slug" element={<LessonPage />} />
                 <Route path="savings" element={<SignedIn><Savings /></SignedIn>} />

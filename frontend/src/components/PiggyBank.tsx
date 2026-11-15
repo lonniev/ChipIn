@@ -6,6 +6,7 @@
 import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { formatSats } from "@tollbooth-dpyc/web";
+import { useLooking } from "../lib/LookContext";
 
 const COINS = 3;
 
@@ -13,6 +14,7 @@ export default function PiggyBank({ earned, coming }: { earned: number; coming: 
   const [drop, setDrop] = useState(0);
   const [open, setOpen] = useState(false);
   const before = useRef<number | null>(null);
+  const looking = useLooking();
 
   // A coin for the first look, and again each time more has arrived.
   useEffect(() => {
@@ -26,7 +28,7 @@ export default function PiggyBank({ earned, coming }: { earned: number; coming: 
         <div className="piglet-says" role="status">
           <span className="piglet-sats num">{formatSats(earned)}</span> sats saved
           {coming > 0 && <span className="muted"> · <span className="num">{formatSats(coming)}</span> on the way</span>}
-          {" · "}<Link to="/savings" className="ent">Savings</Link>
+          {" · "}<Link to={looking ? "/look/savings" : "/savings"} className="ent">Savings</Link>
         </div>
       )}
       <button type="button" className="piglet" onClick={() => { setOpen((v) => !v); setDrop((n) => n + 1); }}

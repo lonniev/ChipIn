@@ -1,86 +1,53 @@
 /**
- * ChipIn's chore board and chore page on a sample family, for look reviews:
- * the real components, with nothing sent to Task Queue. `?view=sheet` shows a
- * chore that is owed, with its invoice.
+ * ChipIn's pages on the sample family, for look reviews: the real components,
+ * with nothing sent to Task Queue. The family is the one visitors see under
+ * Look around (`src/lib/sampleFamily.ts`).
+ *
+ *   (none)          Sam's board        ?view=mum       Mum's board
+ *   ?view=sheet     Mum's owed chore, with its invoice
+ *   ?view=ask       Sam's owed chore, asking for his sats
+ *   ?view=check     Mum's chore to grade
+ *   ?view=savings   Sam's savings, with a sample price
+ *   &theme=dark
  */
 import { createRoot } from "react-dom/client";
 import { MemoryRouter } from "react-router-dom";
-import { FamilyProvider } from "../src/lib/FamilyContext";
-import type { Role, Standing } from "../src/lib/moves";
-import type { Task } from "../src/lib/tasks";
+import { SampleFamilyProvider } from "../src/lib/FamilyContext";
+import { SAMPLE_MEMBERS, samplePayout, sampleTasks, viewerNpub, type Viewer } from "../src/lib/sampleFamily";
 import { Sheet } from "../src/views/Chore";
 import { Board } from "../src/views/Chores";
 import { SavingsSheet, WorthPanel } from "../src/views/Savings";
 import "../src/index.css";
 
-const key = (c: string) => "npub1" + c.repeat(58);
-const MUM = key("q");
-const SAM = key("p");
 const now = Math.floor(Date.now() / 1000);
-const DAY = 86_400;
-
-localStorage.setItem("chipin:family", JSON.stringify([{ npub: MUM, name: "Mum" }, { npub: SAM, name: "Sam" }]));
-
-const rubric = {
-  grades: [
-    { name: "Great job", sats: 1000, criteria: "Nothing left on the floor" },
-    { name: "Good enough", sats: 500, criteria: "" },
-    { name: "Not done", sats: 0, criteria: "" },
-  ],
-  appeal: "",
-};
-
-function chore(id: string, title: string, standing: Standing, your_roles: Role[], more: Partial<Task> = {}): Task {
-  return {
-    task_id: id, title, description: "", rubric, purchaser: MUM, performer: SAM, audience: [SAM], assessors: [MUM],
-    tie_breaker: MUM, standing, final: false, your_roles, needed_by: now + DAY, every_days: 0, ...more,
-  };
-}
-
-const graded = (sats: number, grade: string) => ({ grade, sats, assessor: MUM, reasons: "", at: now });
-
-const tasks: Task[] = [
-  chore("1", "🧹 Sweep the kitchen floor", "posted", ["audience"], { performer: null, needed_by: now + 2 * DAY, every_days: 1, description: "Every evening, after supper is cleared.\nSweep under the table and along the cupboards.\nTip the dustpan into the bin and hang the broom back on its hook." }),
-  chore("2", "🛏️ Make your bed before school", "claimed", ["performer"], { every_days: 1, needed_by: now }),
-  chore("3", "🍽️ Empty the dishwasher", "assessed", ["performer"], { assessment: graded(500, "Good enough") }),
-  chore("4", "🐕 Walk Rex round the block", "owed", ["performer"], { final: true, assessment: graded(1000, "Great job") }),
-  chore("5", "🧺 Fold the laundry", "done", ["performer"]),
-  chore("6", "🗑️ Take the bins to the kerb", "paid", ["performer"], { final: true, assessment: graded(1000, "Great job"), needed_by: now - 3 * DAY }),
-  chore("7", "🌱 Water the plants", "paid", ["performer"], { final: true, assessment: graded(500, "Good enough"), needed_by: now - 5 * DAY }),
-];
-
-const owed = chore("4", "🐕 Walk Rex round the block", "owed", ["purchaser", "assessor"], {
-  final: true, assessment: { ...graded(1000, "Great job"), reasons: "Rex came back tired and happy." },
-  description: "After school, before supper.\nTwenty minutes, on the lead, round the block.\nTake a bag, and fill his water bowl when you are back.",
-});
-const invoice = "lnbc10u1p" + "x".repeat(180);
-const payout = { sats: 1000, invoice, lightning_uri: `lightning:${invoice}`, payment_hash: "0".repeat(64), expires_at: now + 3540, paid_at: null };
-const toCheck = chore("5", "🧺 Fold the laundry", "done", ["purchaser", "assessor"]);
-
 const asked = new URLSearchParams(location.search);
 const view = asked.get("view");
 document.documentElement.dataset.theme = asked.get("theme") ?? "light";
-const me = view && view !== "ask" && view !== "savings" ? MUM : SAM;
+
+const viewer: Viewer = view === "mum" || view === "sheet" || view === "check" ? "mum" : "sam";
+const tasks = sampleTasks(viewer, now);
+const standing = { sheet: "owed", ask: "owed", check: "done" }[view ?? ""];
+const one = standing ? tasks.find((t) => t.standing === standing) : undefined;
 
 createRoot(document.getElementById("root")!).render(
   <MemoryRouter>
-    <FamilyProvider me={me}>
+    <SampleFamilyProvider me={viewerNpub(viewer)} members={SAMPLE_MEMBERS}>
       <div className="page grid gap-4">
-        {view === "sheet" && <Sheet task={owed} payout={payout} now={now} onChanged={() => {}} onPay={() => {}} />}
-        {view === "ask" && <Sheet task={chore("4", "🐕 Walk Rex round the block", "owed", ["performer"], { final: true, assessment: graded(1000, "Great job") })} payout={null} now={now} onChanged={() => {}} onPay={() => {}} />}
-        {view === "savings" && <SavingsSheet tasks={tasks.map((t, i) => (t.assessment ? { ...t, assessment: { ...t.assessment, at: now - (9 - i) * 6 * DAY } } : t))} me={SAM} now={now} worthPanel={(earned, ahead) => (
-          <WorthPanel earned={earned} ahead={ahead} now={now} fiat="USD" onFiat={() => {}} problem=""
-            reading={{ fiat: "USD", price: 64941, observed_at: now - 600, source: "mempool.space", source_url: "https://mempool.space",
-              history: [{ observed_at: now - 4 * 365 * 86400, price: 16800 }, { observed_at: now - 365 * 86400, price: 91000 }] }} />
-        )} />}
-        {view === "check" && <Sheet task={toCheck} payout={null} now={now} onChanged={() => {}} onPay={() => {}} />}
-        {!view && (
+        {one && <Sheet task={one} payout={view === "sheet" ? samplePayout(one, now) : null} now={now} onChanged={() => {}} onPay={() => {}} />}
+        {view === "savings" && (
+          <SavingsSheet tasks={tasks} me={viewerNpub("sam")} now={now} worthPanel={(earned, ahead) => (
+            <WorthPanel earned={earned} ahead={ahead} now={now} fiat="USD" onFiat={() => {}} problem=""
+              reading={{ fiat: "USD", price: 64941, observed_at: now - 600, source: "mempool.space", source_url: "https://mempool.space",
+                history: [{ observed_at: now - 4 * 365 * 86400, price: 16800 }, { observed_at: now - 365 * 86400, price: 91000 }] }} />
+          )} />
+        )}
+        {!one && view !== "savings" && (
           <>
             <h1 className="text-3xl font-bold">Chores</h1>
-            <Board tasks={tasks} me={SAM} now={now} onChanged={() => {}} />
+            <Board tasks={tasks} me={viewerNpub(viewer)} now={now} onChanged={() => {}} />
           </>
         )}
       </div>
-    </FamilyProvider>
+    </SampleFamilyProvider>
   </MemoryRouter>,
 );
