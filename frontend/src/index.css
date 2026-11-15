@@ -1,0 +1,303 @@
+@import "tailwindcss";
+@import "@tollbooth-dpyc/web/theme.css";
+@import "@tollbooth-dpyc/web/wallet.css";
+@import "@tollbooth-dpyc/web/tour.css";
+@source "../node_modules/@tollbooth-dpyc/web/dist";
+
+@theme {
+  --font-sans: system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-mono: ui-monospace, "SF Mono", Menlo, Consolas, monospace;
+}
+
+/* A kitchen noticeboard: warm paper, ink, and a terracotta accent. Gold is for money. */
+:root {
+  --tb-accent: #b8400e;
+  --tb-on-accent: #ffffff;
+  --tb-surface: #fffdf9;
+  --tb-surface-2: #f6f0e6;
+  --tb-ink: #1c1712;
+  --tb-muted: #5c5348;
+  --tb-line: #e6dccb;
+  --tb-ok: #1f6b2b;
+  --page: #fbf6ec;
+  --gold: #e9a400;
+  --on-gold: #1b1300;
+  --bad: #c0362c;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --tb-accent: #f0935a;
+    --tb-on-accent: #1d0d02;
+    --tb-surface: #1d1a17;
+    --tb-surface-2: #282420;
+    --tb-ink: #f3eee6;
+    --tb-muted: #c6bcae;
+    --tb-line: #36302a;
+    --tb-ok: #4cb35c;
+    --page: #121010;
+    --gold: #d79a10;
+    --bad: #ef6b60;
+  }
+}
+
+:root[data-theme="dark"] {
+  --tb-accent: #f0935a;
+  --tb-on-accent: #1d0d02;
+  --tb-surface: #1d1a17;
+  --tb-surface-2: #282420;
+  --tb-ink: #f3eee6;
+  --tb-muted: #c6bcae;
+  --tb-line: #36302a;
+  --tb-ok: #4cb35c;
+  --page: #121010;
+  --gold: #d79a10;
+  --bad: #ef6b60;
+}
+
+html { font-size: 17px; }
+
+body {
+  background: var(--page);
+  color: var(--tb-ink);
+  font-family: var(--font-sans);
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+}
+
+#root { display: flex; flex-direction: column; flex: 1; }
+
+.page { width: 100%; max-width: 56rem; margin: 0 auto; padding: 1rem; }
+.card { background: var(--tb-surface); border: 1px solid var(--tb-line); border-radius: 0.875rem; }
+.site-bar { background: var(--tb-surface); border-bottom: 1px solid var(--tb-line); }
+.muted { color: var(--tb-muted); }
+.num { font-variant-numeric: tabular-nums; }
+.error { color: var(--bad); }
+.label { font-size: 0.875rem; font-weight: 600; color: var(--tb-muted); }
+
+.chip {
+  display: inline-flex; align-items: center; gap: 0.375rem;
+  border: 1px solid var(--tb-line); border-radius: 999px;
+  padding: 0.375rem 0.875rem; font-size: 0.9375rem; background: transparent; color: inherit;
+}
+.chip:hover { background: var(--tb-surface-2); }
+.chip-on { border-color: var(--tb-accent); color: var(--tb-accent); font-weight: 600; }
+.chip-accent { background: var(--tb-accent); border-color: var(--tb-accent); color: var(--tb-on-accent); font-weight: 600; }
+.chip-accent:hover { background: var(--tb-accent); filter: brightness(1.08); }
+.chip-money { background: var(--gold); border-color: var(--gold); color: var(--on-gold); font-weight: 600; }
+.chip-money:hover { background: var(--gold); filter: brightness(1.08); }
+.chip-danger { border-color: var(--bad); color: var(--bad); }
+.chip:disabled { opacity: 0.45; }
+
+.field {
+  border: 1px solid var(--tb-line); border-radius: 0.5rem; background: var(--tb-surface);
+  color: inherit; padding: 0.5rem 0.625rem; font-size: 1rem; min-width: 0;
+}
+.field:focus-visible { outline: 2px solid var(--tb-accent); outline-offset: 1px; }
+
+.site-menu {
+  position: absolute; top: 100%; z-index: 40; margin-top: 0.25rem; min-width: 12rem;
+  background: var(--tb-surface); border: 1px solid var(--tb-line); border-radius: 0.5rem; padding: 0.25rem;
+}
+.site-menu-item { display: block; padding: 0.375rem 0.625rem; border-radius: 0.375rem; font-size: 0.9375rem; }
+.site-menu-item:hover { background: var(--tb-surface-2); }
+
+.panel { padding: 1rem 1.125rem; }
+.panel-title { font-size: 1.0625rem; font-weight: 600; }
+.lane-title { display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.25rem; }
+
+.toolbar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 0.5rem; }
+.toolbar-actions { display: flex; align-items: center; gap: 0.5rem; margin-left: auto; }
+.fab {
+  display: inline-grid; place-items: center; width: 2.75rem; height: 2.75rem; border-radius: 999px;
+  background: var(--tb-accent); color: var(--tb-on-accent); border: none;
+  box-shadow: 0 1px 3px rgb(0 0 0 / 0.25), 0 3px 8px rgb(0 0 0 / 0.12);
+}
+.fab:active { transform: scale(0.95); }
+.icon-btn {
+  display: inline-grid; place-items: center; width: 2.5rem; height: 2.5rem; border-radius: 999px;
+  border: 1px solid var(--tb-line); background: transparent; color: inherit; flex: none;
+}
+.icon-btn:hover { background: var(--tb-surface-2); }
+.icon-btn:disabled { opacity: 0.45; }
+.icon-btn-sm { width: 2rem; height: 2rem; }
+.add-form {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 0.5rem;
+  padding: 0.75rem; border-radius: 0.625rem; background: var(--tb-surface-2);
+}
+
+/* A named person or chore is a link to it. */
+.ent { color: inherit; text-decoration: underline; text-decoration-color: color-mix(in srgb, currentColor 40%, transparent); text-underline-offset: 3px; }
+.ent:hover, .ent:focus-visible { color: var(--tb-accent); text-decoration-color: currentColor; }
+
+/* Where a chore stands. */
+.badge {
+  display: inline-flex; align-items: center; gap: 0.25rem; border-radius: 999px; white-space: nowrap;
+  padding: 0.125rem 0.625rem; font-size: 0.8125rem; font-weight: 600;
+  background: var(--tb-surface-2); border: 1px solid var(--tb-line); color: var(--tb-ink);
+}
+.badge-owed { background: var(--gold); border-color: var(--gold); color: var(--on-gold); }
+.badge-paid { border-color: var(--tb-ok); color: var(--tb-ok); }
+.badge-done, .badge-appealed { border-color: var(--tb-accent); color: var(--tb-accent); }
+.badge-rejected, .badge-expired { border-color: var(--bad); color: var(--bad); }
+
+/* The chore list: what it is on the left, what it earns and the next tap on the right. */
+.chore-row { display: flex; align-items: center; justify-content: space-between; gap: 0.75rem; padding: 0.75rem 0; }
+.chore-row + .chore-row { border-top: 1px solid var(--tb-line); }
+.chore-main { display: grid; gap: 0.25rem; min-width: 0; }
+.chore-title { font-size: 1.125rem; font-weight: 600; overflow-wrap: anywhere; }
+.chore-meta { display: flex; flex-wrap: wrap; align-items: center; gap: 0.25rem 0.75rem; font-size: 0.875rem; }
+.chore-side { display: grid; justify-items: end; gap: 0.375rem; flex: none; }
+.chore-sats { font-size: 1.25rem; font-weight: 600; }
+.chore-sats::after { content: " sats"; font-size: 0.8125rem; font-weight: 400; color: var(--tb-muted); }
+
+/* One chore's facts: the word on the left, the fact on the right. */
+.facts { display: grid; grid-template-columns: auto 1fr; gap: 0.375rem 1rem; }
+.facts dt { color: var(--tb-muted); }
+.facts dd { text-align: right; overflow-wrap: anywhere; }
+
+table.ledger { width: 100%; border-collapse: collapse; }
+table.ledger td { padding: 0.5rem 0.5rem; border-top: 1px solid var(--tb-line); vertical-align: top; }
+table.ledger tr:first-child td { border-top: none; }
+table.ledger tr.grade-given td { background: color-mix(in srgb, var(--gold) 22%, transparent); }
+
+.history-row { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 0.25rem 1rem; padding: 0.375rem 0; font-size: 0.9375rem; }
+.history-row + .history-row { border-top: 1px solid var(--tb-line); }
+
+/* The invoice to pay. */
+.invoice { display: grid; gap: 0.625rem; justify-items: end; text-align: right; }
+.invoice-sats { font-size: 1.75rem; font-weight: 700; }
+.invoice-text {
+  width: 100%; max-height: 4.5rem; overflow: auto; overflow-wrap: anywhere; text-align: left;
+  font-family: var(--font-mono); font-size: 0.75rem; padding: 0.5rem; border-radius: 0.5rem; background: var(--tb-surface-2);
+}
+
+/* The new-chore form's grades. */
+.grade-row { display: grid; grid-template-columns: minmax(6rem, 1fr) minmax(6rem, 2fr) 6.5rem auto; gap: 0.5rem; align-items: center; }
+@media (max-width: 36rem) {
+  .grade-row { grid-template-columns: 1fr 6.5rem auto; }
+  .grade-row > :nth-child(2) { grid-column: 1 / -1; grid-row: 2; }
+}
+
+/* Family. */
+.mono-box { overflow-wrap: anywhere; font-family: var(--font-mono); font-size: 0.8125rem; padding: 0.5rem; border-radius: 0.5rem; background: var(--tb-surface-2); }
+.member-row { display: grid; grid-template-columns: 1fr auto auto; align-items: center; gap: 0.75rem; padding: 0.5rem 0.25rem; }
+.member-row + .member-row { border-top: 1px solid var(--tb-line); }
+.who-on { outline: 2px solid var(--tb-accent); outline-offset: 2px; border-radius: 0.5rem; }
+
+/* The Guide. */
+.steps { display: grid; gap: 0.75rem; grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr)); }
+.step { display: flex; gap: 0.75rem; align-items: flex-start; }
+.step-mark { display: inline-flex; align-items: center; gap: 0.25rem; color: var(--tb-accent); font-weight: 700; }
+
+/* Profile: two columns on a wide screen. */
+.account-grid { display: grid; gap: 0.75rem; grid-template-columns: repeat(auto-fit, minmax(min(100%, 26rem), 1fr)); align-items: start; }
+.account-wide { grid-column: 1 / -1; }
+
+/* A wait: the status, then a quotation, set to the right. */
+.waiting { display: grid; gap: 0.75rem; text-align: right; }
+.waiting-head { color: var(--tb-muted); }
+.waiting-figure { margin: 0; }
+.waiting-text { margin: 0; font-size: 1.125rem; line-height: 1.45; font-style: italic; }
+.waiting-mark { color: var(--gold); font-style: normal; }
+.waiting-author { margin-top: 0.25rem; color: var(--tb-muted); font-size: 0.875rem; }
+.waiting-author::before { content: "— "; }
+
+/* The wallet's balance, figures to the right. */
+.tb-wallet-balance { text-align: right; }
+.tb-wallet-balance .tb-wallet-stats,
+.tb-wallet-balance .tb-wallet-row { justify-content: flex-end; }
+
+/* ── Big, friendly and hard to miss: ChipIn's people are young. ───────────── */
+
+/* A button a thumb can find: tall, wide, and apart from its neighbours. */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;
+  min-height: 3.25rem; padding: 0.625rem 1.375rem; border-radius: 1.125rem;
+  font-size: 1.125rem; font-weight: 700; border: 2px solid transparent; color: inherit; background: transparent;
+  transition: transform 100ms ease;
+}
+.btn:active { transform: scale(0.96); }
+.btn:disabled { opacity: 0.45; }
+.btn-go { background: var(--tb-accent); color: var(--tb-on-accent); box-shadow: 0 3px 0 color-mix(in srgb, var(--tb-accent) 65%, #000); }
+.btn-money { background: var(--gold); color: var(--on-gold); box-shadow: 0 3px 0 color-mix(in srgb, var(--gold) 65%, #000); }
+.btn-quiet { border-color: var(--tb-line); background: var(--tb-surface); }
+.btn-quiet:hover { background: var(--tb-surface-2); }
+.btn-grade { justify-content: space-between; width: 100%; background: var(--tb-surface); border-color: var(--gold); }
+.btn-grade:hover { background: color-mix(in srgb, var(--gold) 18%, var(--tb-surface)); }
+.grade-sats { background: var(--gold); color: var(--on-gold); border-radius: 999px; padding: 0.125rem 0.75rem; }
+@media (prefers-reduced-motion: reduce) { .btn { transition: none; } .btn:active { transform: none; } }
+
+.actions { display: grid; gap: 0.75rem; }
+.actions-row { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 0.75rem; }
+.ask { display: grid; gap: 0.75rem; padding: 0.875rem; border-radius: 1rem; background: var(--tb-surface-2); }
+.grade-picks { display: grid; gap: 0.625rem; }
+
+.fab { width: 3.5rem; height: 3.5rem; }
+.icon-btn { width: 3rem; height: 3rem; }
+.chip { min-height: 2.75rem; padding: 0.375rem 1rem; font-size: 1rem; }
+.field { min-height: 3rem; font-size: 1.0625rem; border-radius: 0.75rem; border-width: 2px; }
+.label { font-size: 1.0625rem; color: var(--tb-ink); }
+.lane-title { font-size: 1.25rem; font-weight: 700; }
+
+/* A person: a face in their own colour, then their name. */
+.person { display: inline-flex; align-items: center; gap: 0.5rem; }
+.people { display: inline-flex; flex-wrap: wrap; justify-content: flex-end; gap: 0.5rem 0.875rem; }
+.face {
+  display: inline-grid; place-items: center; width: 2rem; height: 2rem; border-radius: 999px; flex: none;
+  color: #fff; font-weight: 700; font-size: 1rem;
+}
+.face-big { width: 2.75rem; height: 2.75rem; font-size: 1.25rem; }
+
+/* A chore: a card with its picture, its coin, and one big button. */
+.chore-list { display: grid; gap: 0.75rem; }
+.chore { background: var(--tb-surface); border: 2px solid var(--tb-line); border-radius: 1.25rem; overflow: hidden; }
+.chore-yours { border-color: var(--tb-accent); }
+.chore-finished { opacity: 0.8; }
+.chore-open { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 0.875rem; padding: 0.875rem 1rem; }
+.chore-open:hover { background: var(--tb-surface-2); }
+.chore-picture { font-size: 2.25rem; line-height: 1; }
+.chore-words { display: grid; gap: 0.25rem; min-width: 0; }
+.chore-title { font-size: 1.25rem; font-weight: 700; overflow-wrap: anywhere; }
+.chore-meta { font-size: 0.9375rem; }
+.chore-foot { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 0.75rem; padding: 0 1rem 0.875rem; }
+.chore-head { display: flex; align-items: center; gap: 0.75rem; font-size: 1.75rem; font-weight: 700; overflow-wrap: anywhere; }
+
+/* What a chore earns, as a gold coin. */
+.coin {
+  display: inline-grid; place-items: center; min-width: 4rem; height: 4rem; padding: 0 0.625rem; border-radius: 999px;
+  font-size: 1.125rem; font-weight: 800; color: var(--on-gold);
+  background: radial-gradient(circle at 35% 30%, color-mix(in srgb, var(--gold) 55%, #fff), var(--gold) 70%);
+  box-shadow: inset 0 0 0 3px color-mix(in srgb, var(--gold) 65%, #000);
+}
+
+/* What you earned. */
+.piggy { display: grid; gap: 0.75rem; grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr)); }
+.piggy-tile { display: grid; justify-items: end; padding: 0.875rem 1.125rem; border-radius: 1.25rem; background: var(--tb-surface); border: 2px solid var(--tb-line); }
+.piggy-earned { background: var(--gold); border-color: var(--gold); color: var(--on-gold); }
+.piggy-label { font-size: 1rem; font-weight: 600; }
+.piggy-sats { font-size: 2.25rem; font-weight: 800; line-height: 1.1; }
+.piggy-sats::after { content: " sats"; font-size: 1rem; font-weight: 600; }
+
+.empty { display: grid; justify-items: center; gap: 0.75rem; padding: 2rem 1rem; text-align: center; }
+.empty-picture { font-size: 4rem; line-height: 1; }
+
+.paid-banner {
+  text-align: center; font-size: 1.5rem; font-weight: 800; padding: 0.75rem; border-radius: 1rem;
+  background: var(--gold); color: var(--on-gold);
+}
+
+/* The new-chore form: pictures and people to tap. */
+.pictures { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+.picture {
+  width: 3.5rem; height: 3.5rem; font-size: 1.875rem; line-height: 1; border-radius: 1rem;
+  border: 2px solid var(--tb-line); background: var(--tb-surface);
+}
+.picture-on { border-color: var(--tb-accent); background: color-mix(in srgb, var(--tb-accent) 14%, var(--tb-surface)); }
+.pick {
+  display: inline-flex; align-items: center; gap: 0.5rem; min-height: 3rem; padding: 0.375rem 1rem 0.375rem 0.5rem;
+  border-radius: 999px; border: 2px solid var(--tb-line); background: var(--tb-surface); font-size: 1.0625rem; font-weight: 600;
+}
+.pick-on { border-color: var(--tb-accent); background: color-mix(in srgb, var(--tb-accent) 14%, var(--tb-surface)); }
+.member-row { padding: 0.625rem 0.25rem; }
