@@ -10,7 +10,7 @@ import type { Role, Standing } from "../src/lib/moves";
 import type { Task } from "../src/lib/tasks";
 import { Sheet } from "../src/views/Chore";
 import { Board } from "../src/views/Chores";
-import { SavingsSheet } from "../src/views/Savings";
+import { SavingsSheet, WorthPanel } from "../src/views/Savings";
 import "../src/index.css";
 
 const key = (c: string) => "npub1" + c.repeat(58);
@@ -68,7 +68,11 @@ createRoot(document.getElementById("root")!).render(
       <div className="page grid gap-4">
         {view === "sheet" && <Sheet task={owed} payout={payout} now={now} onChanged={() => {}} onPay={() => {}} />}
         {view === "ask" && <Sheet task={chore("4", "🐕 Walk Rex round the block", "owed", ["performer"], { final: true, assessment: graded(1000, "Great job") })} payout={null} now={now} onChanged={() => {}} onPay={() => {}} />}
-        {view === "savings" && <SavingsSheet tasks={tasks.map((t, i) => (t.assessment ? { ...t, assessment: { ...t.assessment, at: now - (9 - i) * 6 * DAY } } : t))} me={SAM} now={now} />}
+        {view === "savings" && <SavingsSheet tasks={tasks.map((t, i) => (t.assessment ? { ...t, assessment: { ...t.assessment, at: now - (9 - i) * 6 * DAY } } : t))} me={SAM} now={now} worthPanel={(earned, ahead) => (
+          <WorthPanel earned={earned} ahead={ahead} now={now} fiat="USD" onFiat={() => {}} problem=""
+            reading={{ fiat: "USD", price: 64941, observed_at: now - 600, source: "mempool.space", source_url: "https://mempool.space",
+              history: [{ observed_at: now - 4 * 365 * 86400, price: 16800 }, { observed_at: now - 365 * 86400, price: 91000 }] }} />
+        )} />}
         {view === "check" && <Sheet task={toCheck} payout={null} now={now} onChanged={() => {}} onPay={() => {}} />}
         {!view && (
           <>
