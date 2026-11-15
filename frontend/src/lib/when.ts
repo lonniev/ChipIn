@@ -1,4 +1,4 @@
-/** Times as a household says them. Task Queue speaks Unix seconds. */
+/** Times as a household says them. Task Booth speaks Unix seconds. */
 
 const DAY = 86_400;
 

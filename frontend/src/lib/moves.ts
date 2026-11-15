@@ -1,8 +1,8 @@
 /**
  * What the signed-in person may do to a chore from where it stands.
  *
- * Task Queue decides what is allowed; this table only chooses which buttons a
- * page draws, from the roles Task Queue says the person holds (`your_roles`).
+ * Task Booth decides what is allowed; this table only chooses which buttons a
+ * page draws, from the roles Task Booth says the person holds (`your_roles`).
  */
 
 export type Standing =

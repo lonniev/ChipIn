@@ -1,7 +1,7 @@
 /**
  * The names this device gives the family's npubs.
  *
- * They stay in this browser and are sent nowhere: Task Queue knows people only
+ * They stay in this browser and are sent nowhere: Task Booth knows people only
  * by npub. Another device starts with no names until they are added there.
  */
 

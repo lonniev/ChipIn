@@ -6,7 +6,7 @@ import App from "./App";
 import "./index.css";
 
 configureTollbooth({
-  slug: "taskqueue",
+  slug: "taskbooth",
   appName: "ChipIn",
   mcpUrl: import.meta.env.VITE_MCP_URL || "/mcp",
   operatorUrl: "https://taskqueue-mcp.fastmcp.app",

@@ -1,6 +1,6 @@
 /**
  * ChipIn's pages on the sample family, for look reviews: the real components,
- * with nothing sent to Task Queue. The family is the one visitors see under
+ * with nothing sent to Task Booth. The family is the one visitors see under
  * Look around (`src/lib/sampleFamily.ts`).
  *
  *   (none)          Sam's board        ?view=mom       Mom's board

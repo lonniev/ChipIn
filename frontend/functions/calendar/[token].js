@@ -3,7 +3,7 @@
  *
  * A calendar client speaks HTTP and knows nothing about MCP, JSON-RPC or npub
  * proofs, and there is nowhere in an iCalendar subscription to put one. So the
- * site serves the feed: this Function calls Task Queue's free `calendar_fetch`
+ * site serves the feed: this Function calls Task Booth's free `calendar_fetch`
  * tool with the token from the URL and returns what it gets as text/calendar.
  *
  * Serving lives here rather than on the MCP because rendering a subscription is
@@ -56,7 +56,7 @@ export async function onRequestGet(context) {
         jsonrpc: "2.0",
         id: 1,
         method: "tools/call",
-        params: { name: "taskqueue_calendar_fetch", arguments: { token } },
+        params: { name: "taskbooth_calendar_fetch", arguments: { token } },
       }),
     });
     if (!r.ok) throw new Error(`upstream ${r.status}`);

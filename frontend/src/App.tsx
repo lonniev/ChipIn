@@ -97,7 +97,7 @@ function Footer() {
     <footer className="site-bar space-y-1 px-4 py-4 text-center text-xs text-[var(--tb-muted)]" style={{ borderTop: "1px solid var(--tb-line)" }}>
       <div>
         ChipIn v{__APP_VERSION__} · {__BUILD_COMMIT__}
-        {status?.version && ` · Task Queue ${status.version}`}
+        {status?.version && ` · Task Booth ${status.version}`}
         {status?.tollbooth_dpyc_version && ` · SDK ${status.tollbooth_dpyc_version}`}
       </div>
       <div>

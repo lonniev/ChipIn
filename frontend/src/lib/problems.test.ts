@@ -4,7 +4,7 @@ import { looksLikeInvoice, waitsOnTheirRequest } from "./problems.ts";
 
 test("the Operator's no-address refusal is recognised", () => {
   assert.equal(
-    waitsOnTheirRequest("The performer has not set a payout_address. They make an invoice for exactly 800 sats in their own wallet and pass it to taskqueue_request_payout as invoice."),
+    waitsOnTheirRequest("The performer has not set a payout_address. They make an invoice for exactly 800 sats in their own wallet and pass it to taskbooth_request_payout as invoice."),
     true,
   );
 });

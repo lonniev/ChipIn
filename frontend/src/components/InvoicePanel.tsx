@@ -1,6 +1,6 @@
 /**
  * The invoice that pays a chore: a link any wallet opens, a code to scan from
- * another phone, and the text to copy. It is Task Queue's invoice, shown unchanged.
+ * another phone, and the text to copy. It is Task Booth's invoice, shown unchanged.
  */
 
 import { useState } from "react";
