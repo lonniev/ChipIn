@@ -5,6 +5,7 @@ import farm from "./assets/farm.webp";
 import { AppShell, SiteNav, TourProvider, Wallet, matchesPath, useAppShell, useTour } from "@tollbooth-dpyc/web/react";
 import Waiting from "./components/Waiting";
 import { FamilyProvider } from "./lib/FamilyContext";
+import { PicturesProvider } from "./lib/PicturesContext";
 import { TOURS } from "./lib/tours";
 
 // Each page is its own chunk, fetched the first time it opens.
@@ -140,6 +141,7 @@ function Site() {
         <div className="backdrop" style={{ backgroundImage: `url(${farm})` }} aria-hidden />
         <Nav />
         <main className="flex-1">
+          <PicturesProvider>
           <FamilyProvider me={session.signedIn ? session.npub : ""}>
             <Suspense fallback={<div className="page"><div className="card panel"><Waiting heading="Opening the page…" /></div></div>}>
               <Routes>
@@ -162,6 +164,7 @@ function Site() {
               </Routes>
             </Suspense>
           </FamilyProvider>
+          </PicturesProvider>
         </main>
         <Footer />
       </TourProvider>

@@ -2,6 +2,7 @@ import { existsSync } from "node:fs";
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { BITCOIN_EVER, bookHref, CHARACTER_LESSONS, lessonAt, LESSONS, MONEY_LESSONS, USE_LESSONS, VIRTUES_LESSON, SATS_PER_BITCOIN, SHELVES, WORDS } from "./lessons.ts";
+import { PICTURE_SETS, pictureSetFrom } from "./pictures.ts";
 import { CHIPIN_QUOTES } from "./quotes.ts";
 
 const lessons = [...LESSONS];
@@ -81,6 +82,14 @@ test("there are seven virtues: three theological and four cardinal", () => {
   assert.deepEqual(points.filter((p) => p.group === "Cardinal").map((p) => p.name), ["Prudence", "Justice", "Fortitude", "Temperance"]);
 });
 
-test("every lesson has its painting", () => {
-  for (const l of LESSONS) assert.ok(existsSync(new URL(`../assets/lessons/${l.slug}.webp`, import.meta.url)), l.slug);
+test("every lesson has its painting in every family's set", () => {
+  for (const s of PICTURE_SETS) {
+    for (const l of LESSONS) assert.ok(existsSync(new URL(`../assets/lessons/${s.key}/${l.slug}.webp`, import.meta.url)), `${s.key}/${l.slug}`);
+  }
+});
+
+test("a stored choice that is not a set falls back to the first", () => {
+  assert.equal(pictureSetFrom("asian"), "asian");
+  assert.equal(pictureSetFrom("purple"), "white");
+  assert.equal(pictureSetFrom(null), "white");
 });

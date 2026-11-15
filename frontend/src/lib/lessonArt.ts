@@ -1,7 +1,11 @@
-/** The picture painted for each lesson, by the lesson's slug. Each is fetched only when shown. */
+/** The painting for each lesson in each family's set. Each is fetched only when shown. */
 
-const found = import.meta.glob<string>("../assets/lessons/*.webp", { eager: true, query: "?url", import: "default" });
+import { DEFAULT_PICTURES, type PictureSet } from "./pictures.ts";
 
-const bySlug = new Map(Object.entries(found).map(([path, url]) => [path.slice(path.lastIndexOf("/") + 1, -".webp".length), url]));
+const found = import.meta.glob<string>("../assets/lessons/*/*.webp", { eager: true, query: "?url", import: "default" });
 
-export const artFor = (slug: string): string | undefined => bySlug.get(slug);
+/** "white/earn-it" → url */
+const byKey = new Map(Object.entries(found).map(([path, url]) => [path.split("/").slice(-2).join("/").slice(0, -".webp".length), url]));
+
+export const artFor = (slug: string, set: PictureSet): string | undefined =>
+  byKey.get(`${set}/${slug}`) ?? byKey.get(`${DEFAULT_PICTURES}/${slug}`);
