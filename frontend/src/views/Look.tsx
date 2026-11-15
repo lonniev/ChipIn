@@ -31,8 +31,8 @@ export default function Look() {
       <SampleFamilyProvider me={me} members={SAMPLE_MEMBERS}>
         <div className="page grid gap-4">
           <section className="card panel grid gap-2">
-            <h1 className="text-2xl font-bold">Look around</h1>
-            <p>This is a sample family. Nothing here is real, and nothing you tap is sent.</p>
+            <h1 className="text-2xl font-bold">Welcome</h1>
+            <p>Look around a sample family. Nothing here is real, and nothing you tap is sent.</p>
             <div className="flex flex-wrap gap-2" role="group" aria-label="See it as">
               {VIEWERS.map((v) => (
                 <Link key={v.viewer} to={`/look?as=${v.viewer}`} className={v.viewer === viewer ? "pick pick-on" : "pick"} aria-current={v.viewer === viewer}>{v.label}</Link>

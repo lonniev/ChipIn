@@ -1,6 +1,6 @@
 import { lazy, Suspense, type ReactNode } from "react";
 import { BrowserRouter, Link, Navigate, Route, Routes, useLocation } from "react-router-dom";
-import { BookOpen, GraduationCap, HandCoins, ListChecks, PiggyBank, Users, Wallet as WalletIcon } from "lucide-react";
+import { BookOpen, DoorOpen, GraduationCap, HandCoins, ListChecks, PiggyBank, Users, Wallet as WalletIcon } from "lucide-react";
 import farm from "./assets/farm.webp";
 import { AppShell, SiteNav, TourProvider, Wallet, matchesPath, useAppShell, useTour } from "@tollbooth-dpyc/web/react";
 import Waiting from "./components/Waiting";
@@ -24,6 +24,7 @@ const Savings = lazy(() => import("./views/Savings"));
 const WELCOME = "Chores for the household, paid in sats.";
 
 const PAGES = [
+  { href: "/look", label: "Welcome", icon: <DoorOpen size={18} aria-hidden /> },
   { href: "/chores", label: "Chores", icon: <ListChecks size={18} aria-hidden /> },
   { href: "/savings", label: "Savings", icon: <PiggyBank size={18} aria-hidden /> },
   { href: "/family", label: "Family", icon: <Users size={18} aria-hidden /> },
@@ -69,7 +70,7 @@ function Nav() {
     return (
       <header className="site-bar flex flex-wrap items-center gap-2 px-4 py-2.5">
         <Brand />
-        <Link to="/look" className="chip ml-auto">Look around</Link>
+        <Link to="/look" className="chip ml-auto">Welcome</Link>
         <Link to="/learn" className="chip">Learn</Link>
         <Link to="/guide" className="chip">Guide</Link>
         <Link to="/signin" className="chip chip-accent">Sign in</Link>
