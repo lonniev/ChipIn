@@ -1,7 +1,8 @@
 /** How a chore goes, in six steps. */
 
-import { BadgeCheck, Check, ClipboardList, Hand, ThumbsUp, Wallet, Zap } from "lucide-react";
+import { BadgeCheck, Check, ClipboardList, Hand, ThumbsUp, Zap } from "lucide-react";
 import { Link } from "react-router-dom";
+import { WalletChooser } from "@tollbooth-dpyc/web/react";
 import SampleCard from "../components/SampleCard";
 import { SAMPLE_CHORES } from "../lib/samples";
 
@@ -37,9 +38,8 @@ export default function Guide() {
         <p>Write down the wallet's backup words on paper and keep them with the family's important things.</p>
         <p>To be paid, a child taps Receive in the wallet, asks for the sats the chore earned, and pastes the request into ChipIn.</p>
         <div className="flex flex-wrap justify-end gap-2">
-          <Link to="/wallet" className="btn btn-money"><Wallet size={22} aria-hidden />Help me choose a wallet</Link>
+          <WalletChooser className="btn btn-money" />
         </div>
-        <p className="muted text-sm">The chooser is under “Need a wallet?” on the Tollbooth wallet page, once you are signed in.</p>
         <p className="muted text-sm">More on keeping it safe: <Link to="/learn/where-sats-live" className="ent">Where do sats live?</Link></p>
       </section>
       <section className="grid gap-3">

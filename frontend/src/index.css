@@ -438,3 +438,5 @@ table.ledger tr.grade-given td { background: color-mix(in srgb, var(--gold) 22%,
 .picture-set { display: grid; gap: 0.25rem; padding: 0.375rem; border-radius: 1rem; border: 3px solid var(--tb-line); background: var(--tb-surface); font-weight: 700; text-align: center; }
 .picture-set img { width: 100%; height: auto; aspect-ratio: 960 / 644; object-fit: cover; border-radius: 0.625rem; }
 .picture-set-on { border-color: var(--tb-accent); background: color-mix(in srgb, var(--tb-accent) 12%, var(--tb-surface)); }
+
+.invoice-qr { justify-self: center; margin-inline: auto; }
