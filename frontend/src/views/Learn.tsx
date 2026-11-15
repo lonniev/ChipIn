@@ -2,13 +2,15 @@
 
 import { BookOpen, ChevronRight, ExternalLink } from "lucide-react";
 import { Link } from "react-router-dom";
+import { artFor } from "../lib/lessonArt";
 import {
-  bookHref, BOOKSHELF_HREF, CHARACTER_LESSONS, MONEY_LESSONS, ORANGE_BIBLE_HREF, SHELVES, WORDS, type Lesson,
+  bookHref, BOOKSHELF_HREF, CHARACTER_LESSONS, MONEY_LESSONS, ORANGE_BIBLE_HREF, SHELVES, USE_LESSONS, VIRTUES_LESSON, WORDS, type Lesson,
 } from "../lib/lessons";
 
 function LessonCard({ lesson }: { lesson: Lesson }) {
   return (
     <Link to={`/learn/${lesson.slug}`} className="card panel lesson lesson-link">
+      {artFor(lesson.slug) && <img src={artFor(lesson.slug)} alt="" className="lesson-art" loading="lazy" width={960} height={644} />}
       <h3 className="lesson-title"><span aria-hidden>{lesson.picture}</span>{lesson.title}</h3>
       {lesson.lines.map((line) => <p key={line}>{line}</p>)}
       {lesson.saying && (
@@ -37,6 +39,16 @@ export default function Learn() {
       <section className="grid gap-3" aria-label="Character">
         <h2 className="section-title">What to do with what you earn</h2>
         <div className="lessons">{CHARACTER_LESSONS.map((l) => <LessonCard key={l.title} lesson={l} />)}</div>
+      </section>
+
+      <section className="grid gap-3" aria-label="Uses">
+        <h2 className="section-title">Putting sats to work</h2>
+        <div className="lessons">{USE_LESSONS.map((l) => <LessonCard key={l.title} lesson={l} />)}</div>
+      </section>
+
+      <section className="grid gap-3" aria-label="Virtues">
+        <h2 className="section-title">Character</h2>
+        <div className="lessons"><LessonCard lesson={VIRTUES_LESSON} /></div>
       </section>
 
       <section className="card panel grid gap-2">

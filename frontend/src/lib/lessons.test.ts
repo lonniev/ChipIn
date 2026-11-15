@@ -1,9 +1,10 @@
+import { existsSync } from "node:fs";
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { BITCOIN_EVER, bookHref, CHARACTER_LESSONS, lessonAt, LESSONS, MONEY_LESSONS, SATS_PER_BITCOIN, SHELVES, WORDS } from "./lessons.ts";
+import { BITCOIN_EVER, bookHref, CHARACTER_LESSONS, lessonAt, LESSONS, MONEY_LESSONS, USE_LESSONS, VIRTUES_LESSON, SATS_PER_BITCOIN, SHELVES, WORDS } from "./lessons.ts";
 import { CHIPIN_QUOTES } from "./quotes.ts";
 
-const lessons = [...MONEY_LESSONS, ...CHARACTER_LESSONS];
+const lessons = [...LESSONS];
 
 test("a lesson is a few short sentences, one to a line", () => {
   for (const l of lessons) {
@@ -24,7 +25,7 @@ test("the numbers taught are Bitcoin's own", () => {
 
 test("sayings stay the lighter part: fewer lessons carry one than money lessons do without", () => {
   assert.ok(MONEY_LESSONS.filter((l) => l.saying).length <= 1);
-  for (const l of lessons) if (l.saying) assert.match(l.saying.from, /^[1-3A-Z][A-Za-z ]+ \d+:\d+$/, l.title);
+  for (const l of lessons) if (l.saying) assert.match(l.saying.from, /^[1-3A-Z][A-Za-z0-9 ]+ \d+:\d+$/, l.title);
 });
 
 test("every word explained is explained once, briefly", () => {
@@ -57,4 +58,29 @@ test("the quotations are distinct and each names where it is from", () => {
   for (const q of CHIPIN_QUOTES) assert.ok(q.text && q.author, q.text);
   const scripture = CHIPIN_QUOTES.filter((q) => /\d+:\d+/.test(q.author ?? "")).length;
   assert.ok(scripture >= 8 && scripture < CHIPIN_QUOTES.length, "scripture is well represented, with other voices beside it");
+});
+
+test("every outside link is https, says what the place is, and comes with a word of care", () => {
+  for (const l of LESSONS) {
+    if (!l.links) continue;
+    assert.ok(l.care && l.care.length > 0, `${l.title}: links need a word of care`);
+    for (const k of l.links) {
+      assert.match(k.href, /^https:\/\//, k.name);
+      assert.ok(k.says.length > 0 && k.says.length <= 100, k.name);
+    }
+  }
+});
+
+test("the uses of sats are saving for something, earning more, giving, and buying well", () => {
+  assert.deepEqual(USE_LESSONS.map((l) => l.slug), ["what-to-save-for", "where-else-to-earn", "where-to-give", "what-is-worth-buying"]);
+});
+
+test("there are seven virtues: three theological and four cardinal", () => {
+  const points = VIRTUES_LESSON.points ?? [];
+  assert.deepEqual(points.filter((p) => p.group === "Theological").map((p) => p.name), ["Faith", "Hope", "Charity"]);
+  assert.deepEqual(points.filter((p) => p.group === "Cardinal").map((p) => p.name), ["Prudence", "Justice", "Fortitude", "Temperance"]);
+});
+
+test("every lesson has its painting", () => {
+  for (const l of LESSONS) assert.ok(existsSync(new URL(`../assets/lessons/${l.slug}.webp`, import.meta.url)), l.slug);
 });
