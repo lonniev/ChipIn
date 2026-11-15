@@ -3,6 +3,7 @@
 import { useState, type ReactNode } from "react";
 import { CalendarPlus, ChevronLeft, ChevronRight } from "lucide-react";
 import { Link } from "react-router-dom";
+import { useLooking } from "../lib/LookContext";
 import { byDay, dayKey, kindOf, monthWeeks, shiftMonth, type Browsable } from "../lib/browse";
 
 const WEEKDAYS = ["S", "M", "T", "W", "T", "F", "S"];
@@ -11,6 +12,7 @@ const SHOWN_PER_DAY = 3;
 export default function MonthCalendar<T extends Browsable>({ tasks, now, renderDay }: {
   tasks: T[]; now: number; renderDay: (rows: T[]) => ReactNode;
 }) {
+  const looking = useLooking();
   const today = dayKey(now);
   const start = new Date(now * 1000);
   const [shown, setShown] = useState({ year: start.getFullYear(), month: start.getMonth() });
@@ -49,7 +51,7 @@ export default function MonthCalendar<T extends Browsable>({ tasks, now, renderD
             );
           })}
         </div>
-        <p className="text-right"><Link to="/profile#calendar" className="ent"><CalendarPlus size={16} aria-hidden className="inline" /> Add to my calendar</Link></p>
+        {!looking && <p className="text-right"><Link to="/profile#calendar" className="ent"><CalendarPlus size={16} aria-hidden className="inline" /> Add to my calendar</Link></p>}
       </div>
       <h2 className="lane-title">{pickedTitle} ({pickedRows.length})</h2>
       {pickedRows.length > 0 ? renderDay(pickedRows) : <p className="card panel muted">Nothing is due this day.</p>}

@@ -1,0 +1,1 @@
+- Look around: before signing in, a visitor can explore a sample family's chores as a child or as a parent, open a chore, and see sample savings. Nothing tapped there is sent.
