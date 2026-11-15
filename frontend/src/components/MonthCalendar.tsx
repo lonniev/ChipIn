@@ -1,7 +1,8 @@
 /** Chores on a month: each day shows the pictures of what is due, and a tap lists them. */
 
 import { useState, type ReactNode } from "react";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { CalendarPlus, ChevronLeft, ChevronRight } from "lucide-react";
+import { Link } from "react-router-dom";
 import { byDay, dayKey, kindOf, monthWeeks, shiftMonth, type Browsable } from "../lib/browse";
 
 const WEEKDAYS = ["S", "M", "T", "W", "T", "F", "S"];
@@ -48,6 +49,7 @@ export default function MonthCalendar<T extends Browsable>({ tasks, now, renderD
             );
           })}
         </div>
+        <p className="text-right"><Link to="/profile#calendar" className="ent"><CalendarPlus size={16} aria-hidden className="inline" /> Add to my calendar</Link></p>
       </div>
       <h2 className="lane-title">{pickedTitle} ({pickedRows.length})</h2>
       {pickedRows.length > 0 ? renderDay(pickedRows) : <p className="card panel muted">Nothing is due this day.</p>}

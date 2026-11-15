@@ -118,3 +118,31 @@ export const requestPayout = async (taskId: string) =>
 /** The performer's own request for the sats, made in their wallet. */
 export const handInInvoice = async (taskId: string, invoice: string) =>
   (await ask<{ payout: Payout }>("request_payout", { task_id: taskId, invoice })).payout;
+
+export interface Feed {
+  token: string;
+  name: string;
+  zone: string;
+  created_at: number;
+  fetches: number;
+  last_fetch: number | null;
+}
+
+export const listFeeds = async () => (await ask<{ feeds: Feed[] }>("calendar_list")).feeds;
+
+export const publishFeed = async (name: string, timeZone: string) =>
+  (await ask<{ feed: Feed }>("calendar_publish", { name, time_zone: timeZone })).feed;
+
+export const revokeFeed = async (token: string) => { await ask("calendar_revoke", { token }); };
+
+export interface PriceReading {
+  fiat: string;
+  /** What one bitcoin costs. */
+  price: number;
+  observed_at: number;
+  history: { observed_at: number; price: number }[];
+  source: string;
+  source_url: string;
+}
+
+export const btcPrice = async (fiat: string, years = 4) => ask<PriceReading>("btc_price", { fiat, years });

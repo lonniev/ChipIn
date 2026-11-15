@@ -1,5 +1,6 @@
 /** Your account: where you get paid, then the package's panels in their one order. */
 
+import CalendarFeed from "../components/CalendarFeed";
 import { useEffect, useState } from "react";
 import { Check } from "lucide-react";
 import { getMyProperties, setMyProperty } from "@tollbooth-dpyc/web";
@@ -88,7 +89,7 @@ export default function Profile() {
       <AccountPage
         npub={session.npub}
         heading={null}
-        before={<PayoutAddress />}
+        before={<><PayoutAddress /><CalendarFeed /></>}
         usage={{ classNames: USAGE }}
         theme={{ classNames: { chip: "chip", active: "chip chip-on" } }}
         timezone={{ classNames: { select: "field" } }}
