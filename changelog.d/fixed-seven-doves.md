@@ -1,0 +1,1 @@
+- The seven virtues painting now shows seven doves on the barn roof.
