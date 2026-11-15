@@ -22,9 +22,9 @@ export default function InvoicePanel({ payout, now }: { payout: Payout; now: num
     <div className="invoice">
       <p className="invoice-sats num">{formatSats(payout.sats)} sats</p>
       <div className="flex flex-wrap justify-end gap-2">
-        <a href={payout.lightning_uri} className="chip chip-money"><Zap size={16} aria-hidden />Open in wallet</a>
-        <button type="button" className="chip" onClick={() => void copy()}>
-          {copied ? <Check size={16} aria-hidden /> : <Copy size={16} aria-hidden />}
+        <a href={payout.lightning_uri} className="btn btn-money"><Zap size={22} aria-hidden />Open in wallet</a>
+        <button type="button" className="btn btn-quiet" onClick={() => void copy()}>
+          {copied ? <Check size={22} aria-hidden /> : <Copy size={22} aria-hidden />}
           {copied ? "Copied" : "Copy invoice"}
         </button>
       </div>

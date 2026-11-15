@@ -4,8 +4,9 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Plus, Trash2, UserPlus } from "lucide-react";
 import { useAppShell } from "@tollbooth-dpyc/web/react";
-import { choreHref } from "../components/Links";
+import { choreHref, Face } from "../components/Links";
 import { useFamily } from "../lib/FamilyContext";
+import { CHORE_PICTURES } from "../lib/face";
 import { MAX_GRADES, rubricFrom, STARTER_ROWS, type GradeRow } from "../lib/rubric";
 import { postTask } from "../lib/tasks";
 import { dayFrom, endOfDay } from "../lib/when";
@@ -23,6 +24,7 @@ export default function NewChore() {
   const now = Math.floor(Date.now() / 1000);
 
   const [title, setTitle] = useState("");
+  const [picture, setPicture] = useState(CHORE_PICTURES[0]);
   const [description, setDescription] = useState("");
   const [who, setWho] = useState<string[]>([]);
   const [due, setDue] = useState(dayFrom(now, 2));
@@ -47,7 +49,7 @@ export default function NewChore() {
     setBusy(true);
     try {
       const task = await postTask({
-        title: title.trim(), description: description.trim(), rubric: made.rubric,
+        title: `${picture} ${title.trim()}`, description: description.trim(), rubric: made.rubric,
         audience: who, needed_by: neededBy, every_days: every,
       });
       go(choreHref(task.task_id));
@@ -60,11 +62,19 @@ export default function NewChore() {
   return (
     <div className="page">
       <form className="card panel mx-auto grid max-w-2xl gap-4" onSubmit={(e) => { e.preventDefault(); void post(); }}>
-        <h1 className="text-2xl font-semibold">New chore</h1>
+        <h1 className="text-3xl font-bold">New chore</h1>
+
+        <div className="pictures" role="group" aria-label="Picture">
+          {CHORE_PICTURES.map((p) => (
+            <button key={p} type="button" className={picture === p ? "picture picture-on" : "picture"} aria-pressed={picture === p} onClick={() => setPicture(p)}>
+              {p}
+            </button>
+          ))}
+        </div>
 
         <label className="grid gap-1">
-          <span className="label">What needs doing</span>
-          <input className="field" value={title} maxLength={200} onChange={(e) => setTitle(e.target.value)} placeholder="Clean your room" autoFocus />
+          <span className="label">What needs doing?</span>
+          <input className="field" value={title} maxLength={190} onChange={(e) => setTitle(e.target.value)} placeholder="Clean your room" autoFocus />
         </label>
 
         <label className="grid gap-1">
@@ -73,25 +83,26 @@ export default function NewChore() {
         </label>
 
         <fieldset className="grid gap-2">
-          <legend className="label">Who may do it</legend>
+          <legend className="label">Who can do it?</legend>
           <div className="flex flex-wrap gap-2">
             {people.map((p) => (
-              <button key={p.npub} type="button" className={who.includes(p.npub) ? "chip chip-on" : "chip"} aria-pressed={who.includes(p.npub)} onClick={() => toggle(p.npub)}>
+              <button key={p.npub} type="button" className={who.includes(p.npub) ? "pick pick-on" : "pick"} aria-pressed={who.includes(p.npub)} onClick={() => toggle(p.npub)}>
+                <Face npub={p.npub} name={p.name} />
                 {p.name}
               </button>
             ))}
-            <Link to="/family" className="chip" title="Add someone"><UserPlus size={16} aria-hidden />Add someone</Link>
+            <Link to="/family" className="pick" title="Add someone"><UserPlus size={20} aria-hidden />Add someone</Link>
           </div>
         </fieldset>
 
         <div className="flex flex-wrap items-end gap-4">
           <label className="grid gap-1">
-            <span className="label">Due</span>
+            <span className="label">By when?</span>
             <input type="date" className="field" value={due} min={dayFrom(now, 0)} onChange={(e) => setDue(e.target.value)} />
           </label>
           <div className="flex flex-wrap gap-2" role="group" aria-label="Repeats">
             {REPEATS.map((r) => (
-              <button key={r.days} type="button" className={every === r.days ? "chip chip-on" : "chip"} aria-pressed={every === r.days} onClick={() => setEvery(r.days)}>
+              <button key={r.days} type="button" className={every === r.days ? "pick pick-on" : "pick"} aria-pressed={every === r.days} onClick={() => setEvery(r.days)}>
                 {r.label}
               </button>
             ))}
@@ -99,7 +110,7 @@ export default function NewChore() {
         </div>
 
         <fieldset className="grid gap-2">
-          <legend className="label">What each grade earns</legend>
+          <legend className="label">What does it earn?</legend>
           {rows.map((row, i) => (
             <div key={i} className="grade-row">
               <input className="field" value={row.name} maxLength={60} onChange={(e) => setRow(i, { name: e.target.value })} placeholder="Grade" aria-label="Grade name" />
@@ -121,8 +132,8 @@ export default function NewChore() {
 
         {problem && <p className="error text-right">{problem}</p>}
         <div className="flex flex-wrap justify-end gap-2">
-          <Link to="/chores" className="chip">Cancel</Link>
-          <button type="submit" className="chip chip-accent" disabled={busy}>{busy ? "Posting…" : "Post the chore"}</button>
+          <Link to="/chores" className="btn btn-quiet">Cancel</Link>
+          <button type="submit" className="btn btn-go" disabled={busy}>{busy ? "Posting…" : "Post the chore"}</button>
         </div>
       </form>
     </div>

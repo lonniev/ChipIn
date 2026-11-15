@@ -5,11 +5,11 @@ import { Link } from "react-router-dom";
 
 const STEPS = [
   { icon: ClipboardList, title: "Post", says: "A parent posts a chore, who may do it, and what each grade earns." },
-  { icon: Hand, title: "Claim", says: "A child taps “I'll do it”." },
-  { icon: Check, title: "Do it", says: "The child does the chore and taps “It's done”." },
+  { icon: Hand, title: "Claim", says: "A child taps “I'll do it!”." },
+  { icon: Check, title: "Do it", says: "The child does the chore and taps “I'm done!”." },
   { icon: ThumbsUp, title: "Grade", says: "The parent checks the work and picks a grade." },
   { icon: Zap, title: "Pay", says: "The parent pays the invoice from their own Lightning wallet." },
-  { icon: BadgeCheck, title: "Paid", says: "The child taps “I got it” when the sats arrive." },
+  { icon: BadgeCheck, title: "Paid", says: "The child taps “I got it!” when the sats arrive." },
 ];
 
 export default function Guide() {
@@ -32,7 +32,7 @@ export default function Guide() {
         <p>Everyone signs in with their own npub.</p>
         <p>Each person sets the Lightning address they are paid at, on their <Link to="/profile" className="ent">Profile</Link>.</p>
         <p>The sats go from the parent's wallet straight to the child's.</p>
-        <p>A child who disagrees with a grade may appeal once.</p>
+        <p>A child who disagrees with a grade may ask for one more look.</p>
         <p>You can post a chore to yourself to try it.</p>
       </section>
     </div>

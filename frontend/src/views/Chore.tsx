@@ -10,6 +10,7 @@ import { People, PersonLink } from "../components/Links";
 import StandingBadge from "../components/StandingBadge";
 import Waiting from "../components/Waiting";
 import { useFamily } from "../lib/FamilyContext";
+import { splitPicture } from "../lib/face";
 import { byReward } from "../lib/rubric";
 import { getTask, requestPayout, taskHistory, type Payout, type Task, type TaskEvent } from "../lib/tasks";
 import { dueText, repeatText } from "../lib/when";
@@ -44,6 +45,74 @@ function History({ taskId }: { taskId: string }) {
         </ul>
       )}
     </details>
+  );
+}
+
+/** The chore itself: its facts, the buttons, the invoice when it is owed, and its rewards. */
+export function Sheet({ task, payout, now, onChanged, onPay, paying = false, problem = "" }: {
+  task: Task; payout: Payout | null; now: number; onChanged: (t: Task) => void; onPay: () => void; paying?: boolean; problem?: string;
+}) {
+  const graded = task.assessment;
+  const { picture, rest } = splitPicture(task.title);
+  const owed = task.standing === "owed";
+  const mayPay = owed && task.your_roles.includes("purchaser");
+  const live = payout && payout.expires_at > now ? payout : null;
+
+  return (
+    <>
+      <section className="card panel grid gap-3">
+        <div className="flex flex-wrap items-start justify-between gap-2">
+          <h1 className="chore-head"><span className="chore-picture" aria-hidden>{picture || "⭐"}</span>{rest}</h1>
+          <StandingBadge standing={task.standing} />
+        </div>
+        {task.description && <p className="whitespace-pre-wrap">{task.description}</p>}
+        <dl className="facts">
+          <dt>Due</dt><dd>{dueText(task.needed_by, now)}{task.every_days > 0 && <> · <Repeat size={14} aria-hidden className="inline" /> {repeatText(task.every_days)}</>}</dd>
+          <dt>Posted by</dt><dd><PersonLink npub={task.purchaser} /></dd>
+          {task.performer
+            ? <><dt>Doing it</dt><dd><PersonLink npub={task.performer} /></dd></>
+            : <><dt>Who may do it</dt><dd><People npubs={task.audience} /></dd></>}
+          {graded && <><dt>Grade</dt><dd>{graded.grade} · <span className="num">{formatSats(graded.sats)} sats</span>{!task.final && " · waiting to be accepted"}</dd></>}
+        </dl>
+        {graded?.reasons && <p className="muted">“{graded.reasons}”</p>}
+        {graded?.appeal?.reasons && <p className="muted">Appeal: “{graded.appeal.reasons}”</p>}
+        {task.rejection?.reasons && <p className="muted">“{task.rejection.reasons}”</p>}
+        {task.standing === "paid" && graded && (
+          <p className="paid-banner"><span aria-hidden>🎉</span> Paid <span className="num">{formatSats(graded.sats)}</span> sats</p>
+        )}
+        <Actions task={task} onChanged={onChanged} onPay={onPay} />
+        {paying && <p className="muted text-right">Asking for the invoice…</p>}
+        {problem && <p className="error text-right">{problem}</p>}
+      </section>
+
+      {owed && live && (
+        <section className="card panel grid gap-2">
+          <h2 className="panel-title text-right">{mayPay ? "Pay from your wallet" : "The invoice"}</h2>
+          <InvoicePanel payout={live} now={now} />
+          {task.performer && (
+            <p className="muted text-right text-sm">
+              The sats go straight to <PersonLink npub={task.performer} />, who taps “I got it!” when they arrive.
+            </p>
+          )}
+        </section>
+      )}
+
+      <section className="card panel">
+        <h2 className="panel-title mb-1">Rewards</h2>
+        <table className="ledger">
+          <tbody>
+            {byReward(task.rubric.grades).map((g) => (
+              <tr key={g.name} className={graded?.grade === g.name ? "grade-given" : undefined}>
+                <td className="font-medium">{g.name}</td>
+                <td className="muted">{g.criteria}</td>
+                <td className="num text-right">{formatSats(g.sats)}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </section>
+
+    </>
   );
 }
 
@@ -94,69 +163,16 @@ export default function Chore() {
     );
   }
 
-  const graded = task.assessment;
-  const owed = task.standing === "owed";
-  const mayPay = owed && task.your_roles.includes("purchaser");
-  const live = payout && payout.expires_at > now ? payout : null;
-
   return (
     <div className="page grid gap-3">
       <div className="toolbar">
-        <Link to="/chores" className="chip"><ArrowLeft size={16} aria-hidden />Chores</Link>
+        <Link to="/chores" className="btn btn-quiet"><ArrowLeft size={22} aria-hidden />Chores</Link>
         <button type="button" className="icon-btn" onClick={() => void load()} disabled={loading} aria-label="Look again" title="Look again">
-          <RefreshCw size={18} aria-hidden />
+          <RefreshCw size={22} aria-hidden />
         </button>
       </div>
 
-      <section className="card panel grid gap-3">
-        <div className="flex flex-wrap items-start justify-between gap-2">
-          <h1 className="text-2xl font-semibold">{task.title}</h1>
-          <StandingBadge standing={task.standing} />
-        </div>
-        {task.description && <p className="whitespace-pre-wrap">{task.description}</p>}
-        <dl className="facts">
-          <dt>Due</dt><dd>{dueText(task.needed_by, now)}{task.every_days > 0 && <> · <Repeat size={14} aria-hidden className="inline" /> {repeatText(task.every_days)}</>}</dd>
-          <dt>Posted by</dt><dd><PersonLink npub={task.purchaser} /></dd>
-          {task.performer
-            ? <><dt>Doing it</dt><dd><PersonLink npub={task.performer} /></dd></>
-            : <><dt>Who may do it</dt><dd><People npubs={task.audience} /></dd></>}
-          {graded && <><dt>Grade</dt><dd>{graded.grade} · <span className="num">{formatSats(graded.sats)} sats</span>{!task.final && " · waiting to be accepted"}</dd></>}
-        </dl>
-        {graded?.reasons && <p className="muted">“{graded.reasons}”</p>}
-        {graded?.appeal?.reasons && <p className="muted">Appeal: “{graded.appeal.reasons}”</p>}
-        {task.rejection?.reasons && <p className="muted">“{task.rejection.reasons}”</p>}
-        <Actions task={task} onChanged={setTask} onPay={() => void pay()} />
-        {paying && <p className="muted text-right">Asking for the invoice…</p>}
-        {problem && <p className="error text-right">{problem}</p>}
-      </section>
-
-      {owed && live && (
-        <section className="card panel grid gap-2">
-          <h2 className="panel-title text-right">{mayPay ? "Pay from your wallet" : "The invoice"}</h2>
-          <InvoicePanel payout={live} now={now} />
-          {task.performer && (
-            <p className="muted text-right text-sm">
-              The sats go straight to <PersonLink npub={task.performer} />, who taps “I got it” when they arrive.
-            </p>
-          )}
-        </section>
-      )}
-
-      <section className="card panel">
-        <h2 className="panel-title mb-1">Rewards</h2>
-        <table className="ledger">
-          <tbody>
-            {byReward(task.rubric.grades).map((g) => (
-              <tr key={g.name} className={graded?.grade === g.name ? "grade-given" : undefined}>
-                <td className="font-medium">{g.name}</td>
-                <td className="muted">{g.criteria}</td>
-                <td className="num text-right">{formatSats(g.sats)}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </section>
-
+      <Sheet task={task} payout={payout} now={now} onChanged={setTask} onPay={() => void pay()} paying={paying} problem={problem} />
       {task.your_roles.some((r) => r !== "audience") && <History taskId={task.task_id} />}
     </div>
   );
