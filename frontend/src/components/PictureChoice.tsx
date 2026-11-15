@@ -12,7 +12,7 @@ export default function PictureChoice() {
       <div className="picture-sets" role="group" aria-label="Pictures that look like your family">
         {PICTURE_SETS.map((s) => (
           <button key={s.key} type="button" className={s.key === set ? "picture-set picture-set-on" : "picture-set"} aria-pressed={s.key === set} onClick={() => choose(s.key)}>
-            <img src={artFor("earn-it", s.key)} alt="" loading="lazy" width={960} height={644} />
+            <img src={artFor("earn-it", s.key)} alt="" width={960} height={644} />
             <span>{s.label}</span>
           </button>
         ))}
