@@ -15,7 +15,7 @@ export function initialOf(name: string): string {
 }
 
 /** Pictures a chore's name can start with. */
-export const CHORE_PICTURES = ["🧹", "🛏️", "🍽️", "🗑️", "🧺", "🐕", "🌱", "📚", "🚗", "🛒"];
+export const CHORE_PICTURES = ["🧹", "🛏️", "🍽️", "🗑️", "🧺", "🐕", "🌱", "🍂", "📚", "🚗", "🛒"];
 
 /** The picture a title starts with, and the rest of it. */
 export function splitPicture(title: string): { picture: string; rest: string } {

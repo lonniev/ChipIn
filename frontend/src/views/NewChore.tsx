@@ -8,6 +8,7 @@ import { choreHref, Face } from "../components/Links";
 import { useFamily } from "../lib/FamilyContext";
 import { CHORE_PICTURES } from "../lib/face";
 import { MAX_GRADES, rubricFrom, STARTER_ROWS, type GradeRow } from "../lib/rubric";
+import { SAMPLE_CHORES, type SampleChore } from "../lib/samples";
 import { postTask } from "../lib/tasks";
 import { dayFrom, endOfDay } from "../lib/when";
 
@@ -35,6 +36,13 @@ export default function NewChore() {
 
   const people = [{ npub: session.npub, name: "Me" }, ...members.filter((m) => m.npub !== session.npub)];
   const toggle = (npub: string) => setWho((list) => (list.includes(npub) ? list.filter((n) => n !== npub) : [...list, npub]));
+  function startFrom(s: SampleChore) {
+    setPicture(s.picture);
+    setTitle(s.title);
+    setDescription(s.description);
+    setEvery(s.everyDays);
+    setRows(s.rows.map((r) => ({ ...r })));
+  }
   const setRow = (i: number, change: Partial<GradeRow>) => setRows((list) => list.map((r, j) => (j === i ? { ...r, ...change } : r)));
 
   async function post() {
@@ -64,6 +72,17 @@ export default function NewChore() {
       <form className="card panel mx-auto grid max-w-2xl gap-4" onSubmit={(e) => { e.preventDefault(); void post(); }}>
         <h1 className="text-3xl font-bold">New chore</h1>
 
+        <fieldset className="grid gap-2">
+          <legend className="label">Start from one of these</legend>
+          <div className="starters">
+            {SAMPLE_CHORES.map((s) => (
+              <button key={s.title} type="button" className={title === s.title ? "pick pick-on" : "pick"} onClick={() => startFrom(s)}>
+                <span aria-hidden>{s.picture}</span>{s.title}
+              </button>
+            ))}
+          </div>
+        </fieldset>
+
         <div className="pictures" role="group" aria-label="Picture">
           {CHORE_PICTURES.map((p) => (
             <button key={p} type="button" className={picture === p ? "picture picture-on" : "picture"} aria-pressed={picture === p} onClick={() => setPicture(p)}>
@@ -74,12 +93,13 @@ export default function NewChore() {
 
         <label className="grid gap-1">
           <span className="label">What needs doing?</span>
-          <input className="field" value={title} maxLength={190} onChange={(e) => setTitle(e.target.value)} placeholder="Clean your room" autoFocus />
+          <input className="field" value={title} maxLength={190} onChange={(e) => setTitle(e.target.value)} placeholder="Sweep the kitchen floor" />
         </label>
 
         <label className="grid gap-1">
-          <span className="label">More about it</span>
-          <textarea className="field" rows={2} value={description} maxLength={4000} onChange={(e) => setDescription(e.target.value)} />
+          <span className="label">Where, when, and what “done” looks like</span>
+          <textarea className="field" rows={4} value={description} maxLength={4000} onChange={(e) => setDescription(e.target.value)}
+            placeholder={"Every evening, after supper is cleared.\nSweep under the table and along the cupboards.\nHang the broom back on its hook."} />
         </label>
 
         <fieldset className="grid gap-2">

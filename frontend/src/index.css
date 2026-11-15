@@ -303,6 +303,29 @@ table.ledger tr.grade-given td { background: color-mix(in srgb, var(--gold) 22%,
 .member-row { padding: 0.625rem 0.25rem; }
 
 /* Numbered-by-picture steps: one short line each, large enough to follow with a finger. */
-.steps { display: grid; gap: 0.5rem; font-size: 1.125rem; }
-.steps li { display: flex; align-items: center; gap: 0.75rem; }
-.steps li > span { font-size: 1.5rem; width: 2rem; text-align: center; }
+.how-steps { display: grid; gap: 0.5rem; font-size: 1.125rem; }
+.how-steps li { display: flex; align-items: center; gap: 0.75rem; }
+.how-steps li > span { font-size: 1.5rem; width: 2rem; text-align: center; }
+
+/* Sample chores and lessons: cards a parent reads and a child can follow. */
+.section-title { font-size: 1.375rem; font-weight: 700; }
+.samples, .lessons { display: grid; gap: 0.75rem; grid-template-columns: repeat(auto-fit, minmax(min(100%, 19rem), 1fr)); }
+.sample, .lesson { display: grid; gap: 0.5rem; align-content: start; }
+.sample-kind { color: var(--tb-accent); font-weight: 700; font-size: 0.9375rem; }
+.sample-title, .lesson-title { display: flex; align-items: center; gap: 0.625rem; font-size: 1.25rem; font-weight: 700; line-height: 1.25; }
+.sample-title > span, .lesson-title > span { font-size: 2rem; }
+.sample-lines { display: grid; gap: 0.25rem; }
+.sample-teaches { font-weight: 600; text-align: right; }
+.lesson p { font-size: 1.0625rem; }
+.saying { border-left: 4px solid var(--gold); padding-left: 0.75rem; font-style: italic; color: var(--tb-muted); }
+.saying cite { display: block; font-style: normal; font-weight: 600; text-align: right; }
+.words { display: grid; gap: 0.5rem; }
+.words dt { font-weight: 700; }
+.shelf { display: grid; gap: 0.75rem; }
+.shelf li { display: flex; gap: 0.75rem; align-items: flex-start; }
+.shelf-mark { color: var(--tb-accent); flex: none; margin-top: 0.2rem; }
+.orange-bible { display: flex; gap: 0.75rem; align-items: center; border-top: 1px solid var(--tb-line); padding-top: 0.75rem; }
+.orange-bible-mark { font-size: 2rem; }
+.starters { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+.starters .pick { text-align: left; }
+.hero-lines { display: grid; gap: 0.25rem; font-size: 1.125rem; }

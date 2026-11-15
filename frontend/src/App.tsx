@@ -1,6 +1,6 @@
 import { lazy, Suspense, type ReactNode } from "react";
 import { BrowserRouter, Link, Navigate, Route, Routes, useLocation } from "react-router-dom";
-import { BookOpen, HandCoins, ListChecks, Users, Wallet as WalletIcon } from "lucide-react";
+import { BookOpen, GraduationCap, HandCoins, ListChecks, Users, Wallet as WalletIcon } from "lucide-react";
 import { AppShell, SiteNav, TourProvider, Wallet, matchesPath, useAppShell, useTour } from "@tollbooth-dpyc/web/react";
 import Waiting from "./components/Waiting";
 import { FamilyProvider } from "./lib/FamilyContext";
@@ -11,6 +11,8 @@ const Chore = lazy(() => import("./views/Chore"));
 const Chores = lazy(() => import("./views/Chores"));
 const Family = lazy(() => import("./views/Family"));
 const Guide = lazy(() => import("./views/Guide"));
+const Home = lazy(() => import("./views/Home"));
+const Learn = lazy(() => import("./views/Learn"));
 const NewChore = lazy(() => import("./views/NewChore"));
 const Profile = lazy(() => import("./views/Profile"));
 
@@ -20,6 +22,7 @@ const PAGES = [
   { href: "/chores", label: "Chores", icon: <ListChecks size={18} aria-hidden /> },
   { href: "/family", label: "Family", icon: <Users size={18} aria-hidden /> },
   { href: "/wallet", label: "Wallet", icon: <WalletIcon size={18} aria-hidden /> },
+  { href: "/learn", label: "Learn", icon: <GraduationCap size={18} aria-hidden /> },
   { href: "/guide", label: "Guide", icon: <BookOpen size={18} aria-hidden /> },
 ];
 
@@ -60,7 +63,8 @@ function Nav() {
     return (
       <header className="site-bar flex flex-wrap items-center gap-2 px-4 py-2.5">
         <Brand />
-        <Link to="/guide" className="chip ml-auto">Guide</Link>
+        <Link to="/learn" className="chip ml-auto">Learn</Link>
+        <Link to="/guide" className="chip">Guide</Link>
         <Link to="/signin" className="chip chip-accent">Sign in</Link>
       </header>
     );
@@ -94,23 +98,6 @@ function Footer() {
         {" · "}Apache-2.0 · Patent Pending (US Prov. 64/045,999)
       </div>
     </footer>
-  );
-}
-
-function Home() {
-  return (
-    <div className="page py-10">
-      <div className="card grid max-w-2xl gap-4 p-6">
-        <h1 className="text-4xl font-semibold">Chores, paid in sats.</h1>
-        <p className="text-lg">Post a chore and what it earns.</p>
-        <p className="text-lg">Your child does it, and you grade it.</p>
-        <p className="text-lg">The sats go from your Lightning wallet straight to theirs.</p>
-        <div className="flex flex-wrap gap-2">
-          <Link to="/signin" className="chip chip-accent">Sign in with your npub</Link>
-          <Link to="/guide" className="chip">How it works</Link>
-        </div>
-      </div>
-    </div>
   );
 }
 
@@ -148,6 +135,7 @@ function Site() {
                 <Route path="wallet" element={<SignedIn><WalletPage /></SignedIn>} />
                 <Route path="profile" element={<SignedIn><Profile /></SignedIn>} />
                 <Route path="guide" element={<Guide />} />
+                <Route path="learn" element={<Learn />} />
                 <Route path="*" element={<Navigate to="/" replace />} />
               </Routes>
             </Suspense>

@@ -2,6 +2,8 @@
 
 import { BadgeCheck, Check, ClipboardList, Hand, ThumbsUp, Zap } from "lucide-react";
 import { Link } from "react-router-dom";
+import SampleCard from "../components/SampleCard";
+import { SAMPLE_CHORES } from "../lib/samples";
 
 const STEPS = [
   { icon: ClipboardList, title: "Post", says: "A parent posts a chore, who may do it, and what each grade earns." },
@@ -27,6 +29,11 @@ export default function Guide() {
           </li>
         ))}
       </ol>
+      <section className="grid gap-3">
+        <h2 className="section-title">What a good chore says</h2>
+        <p className="muted">Where, when, and what “done” looks like.</p>
+        <div className="samples">{SAMPLE_CHORES.map((s) => <SampleCard key={s.title} sample={s} />)}</div>
+      </section>
       <section className="card panel grid gap-2">
         <h2 className="panel-title">Good to know</h2>
         <p>Everyone signs in with their own npub.</p>
@@ -34,6 +41,7 @@ export default function Guide() {
         <p>The sats go from the parent's wallet straight to the child's.</p>
         <p>A child who disagrees with a grade may ask for one more look.</p>
         <p>You can post a chore to yourself to try it.</p>
+        <p>New to Bitcoin? <Link to="/learn" className="ent">Learn about sats</Link>.</p>
       </section>
     </div>
   );

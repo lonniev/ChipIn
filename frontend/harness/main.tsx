@@ -39,18 +39,18 @@ function chore(id: string, title: string, standing: Standing, your_roles: Role[]
 const graded = (sats: number, grade: string) => ({ grade, sats, assessor: MUM, reasons: "", at: now });
 
 const tasks: Task[] = [
-  chore("1", "🧹 Sweep the porch", "posted", ["audience"], { performer: null, needed_by: now + 2 * DAY }),
-  chore("2", "🛏️ Make your bed", "claimed", ["performer"], { every_days: 1, needed_by: now }),
+  chore("1", "🧹 Sweep the kitchen floor", "posted", ["audience"], { performer: null, needed_by: now + 2 * DAY, every_days: 1, description: "Every evening, after supper is cleared.\nSweep under the table and along the cupboards.\nTip the dustpan into the bin and hang the broom back on its hook." }),
+  chore("2", "🛏️ Make your bed before school", "claimed", ["performer"], { every_days: 1, needed_by: now }),
   chore("3", "🍽️ Empty the dishwasher", "assessed", ["performer"], { assessment: graded(500, "Good enough") }),
-  chore("4", "🐕 Walk the dog", "owed", ["performer"], { final: true, assessment: graded(1000, "Great job") }),
+  chore("4", "🐕 Walk Rex round the block", "owed", ["performer"], { final: true, assessment: graded(1000, "Great job") }),
   chore("5", "🧺 Fold the laundry", "done", ["performer"]),
-  chore("6", "🗑️ Take out the bins", "paid", ["performer"], { final: true, assessment: graded(1000, "Great job"), needed_by: now - 3 * DAY }),
+  chore("6", "🗑️ Take the bins to the kerb", "paid", ["performer"], { final: true, assessment: graded(1000, "Great job"), needed_by: now - 3 * DAY }),
   chore("7", "🌱 Water the plants", "paid", ["performer"], { final: true, assessment: graded(500, "Good enough"), needed_by: now - 5 * DAY }),
 ];
 
-const owed = chore("4", "🐕 Walk the dog", "owed", ["purchaser", "assessor"], {
+const owed = chore("4", "🐕 Walk Rex round the block", "owed", ["purchaser", "assessor"], {
   final: true, assessment: { ...graded(1000, "Great job"), reasons: "Rex came back tired and happy." },
-  description: "Twice round the park, and bring a bag.",
+  description: "After school, before supper.\nTwenty minutes, on the lead, round the block.\nTake a bag, and fill his water bowl when you are back.",
 });
 const invoice = "lnbc10u1p" + "x".repeat(180);
 const payout = { sats: 1000, invoice, lightning_uri: `lightning:${invoice}`, payment_hash: "0".repeat(64), expires_at: now + 3540, paid_at: null };
@@ -66,7 +66,7 @@ createRoot(document.getElementById("root")!).render(
     <FamilyProvider me={me}>
       <div className="page grid gap-4">
         {view === "sheet" && <Sheet task={owed} payout={payout} now={now} onChanged={() => {}} onPay={() => {}} />}
-        {view === "ask" && <Sheet task={chore("4", "🐕 Walk the dog", "owed", ["performer"], { final: true, assessment: graded(1000, "Great job") })} payout={null} now={now} onChanged={() => {}} onPay={() => {}} />}
+        {view === "ask" && <Sheet task={chore("4", "🐕 Walk Rex round the block", "owed", ["performer"], { final: true, assessment: graded(1000, "Great job") })} payout={null} now={now} onChanged={() => {}} onPay={() => {}} />}
         {view === "check" && <Sheet task={toCheck} payout={null} now={now} onChanged={() => {}} onPay={() => {}} />}
         {!view && (
           <>
