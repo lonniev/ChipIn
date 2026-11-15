@@ -11,13 +11,13 @@ import { SavingsSheet } from "./Savings";
 
 const VIEWERS: { viewer: Viewer; label: string; says: string }[] = [
   { viewer: "sam", label: "Sam, a child", says: "Sam sees chores he may take, the ones he is doing, and what he has earned." },
-  { viewer: "mum", label: "Mum, a parent", says: "Mum sees every chore, the work waiting to be checked, and what she owes." },
+  { viewer: "mom", label: "Mom, a parent", says: "Mom sees every chore, the work waiting to be checked, and what she owes." },
 ];
 
 export default function Look() {
   const { taskId, page } = useParams();
   const [asked] = useSearchParams();
-  const viewer: Viewer = asked.get("as") === "mum" ? "mum" : "sam";
+  const viewer: Viewer = asked.get("as") === "mom" ? "mom" : "sam";
   const now = Math.floor(Date.now() / 1000);
   const me = viewerNpub(viewer);
   const tasks = sampleTasks(viewer, now);

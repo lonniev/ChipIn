@@ -1,4 +1,4 @@
-/** A person's face on screen: their initial on a colour that is always theirs. */
+/** A person's face on screen: their initial on a color that is always theirs. */
 
 const HUES = [12, 38, 95, 150, 190, 215, 265, 320];
 

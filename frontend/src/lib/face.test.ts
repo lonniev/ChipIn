@@ -2,7 +2,7 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import { hueOf, initialOf, splitPicture } from "./face.ts";
 
-test("an npub keeps its colour", () => {
+test("an npub keeps its color", () => {
   assert.equal(hueOf("npub1abc"), hueOf("npub1abc"));
   assert.ok(hueOf("npub1abc") >= 0 && hueOf("npub1abc") < 360);
 });

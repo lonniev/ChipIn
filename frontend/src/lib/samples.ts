@@ -29,10 +29,10 @@ export const SAMPLE_CHORES: ReadonlyArray<SampleChore> = [
     picture: "🧹",
     title: "Sweep the kitchen floor",
     description:
-      "Every evening, after supper is cleared.\nSweep under the table and along the cupboards.\nTip the dustpan into the bin and hang the broom back on its hook.",
+      "Every evening, after supper is cleared.\nSweep under the table and along the cabinets.\nEmpty the dustpan into the trash and hang the broom back on its hook.",
     everyDays: 1,
     rows: [
-      { name: "Spotless", sats: "300", criteria: "No crumbs under the table or by the cupboards" },
+      { name: "Spotless", sats: "300", criteria: "No crumbs under the table or by the cabinets" },
       { name: "Swept", sats: "150", criteria: "Swept, with a few spots missed" },
       none,
     ],
@@ -43,7 +43,7 @@ export const SAMPLE_CHORES: ReadonlyArray<SampleChore> = [
     picture: "🛏️",
     title: "Make your bed before school",
     description:
-      "Every school morning, before breakfast.\nPull the sheet and blanket flat, and put the pillow at the top.\nPyjamas go under the pillow.",
+      "Every school morning, before breakfast.\nPull the sheet and blanket flat, and put the pillow at the top.\nPajamas go under the pillow.",
     everyDays: 1,
     rows: [
       { name: "Made", sats: "100", criteria: "Flat, pillow at the top, nothing on the floor" },
@@ -54,9 +54,9 @@ export const SAMPLE_CHORES: ReadonlyArray<SampleChore> = [
   },
   {
     picture: "🗑️",
-    title: "Take the bins to the kerb",
+    title: "Take the trash cans to the curb",
     description:
-      "Thursday evening, before dark.\nWheel both bins from the side of the house to the end of the drive, lids shut.\nBring them back on Friday after school.",
+      "Thursday evening, before dark.\nWheel both cans from the side of the house to the end of the driveway, lids shut.\nBring them back on Friday after school.",
     everyDays: 7,
     rows: [
       { name: "Out and back", sats: "500", criteria: "Out on Thursday, back on Friday" },
@@ -68,9 +68,9 @@ export const SAMPLE_CHORES: ReadonlyArray<SampleChore> = [
   },
   {
     picture: "🐕",
-    title: "Walk Rex round the block",
+    title: "Walk Rex around the block",
     description:
-      "After school, before supper.\nTwenty minutes, on the lead, round the block.\nTake a bag, and fill his water bowl when you are back.",
+      "After school, before supper.\nTwenty minutes, on the leash, around the block.\nTake a bag, and fill his water bowl when you are back.",
     everyDays: 1,
     rows: [
       { name: "Great walk", sats: "400", criteria: "Twenty minutes, bag used, water bowl filled" },
@@ -84,10 +84,10 @@ export const SAMPLE_CHORES: ReadonlyArray<SampleChore> = [
     picture: "🌱",
     title: "Weed the front flower bed",
     description:
-      "This Saturday morning, before lunch.\nThe bed by the front steps, from the path to the fence.\nPull each weed out by the root, and put them in the green bin.",
+      "This Saturday morning, before lunch.\nThe bed by the front steps, from the walk to the fence.\nPull each weed out by the root, and put them in the yard waste bin.",
     everyDays: 0,
     rows: [
-      { name: "Great job", sats: "2000", criteria: "No weeds left, roots and all, and the path swept" },
+      { name: "Great job", sats: "2000", criteria: "No weeds left, roots and all, and the walk swept" },
       { name: "Good enough", sats: "1000", criteria: "Most weeds gone" },
       none,
     ],
@@ -112,7 +112,7 @@ export const SAMPLE_CHORES: ReadonlyArray<SampleChore> = [
     picture: "🍂",
     title: "Rake the leaves for Mrs. Miller next door",
     description:
-      "Saturday afternoon, with her say-so first.\nRake her front lawn into one pile by the kerb.\nPut the rake back in our shed.",
+      "Saturday afternoon, with her say-so first.\nRake her front lawn into one pile by the curb.\nPut the rake back in our shed.",
     everyDays: 0,
     rows: [
       { name: "Lawn cleared", sats: "1500", criteria: "The whole front lawn, in one pile" },
@@ -120,6 +120,6 @@ export const SAMPLE_CHORES: ReadonlyArray<SampleChore> = [
       none,
     ],
     kind: "A kindness",
-    teaches: "Work is a way to serve a neighbour.",
+    teaches: "Work is a way to serve a neighbor.",
   },
 ];

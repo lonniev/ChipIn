@@ -2,17 +2,17 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import { byDay, dayKey, grouped, kindOf, matches, monthWeeks, personOf, shiftMonth, type Browsable } from "./browse.ts";
 
-const MUM = "npub1mum", SAM = "npub1sam", ADA = "npub1ada";
-const names: Record<string, string> = { [MUM]: "Mum", [SAM]: "Sam", [ADA]: "Ada" };
+const MOM = "npub1mum", SAM = "npub1sam", ADA = "npub1ada";
+const names: Record<string, string> = { [MOM]: "Mom", [SAM]: "Sam", [ADA]: "Ada" };
 const name = (n: string) => names[n] ?? n;
 const at = (y: number, m: number, d: number) => Math.floor(new Date(y, m - 1, d, 23, 59, 59).getTime() / 1000);
 
 const chore = (id: string, title: string, more: Partial<Browsable> = {}): Browsable => ({
-  task_id: id, title, description: "", purchaser: MUM, performer: SAM, standing: "claimed", needed_by: at(2026, 11, 20), ...more,
+  task_id: id, title, description: "", purchaser: MOM, performer: SAM, standing: "claimed", needed_by: at(2026, 11, 20), ...more,
 });
 
 const sweep = chore("1", "🧹 Sweep the kitchen floor", { description: "After supper.", needed_by: at(2026, 11, 18) });
-const bins = chore("2", "🗑️ Take the bins to the kerb", { performer: ADA, needed_by: at(2026, 11, 19), standing: "owed" });
+const bins = chore("2", "🗑️ Take the trash cans to the curb", { performer: ADA, needed_by: at(2026, 11, 19), standing: "owed" });
 const weed = chore("3", "🌱 Weed the front flower bed", { performer: null, standing: "posted", needed_by: at(2026, 11, 21) });
 const porch = chore("4", "🧹 Sweep the porch", { performer: ADA, needed_by: at(2026, 11, 17) });
 const all = [sweep, bins, weed, porch];
@@ -32,7 +32,7 @@ test("a chore's kind is its picture, and its person is whoever is doing it or el
   assert.equal(kindOf(sweep), "🧹");
   assert.equal(kindOf(chore("9", "Tidy up")), "⭐");
   assert.equal(personOf(sweep), SAM);
-  assert.equal(personOf(weed), MUM);
+  assert.equal(personOf(weed), MOM);
 });
 
 test("by due is one section, soonest first", () => {
@@ -44,7 +44,7 @@ test("by due is one section, soonest first", () => {
 
 test("by person is a section per person in name order, soonest first inside", () => {
   const g = grouped(all, "person", name);
-  assert.deepEqual(g.map((s) => name(s.key)), ["Ada", "Mum", "Sam"]);
+  assert.deepEqual(g.map((s) => name(s.key)), ["Ada", "Mom", "Sam"]);
   assert.deepEqual(g[0].rows.map((t) => t.task_id), ["4", "2"]);
 });
 

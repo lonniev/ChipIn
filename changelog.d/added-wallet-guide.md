@@ -1,0 +1,1 @@
+- The Guide adds "Getting a wallet": who needs one, how a parent sets one up for a child, and the wallet chooser.

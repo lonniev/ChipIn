@@ -99,7 +99,7 @@ export default function NewChore() {
         <label className="grid gap-1">
           <span className="label">Where, when, and what “done” looks like</span>
           <textarea className="field" rows={4} value={description} maxLength={4000} onChange={(e) => setDescription(e.target.value)}
-            placeholder={"Every evening, after supper is cleared.\nSweep under the table and along the cupboards.\nHang the broom back on its hook."} />
+            placeholder={"Every evening, after supper is cleared.\nSweep under the table and along the cabinets.\nHang the broom back on its hook."} />
         </label>
 
         <fieldset className="grid gap-2">
