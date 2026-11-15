@@ -1,0 +1,2 @@
+- The chore page now offers "Say where your sats go" when someone has no Lightning address yet, in place of the Operator's instruction for agents.
+- A long refusal no longer pushes the chore page wider than the phone.
