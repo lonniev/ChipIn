@@ -59,13 +59,14 @@ const toCheck = chore("5", "🧺 Fold the laundry", "done", ["purchaser", "asses
 const asked = new URLSearchParams(location.search);
 const view = asked.get("view");
 document.documentElement.dataset.theme = asked.get("theme") ?? "light";
-const me = view ? MUM : SAM;
+const me = view && view !== "ask" ? MUM : SAM;
 
 createRoot(document.getElementById("root")!).render(
   <MemoryRouter>
     <FamilyProvider me={me}>
       <div className="page grid gap-4">
         {view === "sheet" && <Sheet task={owed} payout={payout} now={now} onChanged={() => {}} onPay={() => {}} />}
+        {view === "ask" && <Sheet task={chore("4", "🐕 Walk the dog", "owed", ["performer"], { final: true, assessment: graded(1000, "Great job") })} payout={null} now={now} onChanged={() => {}} onPay={() => {}} />}
         {view === "check" && <Sheet task={toCheck} payout={null} now={now} onChanged={() => {}} onPay={() => {}} />}
         {!view && (
           <>

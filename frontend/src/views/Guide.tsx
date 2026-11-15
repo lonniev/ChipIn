@@ -30,7 +30,7 @@ export default function Guide() {
       <section className="card panel grid gap-2">
         <h2 className="panel-title">Good to know</h2>
         <p>Everyone signs in with their own npub.</p>
-        <p>Each person sets the Lightning address they are paid at, on their <Link to="/profile" className="ent">Profile</Link>.</p>
+        <p>Any Lightning wallet works. When a chore is owed, the person who did it asks their wallet for the sats and pastes the request in. A Lightning address on their <Link to="/profile" className="ent">Profile</Link> skips that step.</p>
         <p>The sats go from the parent's wallet straight to the child's.</p>
         <p>A child who disagrees with a grade may ask for one more look.</p>
         <p>You can post a chore to yourself to try it.</p>

@@ -6,12 +6,14 @@ import { ArrowLeft, RefreshCw, Repeat } from "lucide-react";
 import { formatSats } from "@tollbooth-dpyc/web";
 import Actions from "../components/Actions";
 import InvoicePanel from "../components/InvoicePanel";
+import RequestPanel from "../components/RequestPanel";
 import { People, PersonLink } from "../components/Links";
 import StandingBadge from "../components/StandingBadge";
 import Waiting from "../components/Waiting";
 import { useFamily } from "../lib/FamilyContext";
 import { splitPicture } from "../lib/face";
 import { byReward } from "../lib/rubric";
+import { waitsOnTheirRequest } from "../lib/problems";
 import { getTask, requestPayout, taskHistory, type Payout, type Task, type TaskEvent } from "../lib/tasks";
 import { dueText, repeatText } from "../lib/when";
 
@@ -49,14 +51,17 @@ function History({ taskId }: { taskId: string }) {
 }
 
 /** The chore itself: its facts, the buttons, the invoice when it is owed, and its rewards. */
-export function Sheet({ task, payout, now, onChanged, onPay, paying = false, problem = "" }: {
-  task: Task; payout: Payout | null; now: number; onChanged: (t: Task) => void; onPay: () => void; paying?: boolean; problem?: string;
+export function Sheet({ task, payout, now, onChanged, onPay, onRequested = () => {}, paying = false, problem = "" }: {
+  task: Task; payout: Payout | null; now: number; onChanged: (t: Task) => void; onPay: () => void;
+  onRequested?: (p: Payout) => void; paying?: boolean; problem?: string;
 }) {
   const graded = task.assessment;
   const { picture, rest } = splitPicture(task.title);
   const owed = task.standing === "owed";
   const mayPay = owed && task.your_roles.includes("purchaser");
   const live = payout && payout.expires_at > now ? payout : null;
+  const mayAsk = owed && !live && task.your_roles.includes("performer") && !!graded;
+  const waiting = waitsOnTheirRequest(problem);
 
   return (
     <>
@@ -82,8 +87,18 @@ export function Sheet({ task, payout, now, onChanged, onPay, paying = false, pro
         )}
         <Actions task={task} onChanged={onChanged} onPay={onPay} />
         {paying && <p className="muted text-right">Asking for the invoice…</p>}
-        {problem && <p className="error text-right">{problem}</p>}
+        {waiting && task.performer && !mayAsk && (
+          <p className="muted text-right"><span aria-hidden>⏳</span> <PersonLink npub={task.performer} /> asks for their sats first.</p>
+        )}
+        {problem && !waiting && <p className="error text-right">{problem}</p>}
       </section>
+
+      {mayAsk && graded && (
+        <section className="card panel grid gap-2">
+          <h2 className="panel-title">Get your sats</h2>
+          <RequestPanel taskId={task.task_id} sats={graded.sats} onTaken={onRequested} />
+        </section>
+      )}
 
       {owed && live && (
         <section className="card panel grid gap-2">
@@ -172,7 +187,7 @@ export default function Chore() {
         </button>
       </div>
 
-      <Sheet task={task} payout={payout} now={now} onChanged={setTask} onPay={() => void pay()} paying={paying} problem={problem} />
+      <Sheet task={task} payout={payout} now={now} onChanged={setTask} onPay={() => void pay()} onRequested={setPayout} paying={paying} problem={problem} />
       {task.your_roles.some((r) => r !== "audience") && <History taskId={task.task_id} />}
     </div>
   );
