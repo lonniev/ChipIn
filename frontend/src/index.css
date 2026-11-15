@@ -301,3 +301,8 @@ table.ledger tr.grade-given td { background: color-mix(in srgb, var(--gold) 22%,
 }
 .pick-on { border-color: var(--tb-accent); background: color-mix(in srgb, var(--tb-accent) 14%, var(--tb-surface)); }
 .member-row { padding: 0.625rem 0.25rem; }
+
+/* Numbered-by-picture steps: one short line each, large enough to follow with a finger. */
+.steps { display: grid; gap: 0.5rem; font-size: 1.125rem; }
+.steps li { display: flex; align-items: center; gap: 0.75rem; }
+.steps li > span { font-size: 1.5rem; width: 2rem; text-align: center; }

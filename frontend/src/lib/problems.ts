@@ -2,7 +2,15 @@
  * Refusals the Operator words for an agent, which ChipIn says its own way.
  */
 
-/** The Operator will not let someone take a chore until it knows where to pay them. */
-export function needsPayoutAddress(message: string): boolean {
+/** Nothing can be paid yet: the person who did the chore has to ask for their sats first. */
+export function waitsOnTheirRequest(message: string): boolean {
   return /payout_address/.test(message);
+}
+
+/**
+ * What a wallet copies when you ask to receive: a Lightning invoice, bare or
+ * behind `lightning:`. Task Queue does the real checking.
+ */
+export function looksLikeInvoice(text: string): boolean {
+  return /^(lightning:)?ln(bc|tb|bcrt)[0-9a-z]+$/i.test(text.trim());
 }

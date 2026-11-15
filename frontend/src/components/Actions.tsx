@@ -5,11 +5,9 @@
  */
 
 import { useState } from "react";
-import { Link } from "react-router-dom";
-import { Check, Hand, MessageCircleQuestion, ThumbsUp, Undo2, Wallet, X, Zap } from "lucide-react";
+import { Check, Hand, MessageCircleQuestion, ThumbsUp, Undo2, X, Zap } from "lucide-react";
 import { formatSats } from "@tollbooth-dpyc/web";
 import { movesFor, type Move } from "../lib/moves";
-import { needsPayoutAddress } from "../lib/problems";
 import { byReward } from "../lib/rubric";
 import { appeal, assess, decideAppeal, isPlain, move, reject, type Task } from "../lib/tasks";
 
@@ -132,11 +130,7 @@ export default function Actions({ task, onChanged, onPay, quick = false }: {
           </div>
         </div>
       )}
-      {problem && needsPayoutAddress(problem) ? (
-        <Link to="/profile" className="btn btn-money"><Wallet size={22} aria-hidden />Say where your sats go</Link>
-      ) : (
-        problem && <p className="error text-right">{problem}</p>
-      )}
+      {problem && <p className="error text-right">{problem}</p>}
     </div>
   );
 }

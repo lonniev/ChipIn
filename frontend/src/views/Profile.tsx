@@ -65,7 +65,7 @@ function PayoutAddress() {
   return (
     <section className="card panel grid gap-2" {...tourTarget("account.payout")}>
       <h2 className="panel-title">Where you get paid</h2>
-      <p className="muted text-sm">Your Lightning address. Your wallet app shows it, and it looks like an email address.</p>
+      <p className="muted text-sm">If your wallet gives you a Lightning address, put it here and your sats arrive with no extra step. It looks like an email address. You can skip this.</p>
       <form className="flex flex-wrap items-center justify-end gap-2" onSubmit={(e) => { e.preventDefault(); void save(); }}>
         <input
           className="field flex-1" value={address} onChange={(e) => setAddress(e.target.value)}

@@ -114,3 +114,7 @@ export const appeal = async (taskId: string, reasons: string) =>
 
 export const requestPayout = async (taskId: string) =>
   (await ask<{ payout: Payout }>("request_payout", { task_id: taskId })).payout;
+
+/** The performer's own request for the sats, made in their wallet. */
+export const handInInvoice = async (taskId: string, invoice: string) =>
+  (await ask<{ payout: Payout }>("request_payout", { task_id: taskId, invoice })).payout;
