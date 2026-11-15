@@ -1,14 +1,14 @@
 /** Bitcoin for a beginner: what sats are, how they move, and what earning them is for. */
 
-import { BookOpen, ExternalLink } from "lucide-react";
+import { BookOpen, ChevronRight, ExternalLink } from "lucide-react";
 import { Link } from "react-router-dom";
 import {
-  BOOKSHELF_HREF, CHARACTER_LESSONS, KEEP_LEARNING, MONEY_LESSONS, ORANGE_BIBLE_HREF, WORDS, type Lesson,
+  bookHref, BOOKSHELF_HREF, CHARACTER_LESSONS, MONEY_LESSONS, ORANGE_BIBLE_HREF, SHELVES, WORDS, type Lesson,
 } from "../lib/lessons";
 
 function LessonCard({ lesson }: { lesson: Lesson }) {
   return (
-    <article className="card panel lesson">
+    <Link to={`/learn/${lesson.slug}`} className="card panel lesson lesson-link">
       <h3 className="lesson-title"><span aria-hidden>{lesson.picture}</span>{lesson.title}</h3>
       {lesson.lines.map((line) => <p key={line}>{line}</p>)}
       {lesson.saying && (
@@ -17,7 +17,8 @@ function LessonCard({ lesson }: { lesson: Lesson }) {
           <cite>{lesson.saying.from}</cite>
         </blockquote>
       )}
-    </article>
+      <span className="lesson-more">More<ChevronRight size={20} aria-hidden /></span>
+    </Link>
   );
 }
 
@@ -48,18 +49,23 @@ export default function Learn() {
       <section className="card panel grid gap-3">
         <h2 className="panel-title">Keep learning</h2>
         <p className="muted">For parents, and for children ready for more.</p>
-        <ul className="shelf">
-          {KEEP_LEARNING.map((k) => (
-            <li key={k.name}>
-              <BookOpen size={22} aria-hidden className="shelf-mark" />
-              <div>
-                <a href={k.href} {...out} className="ent font-semibold">{k.name}</a>
-                <span className="muted"> · {k.by}</span>
-                <p>{k.says}</p>
-              </div>
-            </li>
-          ))}
-        </ul>
+        {SHELVES.map((shelf) => (
+          <div key={shelf.title} className="grid gap-2">
+            <h3 className="shelf-title">{shelf.title}</h3>
+            <ul className="shelf">
+              {shelf.books.map((k) => (
+                <li key={k.handle}>
+                  <BookOpen size={22} aria-hidden className="shelf-mark" />
+                  <div>
+                    <a href={bookHref(k)} {...out} className="ent font-semibold">{k.name}</a>
+                    <span className="muted"> · {k.by}</span>
+                    <p>{k.says}</p>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
         <div className="flex flex-wrap gap-2">
           <a href={BOOKSHELF_HREF} {...out} className="btn btn-quiet"><BookOpen size={22} aria-hidden />More books at Good Brew<ExternalLink size={16} aria-hidden /></a>
         </div>

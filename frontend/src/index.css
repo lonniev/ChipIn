@@ -397,3 +397,31 @@ table.ledger tr.grade-given td { background: color-mix(in srgb, var(--gold) 22%,
 }
 /* Room at the foot of the page, so the piglet covers no button. */
 .page:has(.piglet-corner) { padding-bottom: 7.5rem; }
+
+/* The farm behind every page: fixed, and washed so words stay easy to read. */
+.backdrop {
+  position: fixed; inset: 0; z-index: -1; background-size: cover; background-position: center bottom;
+}
+.backdrop::after { content: ""; position: absolute; inset: 0; background: color-mix(in srgb, var(--page) 52%, transparent); }
+.site-bar { background: color-mix(in srgb, var(--tb-surface) 94%, transparent); }
+
+/* A lesson card is a link into the longer telling. */
+.lesson-link { color: inherit; text-decoration: none; }
+.lesson-link:hover, .lesson-link:focus-visible { border-color: var(--tb-accent); }
+.lesson-more { display: inline-flex; align-items: center; justify-content: flex-end; gap: 0.125rem; font-weight: 700; color: var(--tb-accent); }
+.lesson-head { display: flex; align-items: center; gap: 0.75rem; font-size: 1.875rem; font-weight: 800; line-height: 1.2; }
+.lesson-head > span { font-size: 2.75rem; }
+.lesson-long p { font-size: 1.125rem; }
+.lesson-lead { font-weight: 600; }
+.shelf-title { font-weight: 700; color: var(--tb-accent); }
+
+/* Sats over time. */
+.growth { width: 100%; height: auto; }
+.growth-axis { stroke: var(--tb-line); stroke-width: 1.5; }
+.growth-today { stroke: var(--tb-line); stroke-width: 1.5; stroke-dasharray: 3 4; }
+.growth-earned { fill: none; stroke: var(--tb-accent); stroke-width: 3.5; stroke-linejoin: round; stroke-linecap: round; }
+.growth-ahead { fill: none; stroke: var(--gold); stroke-width: 3.5; stroke-dasharray: 7 6; stroke-linecap: round; }
+.growth-dot { fill: var(--tb-accent); }
+.growth-dot-ahead { fill: var(--gold); }
+.growth-label { font-size: 11px; fill: var(--tb-muted); }
+.growth-value { font-size: 13px; font-weight: 700; fill: var(--tb-ink); font-variant-numeric: tabular-nums; }

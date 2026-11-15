@@ -1,6 +1,6 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { BITCOIN_EVER, CHARACTER_LESSONS, KEEP_LEARNING, MONEY_LESSONS, SATS_PER_BITCOIN, WORDS } from "./lessons.ts";
+import { BITCOIN_EVER, bookHref, CHARACTER_LESSONS, lessonAt, LESSONS, MONEY_LESSONS, SATS_PER_BITCOIN, SHELVES, WORDS } from "./lessons.ts";
 import { CHIPIN_QUOTES } from "./quotes.ts";
 
 const lessons = [...MONEY_LESSONS, ...CHARACTER_LESSONS];
@@ -32,8 +32,24 @@ test("every word explained is explained once, briefly", () => {
   for (const w of WORDS) assert.ok(w.means.length <= 100, w.word);
 });
 
-test("every place to keep learning is an https link", () => {
-  for (const k of KEEP_LEARNING) assert.match(k.href, /^https:\/\//, k.name);
+test("every book links to its page at Good Brew, and no book is shelved twice", () => {
+  const books = SHELVES.flatMap((s) => s.books);
+  assert.equal(new Set(books.map((b) => b.handle)).size, books.length);
+  for (const b of books) assert.match(bookHref(b), /^https:\/\/cafe\.tollbooth-dpyc\.com\/products\/[a-z0-9-]+$/, b.name);
+  assert.ok(SHELVES.some((s) => /farm/i.test(s.title)));
+});
+
+test("every lesson opens into a longer telling at its own address", () => {
+  assert.equal(new Set(LESSONS.map((l) => l.slug)).size, LESSONS.length);
+  for (const l of LESSONS) {
+    assert.match(l.slug, /^[a-z0-9-]+$/);
+    assert.equal(lessonAt(l.slug), l);
+    assert.ok(l.more.length >= 5, l.title);
+    for (const line of l.more) assert.match(line, /[.!]$/, `${l.title}: "${line}"`);
+    assert.match(l.ask, /\?$/, l.title);
+    assert.ok(l.tryThis.length > 0, l.title);
+  }
+  assert.equal(lessonAt("no-such-lesson"), undefined);
 });
 
 test("the quotations are distinct and each names where it is from", () => {

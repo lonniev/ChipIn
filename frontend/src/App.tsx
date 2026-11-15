@@ -1,6 +1,7 @@
 import { lazy, Suspense, type ReactNode } from "react";
 import { BrowserRouter, Link, Navigate, Route, Routes, useLocation } from "react-router-dom";
-import { BookOpen, GraduationCap, HandCoins, ListChecks, Users, Wallet as WalletIcon } from "lucide-react";
+import { BookOpen, GraduationCap, HandCoins, ListChecks, PiggyBank, Users, Wallet as WalletIcon } from "lucide-react";
+import farm from "./assets/farm.webp";
 import { AppShell, SiteNav, TourProvider, Wallet, matchesPath, useAppShell, useTour } from "@tollbooth-dpyc/web/react";
 import Waiting from "./components/Waiting";
 import { FamilyProvider } from "./lib/FamilyContext";
@@ -13,15 +14,18 @@ const Family = lazy(() => import("./views/Family"));
 const Guide = lazy(() => import("./views/Guide"));
 const Home = lazy(() => import("./views/Home"));
 const Learn = lazy(() => import("./views/Learn"));
+const LessonPage = lazy(() => import("./views/LessonPage"));
 const NewChore = lazy(() => import("./views/NewChore"));
 const Profile = lazy(() => import("./views/Profile"));
+const Savings = lazy(() => import("./views/Savings"));
 
 const WELCOME = "Chores for the household, paid in sats.";
 
 const PAGES = [
   { href: "/chores", label: "Chores", icon: <ListChecks size={18} aria-hidden /> },
+  { href: "/savings", label: "Savings", icon: <PiggyBank size={18} aria-hidden /> },
   { href: "/family", label: "Family", icon: <Users size={18} aria-hidden /> },
-  { href: "/wallet", label: "Wallet", icon: <WalletIcon size={18} aria-hidden /> },
+  { href: "/wallet", label: "Tollbooth wallet", icon: <WalletIcon size={18} aria-hidden /> },
   { href: "/learn", label: "Learn", icon: <GraduationCap size={18} aria-hidden /> },
   { href: "/guide", label: "Guide", icon: <BookOpen size={18} aria-hidden /> },
 ];
@@ -113,7 +117,17 @@ function SignIn({ gate }: { gate: ReactNode }) {
 
 function WalletPage() {
   useTour("wallet");
-  return <div className="page"><Wallet /></div>;
+  return (
+    <div className="page grid gap-3">
+      <section className="card panel grid gap-1">
+        <h1 className="text-2xl font-bold">Tollbooth DPYC™ wallet</h1>
+        <p>This wallet holds api_sats, which pay for using ChipIn.</p>
+        <p>A parent tops it up here.</p>
+        <p>The sats you earn from chores go to your own Lightning wallet; see <Link to="/savings" className="ent">Savings</Link>.</p>
+      </section>
+      <Wallet />
+    </div>
+  );
 }
 
 function Site() {
@@ -121,6 +135,7 @@ function Site() {
   return (
     <BrowserRouter>
       <TourProvider tours={TOURS}>
+        <div className="backdrop" style={{ backgroundImage: `url(${farm})` }} aria-hidden />
         <Nav />
         <main className="flex-1">
           <FamilyProvider me={session.signedIn ? session.npub : ""}>
@@ -136,6 +151,8 @@ function Site() {
                 <Route path="profile" element={<SignedIn><Profile /></SignedIn>} />
                 <Route path="guide" element={<Guide />} />
                 <Route path="learn" element={<Learn />} />
+                <Route path="learn/:slug" element={<LessonPage />} />
+                <Route path="savings" element={<SignedIn><Savings /></SignedIn>} />
                 <Route path="*" element={<Navigate to="/" replace />} />
               </Routes>
             </Suspense>
