@@ -1,5 +1,6 @@
 /** The names this device gives the family's npubs, and your own npub to hand out. */
 
+import PictureChoice from "../components/PictureChoice";
 import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { Check, Copy, Trash2, UserPlus } from "lucide-react";
@@ -82,6 +83,7 @@ export default function Family() {
         {problem && <p className="error text-right">{problem}</p>}
         <p className="muted text-sm">Names stay on this device.</p>
       </section>
+      <PictureChoice />
     </div>
   );
 }
