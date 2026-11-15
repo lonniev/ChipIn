@@ -1,0 +1,1 @@
+- Each Learn topic has its own painting, on its card and at the head of its page.

@@ -429,3 +429,6 @@ table.ledger tr.grade-given td { background: color-mix(in srgb, var(--gold) 22%,
 .points { display: grid; gap: 0.625rem; }
 .points dt { font-weight: 700; font-size: 1.125rem; }
 .points dd { font-size: 1.0625rem; }
+
+/* The painting at the head of a lesson. */
+.lesson-art { width: 100%; height: auto; aspect-ratio: 960 / 644; object-fit: cover; border-radius: 0.75rem; }

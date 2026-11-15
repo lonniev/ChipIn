@@ -1,3 +1,4 @@
+import { existsSync } from "node:fs";
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { BITCOIN_EVER, bookHref, CHARACTER_LESSONS, lessonAt, LESSONS, MONEY_LESSONS, USE_LESSONS, VIRTUES_LESSON, SATS_PER_BITCOIN, SHELVES, WORDS } from "./lessons.ts";
@@ -78,4 +79,8 @@ test("there are seven virtues: three theological and four cardinal", () => {
   const points = VIRTUES_LESSON.points ?? [];
   assert.deepEqual(points.filter((p) => p.group === "Theological").map((p) => p.name), ["Faith", "Hope", "Charity"]);
   assert.deepEqual(points.filter((p) => p.group === "Cardinal").map((p) => p.name), ["Prudence", "Justice", "Fortitude", "Temperance"]);
+});
+
+test("every lesson has its painting", () => {
+  for (const l of LESSONS) assert.ok(existsSync(new URL(`../assets/lessons/${l.slug}.webp`, import.meta.url)), l.slug);
 });

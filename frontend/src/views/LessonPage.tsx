@@ -2,6 +2,7 @@
 
 import { ArrowLeft, ArrowRight, ExternalLink } from "lucide-react";
 import { Link, Navigate, useParams } from "react-router-dom";
+import { artFor } from "../lib/lessonArt";
 import { lessonAt, LESSONS } from "../lib/lessons";
 
 export default function LessonPage() {
@@ -16,6 +17,7 @@ export default function LessonPage() {
         <Link to="/learn" className="btn btn-quiet"><ArrowLeft size={22} aria-hidden />Learn</Link>
       </div>
       <article className="card panel lesson lesson-long">
+        {artFor(lesson.slug) && <img src={artFor(lesson.slug)} alt="" className="lesson-art" width={960} height={644} />}
         <h1 className="lesson-head"><span aria-hidden>{lesson.picture}</span>{lesson.title}</h1>
         {lesson.lines.map((line) => <p key={line} className="lesson-lead">{line}</p>)}
         {lesson.more.map((line) => <p key={line}>{line}</p>)}

@@ -2,6 +2,7 @@
 
 import { BookOpen, ChevronRight, ExternalLink } from "lucide-react";
 import { Link } from "react-router-dom";
+import { artFor } from "../lib/lessonArt";
 import {
   bookHref, BOOKSHELF_HREF, CHARACTER_LESSONS, MONEY_LESSONS, ORANGE_BIBLE_HREF, SHELVES, USE_LESSONS, VIRTUES_LESSON, WORDS, type Lesson,
 } from "../lib/lessons";
@@ -9,6 +10,7 @@ import {
 function LessonCard({ lesson }: { lesson: Lesson }) {
   return (
     <Link to={`/learn/${lesson.slug}`} className="card panel lesson lesson-link">
+      {artFor(lesson.slug) && <img src={artFor(lesson.slug)} alt="" className="lesson-art" loading="lazy" width={960} height={644} />}
       <h3 className="lesson-title"><span aria-hidden>{lesson.picture}</span>{lesson.title}</h3>
       {lesson.lines.map((line) => <p key={line}>{line}</p>)}
       {lesson.saying && (
