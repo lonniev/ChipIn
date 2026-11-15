@@ -42,7 +42,7 @@ export default function RequestPanel({ taskId, sats, onTaken }: { taskId: string
 
   return (
     <div className="grid gap-3">
-      <ol className="steps">
+      <ol className="how-steps">
         <li><span aria-hidden>📱</span>Open your wallet.</li>
         <li><span aria-hidden>⬇️</span>Tap Receive.</li>
         <li><span aria-hidden>🪙</span>Ask for <strong className="num">{formatSats(sats)}</strong> sats.</li>

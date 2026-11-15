@@ -1,0 +1,1 @@
+- The Guide's six steps are laid out in columns again.
