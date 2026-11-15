@@ -211,7 +211,7 @@ table.ledger tr.grade-given td { background: color-mix(in srgb, var(--gold) 22%,
 
 /* ── Big, friendly and hard to miss: ChipIn's people are young. ───────────── */
 
-/* A button a thumb can find: tall, wide, and apart from its neighbours. */
+/* A button a thumb can find: tall, wide, and apart from its neighbors. */
 .btn {
   display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem;
   min-height: 3.25rem; padding: 0.625rem 1.375rem; border-radius: 1.125rem;
@@ -241,7 +241,7 @@ table.ledger tr.grade-given td { background: color-mix(in srgb, var(--gold) 22%,
 .label { font-size: 1.0625rem; color: var(--tb-ink); }
 .lane-title { font-size: 1.25rem; font-weight: 700; }
 
-/* A person: a face in their own colour, then their name. */
+/* A person: a face in their own color, then their name. */
 .person { display: inline-flex; align-items: center; gap: 0.5rem; }
 .people { display: inline-flex; flex-wrap: wrap; justify-content: flex-end; gap: 0.5rem 0.875rem; }
 .face {

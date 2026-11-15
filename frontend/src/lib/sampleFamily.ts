@@ -8,14 +8,14 @@ import { SAMPLE_CHORES, type SampleChore } from "./samples.ts";
 import type { Payout, Task } from "./tasks.ts";
 
 const sampleId = (c: string) => "npub1" + c.repeat(58);
-export const MUM = sampleId("q");
+export const MOM = sampleId("q");
 export const SAM = sampleId("p");
 export const ADA = sampleId("z");
 
-export const SAMPLE_MEMBERS = [{ npub: MUM, name: "Mum" }, { npub: SAM, name: "Sam" }, { npub: ADA, name: "Ada" }];
+export const SAMPLE_MEMBERS = [{ npub: MOM, name: "Mom" }, { npub: SAM, name: "Sam" }, { npub: ADA, name: "Ada" }];
 
-export type Viewer = "sam" | "mum";
-export const viewerNpub = (viewer: Viewer) => (viewer === "mum" ? MUM : SAM);
+export type Viewer = "sam" | "mom";
+export const viewerNpub = (viewer: Viewer) => (viewer === "mom" ? MOM : SAM);
 
 const DAY = 86_400;
 
@@ -35,7 +35,7 @@ const WEEK: { sample: number; standing: Standing; by: string | null; dueIn: numb
 ];
 
 function rolesOf(viewer: Viewer, performer: string | null): Role[] {
-  if (viewer === "mum") return ["purchaser", "assessor", "tie_breaker"];
+  if (viewer === "mom") return ["purchaser", "assessor", "tie_breaker"];
   if (performer === SAM) return ["performer"];
   return performer === null ? ["audience"] : [];
 }
@@ -55,18 +55,18 @@ export function sampleTasks(viewer: Viewer, now: number): Task[] {
       title: `${sample.picture} ${sample.title}`,
       description: sample.description,
       rubric,
-      purchaser: MUM,
+      purchaser: MOM,
       performer: w.by,
       audience: [SAM, ADA],
-      assessors: [MUM],
-      tie_breaker: MUM,
+      assessors: [MOM],
+      tie_breaker: MOM,
       standing: w.standing,
       final: w.final ?? false,
       your_roles: rolesOf(viewer, w.by),
       needed_by: now + w.dueIn * DAY,
       every_days: sample.everyDays,
       assessment: graded
-        ? { grade: graded.name, sats: graded.sats, assessor: MUM, reasons: "", at: now - (w.paidAgo ?? 0) * DAY }
+        ? { grade: graded.name, sats: graded.sats, assessor: MOM, reasons: "", at: now - (w.paidAgo ?? 0) * DAY }
         : null,
     };
   }).filter((t) => t.your_roles.length > 0);

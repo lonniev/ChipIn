@@ -3,10 +3,10 @@
  * with nothing sent to Task Queue. The family is the one visitors see under
  * Look around (`src/lib/sampleFamily.ts`).
  *
- *   (none)          Sam's board        ?view=mum       Mum's board
- *   ?view=sheet     Mum's owed chore, with its invoice
+ *   (none)          Sam's board        ?view=mom       Mom's board
+ *   ?view=sheet     Mom's owed chore, with its invoice
  *   ?view=ask       Sam's owed chore, asking for his sats
- *   ?view=check     Mum's chore to grade
+ *   ?view=check     Mom's chore to grade
  *   ?view=savings   Sam's savings, with a sample price
  *   &theme=dark
  */
@@ -24,7 +24,7 @@ const asked = new URLSearchParams(location.search);
 const view = asked.get("view");
 document.documentElement.dataset.theme = asked.get("theme") ?? "light";
 
-const viewer: Viewer = view === "mum" || view === "sheet" || view === "check" ? "mum" : "sam";
+const viewer: Viewer = view === "mom" || view === "sheet" || view === "check" ? "mom" : "sam";
 const tasks = sampleTasks(viewer, now);
 const standing = { sheet: "owed", ask: "owed", check: "done" }[view ?? ""];
 const one = standing ? tasks.find((t) => t.standing === standing) : undefined;

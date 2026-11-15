@@ -65,6 +65,7 @@ export const MONEY_LESSONS: ReadonlyArray<Lesson> = [
       "Most wallets give you twelve or twenty-four words to write on paper, and those words are the key.",
       "Keep that paper where the family keeps important things.",
       "Never type those words into a website, and never photograph them.",
+      "The Guide shows how to choose a wallet and set one up for a child.",
     ],
     tryThis: "With a parent, find where your wallet shows its backup words, and agree where the paper will be kept.",
     ask: "What is the difference between someone holding your money for you and you holding it yourself?",
@@ -76,7 +77,7 @@ export const MONEY_LESSONS: ReadonlyArray<Lesson> = [
     lines: [
       "Sats travel over Lightning, a fast road built on Bitcoin.",
       "Your wallet writes a request for the sats you earned.",
-      "Mum or Dad's wallet pays it, and the sats arrive in a second or two.",
+      "Mom or Dad's wallet pays it, and the sats arrive in a second or two.",
       "They go straight from one wallet to the other.",
     ],
     more: [
@@ -109,7 +110,7 @@ export const MONEY_LESSONS: ReadonlyArray<Lesson> = [
       "No person, company or government can change that by deciding to.",
       "Money like this is called sound money: it measures the same tomorrow as today.",
     ],
-    tryThis: "Ask a grandparent what a loaf of bread or a gallon of petrol cost when they were your age.",
+    tryThis: "Ask a grandparent what a loaf of bread or a gallon of gas cost when they were your age.",
     ask: "If you could print your own pocket money, what would happen to the price of sweets at home?",
   },
 ];
@@ -193,7 +194,7 @@ export const CHARACTER_LESSONS: ReadonlyArray<Lesson> = [
       "That is why earning comes first: it makes you able to give.",
       "Families of faith have long set aside a tenth before spending anything.",
       "A gift given quietly helps the one who receives it and shapes the one who gives.",
-      "Giving time counts as well: a chore done for a neighbour, with no reward asked.",
+      "Giving time counts as well: a chore done for a neighbor, with no reward asked.",
       "Decide your share before the sats arrive, and giving becomes a habit.",
     ],
     tryThis: "Choose a share to give from your next reward, and who it is for.",
@@ -237,13 +238,13 @@ export const USE_LESSONS: ReadonlyArray<Lesson> = [
     more: [
       "Sell what you grow or make: eggs, vegetables, firewood, baking, a craft.",
       "A sign with your wallet's code on it turns a farm stand into a shop that takes sats.",
-      "Offer work to neighbours: mowing, raking, shovelling snow, minding pets.",
+      "Offer work to neighbors: mowing, raking, shoveling snow, pet sitting.",
       "Ask grandparents and godparents to send birthday money as sats.",
       "Some apps pay small amounts of sats for reading, listening or writing.",
       "Those amounts are small, and each app has its own rules and its own reasons for paying.",
       "Use them with a parent, and never give an app your wallet's secret words.",
     ],
-    tryThis: "Think of one thing you could sell or one job you could do for a neighbour, and ask a parent about it.",
+    tryThis: "Think of one thing you could sell or one job you could do for a neighbor, and ask a parent about it.",
     ask: "What could our family make or grow that someone would pay for?",
     links: [
       { name: "Orange Bible", href: "https://orangebible.com", says: "A Bible app that rewards daily reading with sats." },
@@ -262,7 +263,7 @@ export const USE_LESSONS: ReadonlyArray<Lesson> = [
       "Sats cross the world in a second, so a small gift can go a long way.",
     ],
     more: [
-      "Begin close to home: your church, a neighbour in need, a family having a hard season.",
+      "Begin close to home: your church, a neighbor in need, a family having a hard season.",
       "If your church does not take sats yet, give in the plate and offer to help them set it up.",
       "A gift of time counts: a chore done for someone who cannot do it.",
       "Farther off, some groups take sats directly and say what they do with them.",
@@ -313,8 +314,8 @@ export const VIRTUES_LESSON: Lesson = {
   title: "The seven virtues",
   lines: [
     "A virtue is a good habit of the heart.",
-    "Christians have long taught seven: three given by God and four that anyone can practise.",
-    "Chores are a good place to practise them.",
+    "Christians have long taught seven: three given by God and four that anyone can practice.",
+    "Chores are a good place to practice them.",
   ],
   more: [
     "The three theological virtues come from Saint Paul's first letter to the Corinthians.",
@@ -327,7 +328,7 @@ export const VIRTUES_LESSON: Lesson = {
   points: [
     { group: "Theological", name: "Faith", says: "Trusting God and his promises." },
     { group: "Theological", name: "Hope", says: "Expecting good from God, and working toward it." },
-    { group: "Theological", name: "Charity", says: "Loving God and neighbour by giving of yourself. Paul calls it the greatest." },
+    { group: "Theological", name: "Charity", says: "Loving God and neighbor by giving of yourself. Paul calls it the greatest." },
     { group: "Cardinal", name: "Prudence", says: "Choosing well: thinking before you take a chore or spend a sat." },
     { group: "Cardinal", name: "Justice", says: "Giving each person their due: honest work for honest pay." },
     { group: "Cardinal", name: "Fortitude", says: "Finishing the hard job when you would rather stop." },
