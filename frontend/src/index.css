@@ -73,7 +73,7 @@ body {
 .site-bar { background: var(--tb-surface); border-bottom: 1px solid var(--tb-line); }
 .muted { color: var(--tb-muted); }
 .num { font-variant-numeric: tabular-nums; }
-.error { color: var(--bad); }
+.error { color: var(--bad); overflow-wrap: anywhere; }
 .label { font-size: 0.875rem; font-weight: 600; color: var(--tb-muted); }
 
 .chip {
