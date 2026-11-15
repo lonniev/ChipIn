@@ -4,6 +4,7 @@
  */
 
 import { useEffect, useRef, useState } from "react";
+import { Link } from "react-router-dom";
 import { formatSats } from "@tollbooth-dpyc/web";
 
 const COINS = 3;
@@ -25,6 +26,7 @@ export default function PiggyBank({ earned, coming }: { earned: number; coming: 
         <div className="piglet-says" role="status">
           <span className="piglet-sats num">{formatSats(earned)}</span> sats saved
           {coming > 0 && <span className="muted"> · <span className="num">{formatSats(coming)}</span> on the way</span>}
+          {" · "}<Link to="/savings" className="ent">Savings</Link>
         </div>
       )}
       <button type="button" className="piglet" onClick={() => { setOpen((v) => !v); setDrop((n) => n + 1); }}

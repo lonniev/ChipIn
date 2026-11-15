@@ -1,0 +1,5 @@
+- The farm scene from Good Brew sits behind every page.
+- ChipIn has a site icon and can be added to a home screen.
+- Each lesson on Learn opens into a longer telling, with something to try and a question for supper.
+- Keep learning adds shelves for the small farm and for land, family and ownership.
+- A Savings page: what you earned in sats and in bitcoin, your pace per week, and where that pace leads in a year.

@@ -10,6 +10,7 @@ import type { Role, Standing } from "../src/lib/moves";
 import type { Task } from "../src/lib/tasks";
 import { Sheet } from "../src/views/Chore";
 import { Board } from "../src/views/Chores";
+import { SavingsSheet } from "../src/views/Savings";
 import "../src/index.css";
 
 const key = (c: string) => "npub1" + c.repeat(58);
@@ -59,7 +60,7 @@ const toCheck = chore("5", "🧺 Fold the laundry", "done", ["purchaser", "asses
 const asked = new URLSearchParams(location.search);
 const view = asked.get("view");
 document.documentElement.dataset.theme = asked.get("theme") ?? "light";
-const me = view && view !== "ask" ? MUM : SAM;
+const me = view && view !== "ask" && view !== "savings" ? MUM : SAM;
 
 createRoot(document.getElementById("root")!).render(
   <MemoryRouter>
@@ -67,6 +68,7 @@ createRoot(document.getElementById("root")!).render(
       <div className="page grid gap-4">
         {view === "sheet" && <Sheet task={owed} payout={payout} now={now} onChanged={() => {}} onPay={() => {}} />}
         {view === "ask" && <Sheet task={chore("4", "🐕 Walk Rex round the block", "owed", ["performer"], { final: true, assessment: graded(1000, "Great job") })} payout={null} now={now} onChanged={() => {}} onPay={() => {}} />}
+        {view === "savings" && <SavingsSheet tasks={tasks.map((t, i) => (t.assessment ? { ...t, assessment: { ...t.assessment, at: now - (9 - i) * 6 * DAY } } : t))} me={SAM} now={now} />}
         {view === "check" && <Sheet task={toCheck} payout={null} now={now} onChanged={() => {}} onPay={() => {}} />}
         {!view && (
           <>
