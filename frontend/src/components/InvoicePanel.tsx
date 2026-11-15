@@ -1,11 +1,12 @@
 /**
- * The invoice that pays a chore: a link any wallet opens, and the text to
- * copy. It is Task Queue's invoice, shown unchanged.
+ * The invoice that pays a chore: a link any wallet opens, a code to scan from
+ * another phone, and the text to copy. It is Task Queue's invoice, shown unchanged.
  */
 
 import { useState } from "react";
 import { Check, Copy, Zap } from "lucide-react";
 import { formatSats } from "@tollbooth-dpyc/web";
+import { InvoiceQr } from "@tollbooth-dpyc/web/react";
 import type { Payout } from "../lib/tasks";
 
 export default function InvoicePanel({ payout, now }: { payout: Payout; now: number }) {
@@ -28,6 +29,7 @@ export default function InvoicePanel({ payout, now }: { payout: Payout; now: num
           {copied ? "Copied" : "Copy invoice"}
         </button>
       </div>
+      <InvoiceQr bolt11={payout.invoice} size={240} className="invoice-qr" />
       <p className="invoice-text">{payout.invoice}</p>
       <p className="muted text-sm">{minutes > 0 ? `Good for ${minutes} more minutes.` : "This invoice has expired. Ask for a new one."}</p>
     </div>
