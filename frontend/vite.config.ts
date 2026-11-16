@@ -24,7 +24,7 @@ export default defineConfig({
       name: "ChipIn",
       summary: "Chores for the household, paid in sats: post a chore with what each grade earns, grade the work, and pay by Lightning invoice.",
       site: "https://chipin.tollbooth-dpyc.com",
-      mcpUrl: "https://taskqueue-mcp.fastmcp.app/mcp",
+      mcpUrl: "https://taskbooth-mcp.fastmcp.app/mcp",
       toolPrefix: "taskbooth",
       source: "https://github.com/lonniev/ChipIn",
       registryName: "io.github.lonniev/taskbooth-mcp",
@@ -40,7 +40,7 @@ export default defineConfig({
     allowedHosts: ['.ts.net'],
     proxy: {
       '/mcp': {
-        target: 'https://taskqueue-mcp.fastmcp.app',
+        target: 'https://taskbooth-mcp.fastmcp.app',
         changeOrigin: true,
         configure: (proxy) => proxy.on('proxyReq', (req) => {
           if (!req.getHeader('authorization')) req.setHeader('authorization', 'Bearer anonymous')
