@@ -1,0 +1,2 @@
+- Savings shows what your sats are worth again: the price request no longer carries an npub the price tool does not take.
+- The word "Today" under the savings chart is no longer cut off at the left edge.
