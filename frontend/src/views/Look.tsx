@@ -9,6 +9,7 @@ import { SampleFamilyProvider } from "../lib/FamilyContext";
 import { LookContext } from "../lib/LookContext";
 import { sampleMembers, samplePayout, sampleTasks, viewerNpub, type Viewer } from "../lib/sampleFamily";
 import { Sheet } from "./Job";
+import { CalendarSheet } from "./Calendar";
 import { Board } from "./Jobs";
 import { SavingsSheet } from "./Savings";
 
@@ -28,6 +29,7 @@ export default function Look() {
   if (taskId && !task) return <Navigate to={`/look?as=${viewer}`} replace />;
   const home = `/look?as=${viewer}`;
   const savings = page === "savings";
+  const calendar = page === "calendar";
 
   return (
     <LookContext.Provider value>
@@ -47,7 +49,7 @@ export default function Look() {
             </div>
           </section>
 
-          {(task || savings) && (
+          {(task || savings || calendar) && (
             <div className="toolbar">
               <Link to={home} className="btn btn-quiet"><ArrowLeft size={22} aria-hidden />{t("nav.jobs")}</Link>
             </div>
@@ -55,7 +57,13 @@ export default function Look() {
 
           {task && <Sheet task={task} payout={samplePayout(task, now)} now={now} onChanged={() => {}} onPay={() => {}} />}
           {savings && <SavingsSheet tasks={sampleTasks("sam", now, samples)} me={viewerNpub("sam")} now={now} />}
-          {!task && !savings && (
+          {calendar && (
+            <>
+              <h2 className="text-3xl font-bold">{t("cal.title")}</h2>
+              <CalendarSheet tasks={tasks} me={me} now={now} onChanged={() => {}} />
+            </>
+          )}
+          {!task && !savings && !calendar && (
             <>
               <h2 className="text-3xl font-bold">{t("jobs.title")}</h2>
               <Board tasks={tasks} me={me} now={now} onChanged={() => {}} />

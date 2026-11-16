@@ -26,7 +26,7 @@ test("Sam sees jobs he may take, jobs he is doing, and what he was paid", () => 
 
 test("Mom sees every job, with work to check and a job to pay", () => {
   const tasks = sampleTasks("mom", NOW);
-  assert.equal(tasks.length, 11);
+  assert.equal(tasks.length, 13);
   assert.ok(tasks.every((t) => t.purchaser === MOM));
   assert.ok(tasks.some((t) => movesFor(t).includes("grade")));
   assert.ok(tasks.some((t) => movesFor(t).includes("pay")));

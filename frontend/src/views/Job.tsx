@@ -2,12 +2,13 @@
 
 import { useCallback, useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
-import { ArrowLeft, RefreshCw, Repeat } from "lucide-react";
+import { AlarmClock, ArrowLeft, Pencil, RefreshCw, Repeat } from "lucide-react";
 import { formatSats } from "@tollbooth-dpyc/web";
 import Actions from "../components/Actions";
 import InvoicePanel from "../components/InvoicePanel";
 import RequestPanel from "../components/RequestPanel";
-import { People, PersonLink } from "../components/Links";
+import { People, PersonLink, useJobHref } from "../components/Links";
+import { NudgeBell, NudgeButton } from "../components/Nudges";
 import StandingBadge from "../components/StandingBadge";
 import Waiting from "../components/Waiting";
 import { useT, WORDS } from "../i18n";
@@ -15,10 +16,12 @@ import { Tx, useLanguageLocale } from "@tollbooth-dpyc/web/react";
 import { say } from "../i18n";
 import { useFamily } from "../lib/FamilyContext";
 import { splitPicture } from "../lib/face";
+import { useLooking } from "../lib/LookContext";
+import { isFinished, mayEdit } from "../lib/moves";
 import { byReward } from "../lib/rubric";
 import { waitsOnTheirRequest } from "../lib/problems";
 import { getTask, requestPayout, taskHistory, type Payout, type Task, type TaskEvent } from "../lib/tasks";
-import { dueText, repeatText } from "../lib/when";
+import { dueText, lateRuleText, lateText, repeatText } from "../lib/when";
 
 function History({ taskId }: { taskId: string }) {
   const { name } = useFamily();
@@ -68,6 +71,9 @@ export function Sheet({ task, payout, now, onChanged, onPay, onRequested = () =>
   const live = payout && payout.expires_at > now ? payout : null;
   const mayAsk = owed && !live && task.your_roles.includes("performer") && !!graded;
   const waiting = waitsOnTheirRequest(problem);
+  const looking = useLooking();
+  const jobHref = useJobHref();
+  const late = !isFinished(task) && !task.accomplished_at ? lateText(task.days_late) : null;
 
   return (
     <>
@@ -76,15 +82,22 @@ export function Sheet({ task, payout, now, onChanged, onPay, onRequested = () =>
           <h1 className="job-head"><span className="job-picture" aria-hidden>{picture || "⭐"}</span>{rest}</h1>
           <StandingBadge standing={task.standing} />
         </div>
+        <NudgeBell task={task} now={now} />
+        {late && <p className="late-chip"><AlarmClock size={18} aria-hidden />{say(t, late)}</p>}
+        {task.standing === "missed" && <p className="missed-banner">{t("job.missedBanner")}</p>}
         {task.description && <p className="whitespace-pre-wrap">{task.description}</p>}
         <dl className="facts">
           <dt>{t("job.due")}</dt><dd>{say(t, dueText(task.needed_by, now))}{task.every_days > 0 && <> · <Repeat size={14} aria-hidden className="inline" /> {say(t, repeatText(task.every_days))}</>}</dd>
+          <dt>{t("job.ifLate")}</dt><dd>{say(t, lateRuleText(task.late))}</dd>
           <dt>{t("job.postedBy")}</dt><dd><PersonLink npub={task.purchaser} /></dd>
           {task.performer
             ? <><dt>{t("job.doingIt")}</dt><dd><PersonLink npub={task.performer} /></dd></>
             : <><dt>{t("job.whoMay")}</dt><dd><People npubs={task.audience} /></dd></>}
           {graded && <><dt>{t("job.grade")}</dt><dd>{graded.grade} · <span className="num">{t("sats.amount", { sats: formatSats(graded.sats) })}</span>{!task.final && ` · ${t("job.waitingAccepted")}`}</dd></>}
         </dl>
+        {graded?.full_sats !== undefined && (
+          <p className="muted">{t("job.lateOff", { full: formatSats(graded.full_sats), pct: graded.pct_off ?? 0 })}</p>
+        )}
         {graded?.reasons && <p className="muted">{t("quote.marks", { text: graded.reasons })}</p>}
         {graded?.appeal?.reasons && <p className="muted">{t("job.appealQuote", { reasons: graded.appeal.reasons })}</p>}
         {task.rejection?.reasons && <p className="muted">{t("quote.marks", { text: task.rejection.reasons })}</p>}
@@ -92,6 +105,12 @@ export function Sheet({ task, payout, now, onChanged, onPay, onRequested = () =>
           <p className="paid-banner"><span aria-hidden>🎉</span> <Tx ns={WORDS} k="job.paidBanner" components={{ sats: <span className="num">{formatSats(graded.sats)}</span> }} /></p>
         )}
         <Actions task={task} onChanged={onChanged} onPay={onPay} />
+        <NudgeButton task={task} now={now} onChanged={onChanged} />
+        {mayEdit(task) && !looking && (
+          <div className="flex justify-end">
+            <Link to={`${jobHref(task.task_id)}/edit`} className="btn btn-quiet"><Pencil size={20} aria-hidden />{t("job.edit")}</Link>
+          </div>
+        )}
         {paying && <p className="muted text-right">{t("job.askingInvoice")}</p>}
         {waiting && task.performer && !mayAsk && (
           <p className="muted text-right"><span aria-hidden>⏳</span> <Tx ns={WORDS} k="job.asksFirst" components={{ person: <PersonLink npub={task.performer} /> }} /></p>

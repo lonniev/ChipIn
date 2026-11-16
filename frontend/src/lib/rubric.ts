@@ -64,3 +64,14 @@ export function rubricFrom(rows: GradeRow[]): { rubric: Rubric } | { problem: Sa
   }
   return { rubric: { grades, appeal: "" } };
 }
+
+/** The late choice as the form holds it: a kind, and the percent as typed. */
+export type LateKind = "full" | "discount" | "cancel";
+
+/** The form's late choice as Task Booth takes it, or the message that says what to fix. */
+export function lateFrom(kind: LateKind, pct: string): { late: { kind: "full" } | { kind: "discount"; pct_per_day: number } | { kind: "cancel" } } | { problem: Said } {
+  if (kind !== "discount") return { late: { kind } };
+  const n = Number(pct.trim());
+  if (!/^\d+$/.test(pct.trim()) || n < 1 || n > 100) return { problem: { key: "late.needPct" } };
+  return { late: { kind: "discount", pct_per_day: n } };
+}

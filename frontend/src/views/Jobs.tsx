@@ -2,12 +2,12 @@
 
 import { useCallback, useEffect, useState, type ReactNode } from "react";
 import { Link } from "react-router-dom";
-import { Bell, CalendarDays, CheckCheck, Hourglass, List, Plus, RefreshCw, Repeat, Search, X } from "lucide-react";
+import { AlarmClock, Bell, CalendarDays, CheckCheck, Hourglass, Plus, RefreshCw, Repeat, Search, X } from "lucide-react";
 import { formatSats } from "@tollbooth-dpyc/web";
 import { useAppShell } from "@tollbooth-dpyc/web/react";
 import Actions from "../components/Actions";
 import { PersonLink, useJobHref } from "../components/Links";
-import MonthCalendar from "../components/MonthCalendar";
+import { NudgeBell } from "../components/Nudges";
 import PiggyBank from "../components/PiggyBank";
 import StandingBadge from "../components/StandingBadge";
 import Waiting from "../components/Waiting";
@@ -20,8 +20,10 @@ import { splitPicture } from "../lib/face";
 import { useFamily } from "../lib/FamilyContext";
 import { laneOf, standingKey, type Lane } from "../lib/moves";
 import { topSats } from "../lib/rubric";
+import { useLooking } from "../lib/LookContext";
+import { isFinished } from "../lib/moves";
 import { listTasks, type Task } from "../lib/tasks";
-import { dueText, repeatText } from "../lib/when";
+import { dueText, lateText, repeatText } from "../lib/when";
 
 const LANES: { lane: Lane; title: MessageKey; icon: typeof Bell }[] = [
   { lane: "yours", title: "lanes.yours", icon: Bell },
@@ -34,6 +36,7 @@ function Card({ task, now, onChanged }: { task: Task; now: number; onChanged: (t
   const who = task.performer ?? task.purchaser;
   const jobHref = useJobHref();
   const t = useT();
+  const late = !isFinished(task) && !task.accomplished_at ? lateText(task.days_late) : null;
   return (
     <li className={`job job-${laneOf(task)}`}>
       <Link to={jobHref(task.task_id)} className="job-open">
@@ -45,6 +48,8 @@ function Card({ task, now, onChanged }: { task: Task; now: number; onChanged: (t
             <span>{say(t, dueText(task.needed_by, now))}</span>
             {task.every_days > 0 && <Repeat size={16} aria-label={say(t, repeatText(task.every_days))} />}
           </span>
+          {late && <span className="late-chip"><AlarmClock size={16} aria-hidden />{say(t, late)}</span>}
+          <NudgeBell task={task} now={now} />
         </span>
         <span className="coin num">{formatSats(task.assessment?.sats ?? topSats(task.rubric))}</span>
       </Link>
@@ -72,7 +77,7 @@ export function Board({ tasks, me, now, onChanged }: { tasks: Task[]; me: string
   const t = useT();
   const [query, setQuery] = useState("");
   const [order, setOrder] = useState<Order>("due");
-  const [month, setMonth] = useState(false);
+  const looking = useLooking();
 
   const found = tasks.filter((task) => matches(task, query, name, (s) => t(standingKey(s))));
   const list = (rows: Task[]): ReactNode => (
@@ -109,25 +114,22 @@ export function Board({ tasks, me, now, onChanged }: { tasks: Task[]; me: string
           <div className="browse-picks">
             <div className="flex flex-wrap gap-2" role="group" aria-label={t("order.label")}>
               {ORDERS.map((o) => (
-                <button key={o.order} type="button" className={!month && order === o.order ? "pick pick-on" : "pick"} aria-pressed={!month && order === o.order}
-                  onClick={() => { setOrder(o.order); setMonth(false); }}>
+                <button key={o.order} type="button" className={order === o.order ? "pick pick-on" : "pick"} aria-pressed={order === o.order}
+                  onClick={() => setOrder(o.order)}>
                   {t(o.label)}
                 </button>
               ))}
             </div>
-            <button type="button" className={month ? "pick pick-on" : "pick"} aria-pressed={month} onClick={() => setMonth((v) => !v)}>
-              {month ? <List size={20} aria-hidden /> : <CalendarDays size={20} aria-hidden />}
-              {month ? t("browse.list") : t("browse.month")}
-            </button>
+            <Link to={looking ? "/look/calendar" : "/calendar"} className="pick">
+              <CalendarDays size={20} aria-hidden />{t("browse.calendar")}
+            </Link>
           </div>
         </div>
       )}
 
       {query && !found.length && <p className="card panel muted">{t("browse.noMatch", { query })}</p>}
 
-      {month && <MonthCalendar tasks={found} now={now} renderDay={list} />}
-
-      {!month && order === "due" && LANES.map(({ lane, title, icon: Icon }) => {
+      {order === "due" && LANES.map(({ lane, title, icon: Icon }) => {
         const rows = byDue.filter((task) => laneOf(task) === lane);
         if (!rows.length) return null;
         return (
@@ -138,7 +140,7 @@ export function Board({ tasks, me, now, onChanged }: { tasks: Task[]; me: string
         );
       })}
 
-      {!month && order !== "due" && grouped(found, order, name).map((g) => (
+      {order !== "due" && grouped(found, order, name).map((g) => (
         <section key={g.key} className="grid gap-2">
           <h2 className="lane-title">
             {order === "person" ? <PersonLink npub={g.key} /> : <span className="kind-mark" aria-hidden>{g.key}</span>}
