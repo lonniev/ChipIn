@@ -1,0 +1,1 @@
+- The home page opens with "A family learns the worth of work.", the painting of a chore rewarded, and what ChipIn does for a family in plain words.

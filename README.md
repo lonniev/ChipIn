@@ -1,6 +1,6 @@
 # ChipIn
 
-Chores for the household, paid in sats.
+A family learns the worth of work: children do chores, parents reward a job well done, and the reward is a little bitcoin.
 
 A parent posts a chore with what each grade earns.
 A child claims it, does it, and marks it done.

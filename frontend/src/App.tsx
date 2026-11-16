@@ -21,7 +21,7 @@ const NewChore = lazy(() => import("./views/NewChore"));
 const Profile = lazy(() => import("./views/Profile"));
 const Savings = lazy(() => import("./views/Savings"));
 
-const WELCOME = "Chores for the household, paid in sats.";
+const WELCOME = "A family learns the worth of work.";
 
 const PAGES = [
   { href: "/look", label: "Welcome", icon: <DoorOpen size={18} aria-hidden /> },
