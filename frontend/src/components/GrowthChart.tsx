@@ -31,7 +31,8 @@ export default function GrowthChart({ history, ahead, now }: { history: Point[];
       <polyline points={forward} className="growth-ahead" />
       <circle cx={x(now)} cy={y(held)} r="4.5" className="growth-dot" />
       <circle cx={x(end.at)} cy={y(end.sats)} r="4.5" className="growth-dot growth-dot-ahead" />
-      <text x={x(now)} y={H - 8} textAnchor="middle" className="growth-label">{t("chart.today")}</text>
+      {/* "Today" sits at the left edge when there is little history; anchored there, it is never cut off. */}
+      <text x={Math.max(LEFT, x(now) - 14)} y={H - 8} textAnchor="start" className="growth-label">{t("chart.today")}</text>
       <text x={W - RIGHT} y={H - 8} textAnchor="end" className="growth-label">{year(end.at)}</text>
       <text x={W - RIGHT} y={Math.max(14, y(end.sats) - 8)} textAnchor="end" className="growth-value">{formatSats(end.sats)}</text>
     </svg>

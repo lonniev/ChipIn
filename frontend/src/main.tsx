@@ -10,6 +10,8 @@ configureTollbooth({
   appName: "ChipIn",
   mcpUrl: import.meta.env.VITE_MCP_URL || "/mcp",
   operatorUrl: "https://taskbooth-mcp.fastmcp.app",
+  // Bitcoin's price is public: Task Booth's tool takes no npub, so none is sent.
+  extraBootstrapTools: ["btc_price"],
 });
 
 const crash = {
