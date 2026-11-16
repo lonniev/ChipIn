@@ -8,6 +8,7 @@ export const PICTURE_SETS = [
   { key: "african", label: "African" },
   { key: "hispanic", label: "Hispanic" },
   { key: "asian", label: "Asian" },
+  { key: "indian", label: "Indian" },
 ] as const;
 
 export type PictureSet = (typeof PICTURE_SETS)[number]["key"];

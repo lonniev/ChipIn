@@ -95,8 +95,10 @@ test("a stored choice that is not a set falls back to the first", () => {
 });
 
 test("a roll from 0 up to 1 lands on each set in turn, and never off the end", () => {
-  assert.deepEqual([0, 0.25, 0.5, 0.75].map(pictureSetAt), ["white", "african", "hispanic", "asian"]);
-  assert.equal(pictureSetAt(0.999999), "asian");
-  assert.equal(pictureSetAt(1), "asian");
+  const keys = PICTURE_SETS.map((s) => s.key);
+  assert.deepEqual(keys, ["white", "african", "hispanic", "asian", "indian"]);
+  assert.deepEqual(keys.map((_, i) => pictureSetAt(i / keys.length)), keys);
+  assert.equal(pictureSetAt(0.999999), "indian");
+  assert.equal(pictureSetAt(1), "indian");
   assert.equal(pictureSetAt(-0.1), "white");
 });
