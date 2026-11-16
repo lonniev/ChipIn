@@ -48,7 +48,7 @@ export const en = {
   "home.sceneAlt": "A mother hands her daughter a coin for sweeping the kitchen floor.",
   "home.line.jobs": "Children take on jobs around the home.",
   "home.line.reward": "Parents look at the work and reward a job well done.",
-  "home.line.learn": "Everyone learns sound money, responsibility, and the good of a clean home.",
+  "home.line.learn": "Everyone learns sound money, responsibility, and the goodness of a clean home.",
   "home.line.bitcoin": "The reward is a little bitcoin, real money a child can save, give or spend.",
   "home.lookFirst": "Look around first",
   "home.start": "Start your family",
