@@ -1,14 +1,15 @@
 /** Sats held over time: what was earned as a solid line, the same pace carried forward as a dashed one. */
 
 import { formatSats } from "@tollbooth-dpyc/web";
-import { useLocale, useT } from "../i18n/I18nContext";
+import { useT } from "../i18n";
+import { useLanguageLocale } from "@tollbooth-dpyc/web/react";
 import type { Point } from "../lib/savings";
 
 const W = 320, H = 180, LEFT = 8, RIGHT = 8, TOP = 22, BOTTOM = 26;
 
 export default function GrowthChart({ history, ahead, now }: { history: Point[]; ahead: Point[]; now: number }) {
   const t = useT();
-  const locale = useLocale();
+  const locale = useLanguageLocale();
   const all = [...history, ...ahead];
   const from = all[0].at, to = all[all.length - 1].at;
   const top = Math.max(1, ...all.map((p) => p.sats));

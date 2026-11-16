@@ -2,7 +2,8 @@
 
 import { Link } from "react-router-dom";
 import SampleCard from "../components/SampleCard";
-import { useSamples, useT } from "../i18n/I18nContext";
+import { useT } from "../i18n";
+import { useSamples } from "../lib/content";
 import { useLessonArt } from "../lib/PicturesContext";
 
 /** One of each rhythm: a daily habit, a weekly job, a big one-off, and a kindness. */

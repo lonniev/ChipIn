@@ -7,7 +7,7 @@ import { useState } from "react";
 import { Check, Copy, Zap } from "lucide-react";
 import { formatSats } from "@tollbooth-dpyc/web";
 import { InvoiceQr } from "@tollbooth-dpyc/web/react";
-import { useT } from "../i18n/I18nContext";
+import { useT } from "../i18n";
 import type { Payout } from "../lib/tasks";
 
 export default function InvoicePanel({ payout, now }: { payout: Payout; now: number }) {

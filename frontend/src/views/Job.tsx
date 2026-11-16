@@ -10,8 +10,9 @@ import RequestPanel from "../components/RequestPanel";
 import { People, PersonLink } from "../components/Links";
 import StandingBadge from "../components/StandingBadge";
 import Waiting from "../components/Waiting";
-import { useLocale, useT } from "../i18n/I18nContext";
-import { say } from "../i18n/translate";
+import { useT, WORDS } from "../i18n";
+import { Tx, useLanguageLocale } from "@tollbooth-dpyc/web/react";
+import { say } from "../i18n";
 import { useFamily } from "../lib/FamilyContext";
 import { splitPicture } from "../lib/face";
 import { byReward } from "../lib/rubric";
@@ -22,7 +23,7 @@ import { dueText, repeatText } from "../lib/when";
 function History({ taskId }: { taskId: string }) {
   const { name } = useFamily();
   const t = useT();
-  const locale = useLocale();
+  const locale = useLanguageLocale();
   const [events, setEvents] = useState<TaskEvent[] | null>(null);
   const [problem, setProblem] = useState("");
 
@@ -88,12 +89,12 @@ export function Sheet({ task, payout, now, onChanged, onPay, onRequested = () =>
         {graded?.appeal?.reasons && <p className="muted">{t("job.appealQuote", { reasons: graded.appeal.reasons })}</p>}
         {task.rejection?.reasons && <p className="muted">{t("quote.marks", { text: task.rejection.reasons })}</p>}
         {task.standing === "paid" && graded && (
-          <p className="paid-banner"><span aria-hidden>🎉</span> {t.rich("job.paidBanner", { sats: <span className="num">{formatSats(graded.sats)}</span> })}</p>
+          <p className="paid-banner"><span aria-hidden>🎉</span> <Tx ns={WORDS} k="job.paidBanner" components={{ sats: <span className="num">{formatSats(graded.sats)}</span> }} /></p>
         )}
         <Actions task={task} onChanged={onChanged} onPay={onPay} />
         {paying && <p className="muted text-right">{t("job.askingInvoice")}</p>}
         {waiting && task.performer && !mayAsk && (
-          <p className="muted text-right"><span aria-hidden>⏳</span> {t.rich("job.asksFirst", { person: <PersonLink npub={task.performer} /> })}</p>
+          <p className="muted text-right"><span aria-hidden>⏳</span> <Tx ns={WORDS} k="job.asksFirst" components={{ person: <PersonLink npub={task.performer} /> }} /></p>
         )}
         {problem && !waiting && <p className="error text-right">{problem}</p>}
       </section>
@@ -111,7 +112,7 @@ export function Sheet({ task, payout, now, onChanged, onPay, onRequested = () =>
           <InvoicePanel payout={live} now={now} />
           {task.performer && (
             <p className="muted text-right text-sm">
-              {t.rich("job.satsGoStraight", { person: <PersonLink npub={task.performer} /> })}
+              <Tx ns={WORDS} k="job.satsGoStraight" components={{ person: <PersonLink npub={task.performer} /> }} />
             </p>
           )}
         </section>

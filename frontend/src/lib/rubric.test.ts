@@ -1,10 +1,11 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import english from "../i18n/en.ts";
-import { say, translator } from "../i18n/translate.ts";
+import { translate } from "@tollbooth-dpyc/web";
+import { registerChipIn, say, WORDS, type Translate } from "../i18n/index.ts";
 import { byReward, rubricFrom, starterRows, topSats } from "./rubric.ts";
 
-const t = translator(english, english);
+await registerChipIn();
+const t: Translate = (key, vars) => translate(key, vars, WORDS);
 const STARTER_ROWS = starterRows(t);
 
 test("the starter rows make a rubric worth 1000 sats at most", () => {

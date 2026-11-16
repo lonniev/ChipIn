@@ -2,23 +2,22 @@
  * Every language's files say everything English says, in the same shape.
  * English is checked against the structure in `src/lib`; every other language
  * folder that exists is checked against English, so a translation that drops a
- * lesson, a grade or a `{name}` place fails here.
+ * lesson or a grade fails here. The words on the pages are checked in `src/i18n`.
  */
 
 import { readdirSync, existsSync } from "node:fs";
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import english from "./en/index.ts";
-import { LANGUAGES } from "../i18n/languages.ts";
-import type { LanguagePack } from "../i18n/pack.ts";
-import { holesOf } from "../i18n/translate.ts";
+import { LANGUAGES } from "@tollbooth-dpyc/web";
+import type { LanguageContent } from "../lib/content.ts";
 import { LESSON_SHAPES, libraryIn, SHELF_SHAPES } from "../lib/lessons.ts";
 import { SAMPLE_SHAPES, samplesIn } from "../lib/samples.ts";
 
 const here = new URL(".", import.meta.url);
 const folders = readdirSync(here, { withFileTypes: true }).filter((d) => d.isDirectory()).map((d) => d.name);
 
-const packs: Record<string, LanguagePack> = {};
+const packs: Record<string, LanguageContent> = {};
 for (const code of folders) packs[code] = (await import(new URL(`./${code}/index.ts`, here).href)).default;
 
 test("every content folder is one of the languages, and has its UI catalog beside the English one", () => {
@@ -52,15 +51,6 @@ test("the English content has words for every lesson, shelf, book and sample job
 });
 
 for (const [code, pack] of Object.entries(packs)) {
-  test(`${code}: the UI catalog has every message, with the same {places}`, () => {
-    assert.deepEqual(Object.keys(pack.messages).sort(), Object.keys(english.messages).sort());
-    for (const [key, text] of Object.entries(english.messages)) {
-      const said = pack.messages[key as keyof typeof english.messages];
-      assert.ok(typeof said === "string" && said.trim().length > 0, key);
-      assert.deepEqual(holesOf(said), holesOf(text), `${key}: keep every {place}`);
-    }
-  });
-
   test(`${code}: every lesson is told in full, in the same shape as English`, () => {
     assert.deepEqual(Object.keys(pack.lessons.lessons).sort(), Object.keys(english.lessons.lessons).sort());
     const mine = libraryIn(pack.lessons), theirs = libraryIn(english.lessons);

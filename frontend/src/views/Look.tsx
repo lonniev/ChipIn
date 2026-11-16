@@ -3,7 +3,8 @@
 import { useMemo } from "react";
 import { ArrowLeft } from "lucide-react";
 import { Link, Navigate, useParams, useSearchParams } from "react-router-dom";
-import { useSamples, useT } from "../i18n/I18nContext";
+import { useT } from "../i18n";
+import { useSamples } from "../lib/content";
 import { SampleFamilyProvider } from "../lib/FamilyContext";
 import { LookContext } from "../lib/LookContext";
 import { sampleMembers, samplePayout, sampleTasks, viewerNpub, type Viewer } from "../lib/sampleFamily";

@@ -1,7 +1,7 @@
 /** A wait worth reading: the status line, then a quotation on work and thrift. */
 
 import { QuoteScroller } from "@tollbooth-dpyc/web/react";
-import { useQuotes } from "../i18n/I18nContext";
+import { useQuotes } from "../lib/content";
 
 export default function Waiting({ heading }: { heading: string }) {
   const quotes = useQuotes();

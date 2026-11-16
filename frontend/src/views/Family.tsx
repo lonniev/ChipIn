@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { Check, Copy, Trash2, UserPlus } from "lucide-react";
 import { useAppShell } from "@tollbooth-dpyc/web/react";
-import { useT } from "../i18n/I18nContext";
+import { useT } from "../i18n";
 import { useFamily } from "../lib/FamilyContext";
 import { Face } from "../components/Links";
 import { isNpub, shortNpub } from "../lib/family";

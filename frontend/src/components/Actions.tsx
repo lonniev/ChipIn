@@ -8,7 +8,8 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Check, Hand, MessageCircleQuestion, ThumbsUp, Undo2, X, Zap } from "lucide-react";
 import { formatSats } from "@tollbooth-dpyc/web";
-import { useT } from "../i18n/I18nContext";
+import { Tx } from "@tollbooth-dpyc/web/react";
+import { useT, WORDS } from "../i18n";
 import { useLooking } from "../lib/LookContext";
 import { movesFor, type Move } from "../lib/moves";
 import { byReward } from "../lib/rubric";
@@ -123,7 +124,7 @@ export default function Actions({ task, onChanged, onPay, quick = false }: {
           </div>
         </div>
       )}
-      {tried && <p className="muted text-right">{t.rich("sample.tried", { signIn: <Link to="/signin" className="ent">{t("nav.signIn")}</Link> })}</p>}
+      {tried && <p className="muted text-right"><Tx ns={WORDS} k="sample.tried" components={{ signIn: <Link to="/signin" className="ent">{t("nav.signIn")}</Link> }} /></p>}
       {problem && <p className="error text-right">{problem}</p>}
     </div>
   );

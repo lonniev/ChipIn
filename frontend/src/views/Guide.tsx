@@ -2,9 +2,10 @@
 
 import { BadgeCheck, Check, ClipboardList, Hand, ThumbsUp, Zap } from "lucide-react";
 import { Link } from "react-router-dom";
-import { WalletChooser } from "@tollbooth-dpyc/web/react";
+import { Tx, WalletChooser } from "@tollbooth-dpyc/web/react";
 import SampleCard from "../components/SampleCard";
-import { useLessons, useSamples, useT } from "../i18n/I18nContext";
+import { useT, WORDS } from "../i18n";
+import { useLessons, useSamples } from "../lib/content";
 
 const STEPS = [
   { icon: ClipboardList, step: "post" },
@@ -43,7 +44,7 @@ export default function Guide() {
         <div className="flex flex-wrap justify-end gap-2">
           <WalletChooser className="btn btn-go wallet-door" />
         </div>
-        <p className="muted text-sm">{t.rich("guide.wallet.more", { lesson: <Link to="/learn/where-sats-live" className="ent">{keepingSafe?.title}</Link> })}</p>
+        <p className="muted text-sm"><Tx ns={WORDS} k="guide.wallet.more" components={{ lesson: <Link to="/learn/where-sats-live" className="ent">{keepingSafe?.title}</Link> }} /></p>
       </section>
       <section className="grid gap-3">
         <h2 className="section-title">{t("guide.samples.title")}</h2>
@@ -53,11 +54,11 @@ export default function Guide() {
       <section className="card panel grid gap-2">
         <h2 className="panel-title">{t("guide.know.title")}</h2>
         <p>{t("guide.know.npub")}</p>
-        <p>{t.rich("guide.know.wallet", { profile: <Link to="/profile" className="ent">{t("guide.know.profile")}</Link> })}</p>
+        <p><Tx ns={WORDS} k="guide.know.wallet" components={{ profile: <Link to="/profile" className="ent">{t("guide.know.profile")}</Link> }} /></p>
         <p>{t("guide.know.straight")}</p>
         <p>{t("guide.know.disagree")}</p>
         <p>{t("guide.know.yourself")}</p>
-        <p>{t.rich("guide.know.newToBitcoin", { learn: <Link to="/learn" className="ent">{t("learn.title")}</Link> })}</p>
+        <p><Tx ns={WORDS} k="guide.know.newToBitcoin" components={{ learn: <Link to="/learn" className="ent">{t("learn.title")}</Link> }} /></p>
       </section>
     </div>
   );

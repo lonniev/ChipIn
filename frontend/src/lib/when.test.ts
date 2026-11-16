@@ -1,11 +1,12 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import english from "../i18n/en.ts";
-import { say, translator } from "../i18n/translate.ts";
+import { translate } from "@tollbooth-dpyc/web";
+import { registerChipIn, say, WORDS, type Translate } from "../i18n/index.ts";
 import { dayFrom, dueText as dueSaid, endOfDay, repeatText as repeatSaid } from "./when.ts";
 
 // As a page says them, in English.
-const t = translator(english, english);
+await registerChipIn();
+const t: Translate = (key, vars) => translate(key, vars, WORDS);
 const dueText = (neededBy: number, now: number) => say(t, dueSaid(neededBy, now));
 const repeatText = (everyDays: number) => say(t, repeatSaid(everyDays));
 

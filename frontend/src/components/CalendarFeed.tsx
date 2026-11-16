@@ -2,7 +2,8 @@
 
 import { useEffect, useState } from "react";
 import { CalendarPlus, Check, Copy, Trash2 } from "lucide-react";
-import { useT } from "../i18n/I18nContext";
+import { Tx } from "@tollbooth-dpyc/web/react";
+import { useT, WORDS } from "../i18n";
 import { listFeeds, publishFeed, revokeFeed, type Feed } from "../lib/tasks";
 
 const pathOf = (token: string) => `${globalThis.location.host}/calendar/${token}.ics`;
@@ -63,7 +64,7 @@ export default function CalendarFeed() {
             )}
           </div>
           <p className="muted text-right text-sm">
-            {f.zone}{f.fetches > 0 && <> · {t.rich("calendar.read", { count: <span className="num">({f.fetches})</span> })}</>}
+            {f.zone}{f.fetches > 0 && <> · <Tx ns={WORDS} k="calendar.read" components={{ count: <span className="num">({f.fetches})</span> }} /></>}
           </p>
         </div>
       ))}

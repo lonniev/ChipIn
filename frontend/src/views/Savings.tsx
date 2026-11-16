@@ -4,11 +4,13 @@ import { useEffect, useState } from "react";
 import type React from "react";
 import { Link } from "react-router-dom";
 import { formatSats } from "@tollbooth-dpyc/web";
-import { useAppShell } from "@tollbooth-dpyc/web/react";
+import { Tx, useAppShell } from "@tollbooth-dpyc/web/react";
 import GrowthChart from "../components/GrowthChart";
 import WorthChart from "../components/WorthChart";
 import Waiting from "../components/Waiting";
-import { useLessons, useLocale, useT } from "../i18n/I18nContext";
+import { useT, WORDS } from "../i18n";
+import { useLessons } from "../lib/content";
+import { useLanguageLocale } from "@tollbooth-dpyc/web/react";
 import { earningsOf } from "../lib/earnings";
 import { asBitcoin, carriedForward, perWeek, runningTotal } from "../lib/savings";
 import { btcPrice, listTasks, type PriceReading, type Task } from "../lib/tasks";
@@ -32,7 +34,7 @@ export function WorthPanel({ earned, ahead, now, fiat, onFiat, reading, problem 
   reading: PriceReading | null; problem: string;
 }) {
   const t = useT();
-  const locale = useLocale();
+  const locale = useLanguageLocale();
   const growth = reading ? yearlyGrowth(reading) : null;
   const points = reading ? worthAhead(ahead, reading.price, growth, now) : [];
   const end = points[points.length - 1];
@@ -62,19 +64,22 @@ export function WorthPanel({ earned, ahead, now, fiat, onFiat, reading, problem 
           </dl>
           {growth && (
             <p className="muted text-sm">
-              {t.rich(growth.perYear >= 0 ? "worth.grew" : "worth.fell", {
-                years: Math.round(growth.years),
-                percent: <span className="num">{Math.abs(Math.round(growth.perYear * 100))}%</span>,
-                fiat,
-              })}
+              <Tx
+                ns={WORDS}
+                k={growth.perYear >= 0 ? "worth.grew" : "worth.fell"}
+                vars={{ years: Math.round(growth.years), fiat }}
+                components={{ percent: <span className="num">{Math.abs(Math.round(growth.perYear * 100))}%</span> }}
+              />
             </p>
           )}
           <p className="muted text-sm">{t("worth.nobodyKnows")}</p>
           <p className="muted text-sm">
-            {t.rich("worth.priceFrom", {
-              source: <a href={reading.source_url} target="_blank" rel="noopener noreferrer" className="ent">{reading.source}</a>,
-              when: seen,
-            })}
+            <Tx
+              ns={WORDS}
+              k="worth.priceFrom"
+              vars={{ when: seen }}
+              components={{ source: <a href={reading.source_url} target="_blank" rel="noopener noreferrer" className="ent">{reading.source}</a> }}
+            />
           </p>
         </>
       )}
@@ -122,8 +127,8 @@ export function SavingsSheet({ tasks, me, now, worthPanel }: { tasks: Task[]; me
         <h2 className="panel-title">{t("savings.yearFromNow")}</h2>
         <GrowthChart history={history} ahead={ahead} now={now} />
         <dl className="facts">
-          <dt>{t("savings.pace")}</dt><dd>{t.rich("savings.paceValue", { sats: <span className="num">{formatSats(pace)}</span> })}</dd>
-          <dt>{t("savings.inAYear")}</dt><dd>{t.rich("sats.amount", { sats: <span className="num">{formatSats(inAYear)}</span> })}</dd>
+          <dt>{t("savings.pace")}</dt><dd><Tx ns={WORDS} k="savings.paceValue" components={{ sats: <span className="num">{formatSats(pace)}</span> }} /></dd>
+          <dt>{t("savings.inAYear")}</dt><dd className="num">{t("sats.amount", { sats: formatSats(inAYear) })}</dd>
         </dl>
         <p className="muted text-sm">{t("savings.lines")}</p>
       </section>
@@ -135,10 +140,10 @@ export function SavingsSheet({ tasks, me, now, worthPanel }: { tasks: Task[]; me
         <p>{t("savings.where.saw")}</p>
         <p>{t("savings.where.wallet")}</p>
         <p>{t("savings.where.open")}</p>
-        <p className="muted">{t.rich("savings.whySave", {
+        <p className="muted"><Tx ns={WORDS} k="savings.whySave" components={{
           saveSome: <Link to="/learn/save-some" className="ent">{library.at("save-some")?.title}</Link>,
           whyScarce: <Link to="/learn/why-nobody-can-make-more" className="ent">{library.at("why-nobody-can-make-more")?.title}</Link>,
-        })}</p>
+        }} /></p>
       </section>
     </>
   );

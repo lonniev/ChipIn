@@ -3,7 +3,9 @@
 import { BookOpen, ChevronRight, ExternalLink } from "lucide-react";
 import { Link } from "react-router-dom";
 import PictureChoice from "../components/PictureChoice";
-import { useLessons, useT } from "../i18n/I18nContext";
+import { Tx } from "@tollbooth-dpyc/web/react";
+import { useT, WORDS } from "../i18n";
+import { useLessons } from "../lib/content";
 import { useLessonArt, usePictures } from "../lib/PicturesContext";
 import { bookHref, BOOKSHELF_HREF, ORANGE_BIBLE_HREF, type Lesson } from "../lib/lessons";
 
@@ -97,7 +99,7 @@ export default function Learn() {
 
       {chosen && <PictureChoice />}
 
-      <p className="muted text-right">{t.rich("learn.ready", { jobs: <Link to="/jobs" className="ent">{t("jobs.go")}</Link> })}</p>
+      <p className="muted text-right"><Tx ns={WORDS} k="learn.ready" components={{ jobs: <Link to="/jobs" className="ent">{t("jobs.go")}</Link> }} /></p>
     </div>
   );
 }
