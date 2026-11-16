@@ -187,6 +187,9 @@ export default function Jobs() {
           <button type="button" className="icon-btn" onClick={() => void load()} disabled={loading} aria-label={t("actions.lookAgain")} title={t("actions.lookAgain")}>
             <RefreshCw size={22} aria-hidden />
           </button>
+          <Link to="/calendar" className="icon-btn" aria-label={t("browse.calendar")} title={t("browse.calendar")}>
+            <CalendarDays size={22} aria-hidden />
+          </Link>
           <Link to="/jobs/new" className="fab" aria-label={t("jobs.new")} title={t("jobs.new")}><Plus size={28} aria-hidden /></Link>
         </div>
       </div>

@@ -14,10 +14,9 @@ export const en = {
   // The bar across the top.
   "nav.welcome": "Welcome",
   "nav.jobs": "Jobs",
-  "nav.calendar": "Calendar",
   "nav.savings": "Savings",
   "nav.family": "Family",
-  "nav.wallet": "Tollbooth wallet",
+  "nav.wallet": "Tollbooth",
   "nav.learn": "Learn",
   "nav.guide": "Guide",
   "nav.signIn": "Sign in",
@@ -59,6 +58,12 @@ export const en = {
   "home.seeAll": "See them all",
 
   // Welcome: looking around a sample family.
+  // The Welcome page opens with the seven-doves painting and the site's mission.
+  "look.mission.title": "Virtue grows at home",
+  "look.mission.virtues": "ChipIn helps a family practice the virtues through work done well.",
+  "look.mission.money": "Along the way, children learn what money is worth and why sound money matters.",
+  "look.mission.more": "Read about the seven virtues",
+  "look.mission.picture": "A family at work in the farmyard, with seven doves on the barn roof",
   "look.title": "Welcome",
   "look.intro": "Look around a sample family. Nothing here is real, and nothing you tap is sent.",
   "look.seeAs": "See it as",

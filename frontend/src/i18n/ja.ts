@@ -10,10 +10,9 @@ const ja: Translation = {
 
   "nav.welcome": "ようこそ",
   "nav.jobs": "おしごと",
-  "nav.calendar": "カレンダー",
   "nav.savings": "ちょきん",
   "nav.family": "家族",
-  "nav.wallet": "Tollbooth ウォレット",
+  "nav.wallet": "Tollbooth",
   "nav.learn": "まなぶ",
   "nav.guide": "ガイド",
   "nav.signIn": "サインイン",
@@ -50,6 +49,11 @@ const ja: Translation = {
   "home.samples.title": "こんなおしごとがあります",
   "home.seeAll": "ぜんぶ見る",
 
+  "look.mission.title": "徳は家でそだつ",
+  "look.mission.virtues": "ChipIn は、ていねいなおしごとを通して、家族が徳を身につけるお手伝いをします。",
+  "look.mission.money": "そのなかで子どもたちは、お金の大切さと、しっかりしたお金がなぜ大事なのかを学びます。",
+  "look.mission.more": "七つの徳について読む",
+  "look.mission.picture": "農場の庭ではたらく家族と、納屋の屋根にとまる七羽のハト",
   "look.title": "ようこそ",
   "look.intro": "見本の家族を見てみましょう。ここにあるものはすべて見本で、タップしても何も送られません。",
   "look.seeAs": "だれの目で見る?",
