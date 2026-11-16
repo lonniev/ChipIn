@@ -15,7 +15,7 @@
  * upstream call, so a malformed path costs nothing and reaches nothing.
  */
 
-const UPSTREAM = "https://taskqueue-mcp.fastmcp.app/mcp";
+const UPSTREAM = "https://taskbooth-mcp.fastmcp.app/mcp";
 
 const TEXT = { "Content-Type": "text/plain; charset=utf-8" };
 

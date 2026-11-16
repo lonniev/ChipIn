@@ -9,7 +9,7 @@ configureTollbooth({
   slug: "taskbooth",
   appName: "ChipIn",
   mcpUrl: import.meta.env.VITE_MCP_URL || "/mcp",
-  operatorUrl: "https://taskqueue-mcp.fastmcp.app",
+  operatorUrl: "https://taskbooth-mcp.fastmcp.app",
 });
 
 const crash = {
