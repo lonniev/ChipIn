@@ -38,7 +38,7 @@ export default function Guide() {
         <p>Write down the wallet's backup words on paper and keep them with the family's important things.</p>
         <p>To be paid, a child taps Receive in the wallet, asks for the sats the chore earned, and pastes the request into ChipIn.</p>
         <div className="flex flex-wrap justify-end gap-2">
-          <WalletChooser className="btn btn-money" />
+          <WalletChooser className="btn btn-go wallet-door" />
         </div>
         <p className="muted text-sm">More on keeping it safe: <Link to="/learn/where-sats-live" className="ent">Where do sats live?</Link></p>
       </section>
