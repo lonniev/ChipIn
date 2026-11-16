@@ -43,3 +43,20 @@ export function repeatText(everyDays: number): Said | null {
   if (everyDays === 7) return { key: "repeat.weekly" };
   return { key: "repeat.everyDays", vars: { days: everyDays } };
 }
+
+/** "1 day late", "3 days late"; nothing when on time. */
+export function lateText(daysLate: number): Said | null {
+  return daysLate > 0 ? { key: "late.days", vars: { count: daysLate } } : null;
+}
+
+/** What happens if the job is done late, as the job's page says it. */
+export function lateRuleText(rule: { kind: string; pct_per_day?: number } | undefined): Said {
+  if (rule?.kind === "discount") return { key: "late.rule.discount", vars: { pct: rule.pct_per_day ?? 0 } };
+  if (rule?.kind === "cancel") return { key: "late.rule.cancel" };
+  return { key: "late.rule.full" };
+}
+
+/** The local `YYYY-MM-DD` a time falls on, for a date field. */
+export function dayKeyOf(seconds: number): string {
+  return dayFrom(seconds, 0);
+}

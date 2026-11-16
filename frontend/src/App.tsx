@@ -1,6 +1,6 @@
 import { lazy, Suspense, useMemo, type ReactNode } from "react";
 import { BrowserRouter, Link, Navigate, Route, Routes, useLocation } from "react-router-dom";
-import { BookOpen, DoorOpen, GraduationCap, HandCoins, ListChecks, PiggyBank, Users, Wallet as WalletIcon } from "lucide-react";
+import { BookOpen, CalendarDays, DoorOpen, GraduationCap, HandCoins, ListChecks, PiggyBank, Users, Wallet as WalletIcon } from "lucide-react";
 import farm from "./assets/farm.webp";
 import { AppShell, SiteNav, TourProvider, Tx, Wallet, matchesPath, useAppShell, useTour } from "@tollbooth-dpyc/web/react";
 import Waiting from "./components/Waiting";
@@ -19,12 +19,15 @@ const Learn = lazy(() => import("./views/Learn"));
 const Look = lazy(() => import("./views/Look"));
 const LessonPage = lazy(() => import("./views/LessonPage"));
 const NewJob = lazy(() => import("./views/NewJob"));
+const EditJob = lazy(() => import("./views/EditJob"));
+const Calendar = lazy(() => import("./views/Calendar"));
 const Profile = lazy(() => import("./views/Profile"));
 const Savings = lazy(() => import("./views/Savings"));
 
 const PAGES = [
   { href: "/look", label: "nav.welcome", icon: <DoorOpen size={18} aria-hidden /> },
   { href: "/jobs", label: "nav.jobs", icon: <ListChecks size={18} aria-hidden /> },
+  { href: "/calendar", label: "nav.calendar", icon: <CalendarDays size={18} aria-hidden /> },
   { href: "/savings", label: "nav.savings", icon: <PiggyBank size={18} aria-hidden /> },
   { href: "/family", label: "nav.family", icon: <Users size={18} aria-hidden /> },
   { href: "/wallet", label: "nav.wallet", icon: <WalletIcon size={18} aria-hidden /> },
@@ -155,6 +158,8 @@ function Site() {
                 <Route path="jobs" element={<SignedIn><Jobs /></SignedIn>} />
                 <Route path="jobs/new" element={<SignedIn><NewJob /></SignedIn>} />
                 <Route path="jobs/:taskId" element={<SignedIn><Job /></SignedIn>} />
+                <Route path="jobs/:taskId/edit" element={<SignedIn><EditJob /></SignedIn>} />
+                <Route path="calendar" element={<SignedIn><Calendar /></SignedIn>} />
                 <Route path="family" element={<SignedIn><Family /></SignedIn>} />
                 <Route path="wallet" element={<SignedIn><WalletPage /></SignedIn>} />
                 <Route path="profile" element={<SignedIn><Profile /></SignedIn>} />

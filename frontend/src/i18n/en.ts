@@ -14,6 +14,7 @@ export const en = {
   // The bar across the top.
   "nav.welcome": "Welcome",
   "nav.jobs": "Jobs",
+  "nav.calendar": "Calendar",
   "nav.savings": "Savings",
   "nav.family": "Family",
   "nav.wallet": "Tollbooth wallet",
@@ -87,8 +88,7 @@ export const en = {
   "order.kind": "Kind",
   "browse.find": "Find a job",
   "browse.clear": "Clear",
-  "browse.list": "List",
-  "browse.month": "Month",
+  "browse.calendar": "Calendar",
   "browse.noMatch": "No job matches “{{query}}”.",
   "piggy.earned": "You earned",
   "piggy.coming": "On its way",
@@ -99,7 +99,6 @@ export const en = {
   // The month view.
   "month.before": "Month before",
   "month.after": "Month after",
-  "month.nothing": "Nothing is due this day.",
 
   // Where a job stands.
   "standing.posted": "Open",
@@ -112,6 +111,7 @@ export const en = {
   "standing.paid": "Paid",
   "standing.rejected": "Rejected",
   "standing.withdrawn": "Withdrawn",
+  "standing.missed": "Missed",
 
   // When a job is due, and how often it comes round. {{days}} is 2 or more.
   "due.today": "today",
@@ -208,6 +208,65 @@ export const en = {
   "newJob.addGrade": "Add a grade",
   "newJob.posting": "Posting…",
   "newJob.post": "Post the job",
+  // Shown under the details box as it nears its limit.
+  "newJob.charsLeft_one": "{{count}} letter left",
+  "newJob.charsLeft_other": "{{count}} letters left",
+  "newJob.moreSats": "More sats",
+  "newJob.fewerSats": "Fewer sats",
+  "newJob.gradeNumber": "Grade {{n}}",
+  // What happens when a job is done after its due day.
+  "late.title": "If it's late",
+  "late.pick.full": "Pay in full",
+  "late.pick.discount": "Take some off each day",
+  "late.pick.cancel": "Cancel it",
+  "late.pctLabel": "Percent off each day",
+  "late.pctAfter": "% off for each day late",
+  "late.pickHelp.full": "Late work still earns its grade.",
+  "late.pickHelp.discount": "Each day late earns a little less, down to nothing.",
+  "late.pickHelp.cancel": "When the due day passes, the job is closed as missed.",
+  "late.needPct": "Choose a percent from 1 to 100.",
+  "late.days_one": "{{count}} day late",
+  "late.days_other": "{{count}} days late",
+  "late.rule.full": "Late work is paid in full.",
+  "late.rule.discount": "Each day late takes {{pct}}% off.",
+  "late.rule.cancel": "If the due day passes first, it is cancelled.",
+  "job.ifLate": "If late",
+  "job.lateOff": "On time it would have earned {{full}} sats; {{pct}}% came off for being late.",
+  "job.missedBanner": "The due day passed before this was done, so it was cancelled.",
+  "job.edit": "Change this job",
+  "editJob.title": "Change this job",
+  "editJob.save": "Save the changes",
+  "editJob.saving": "Saving…",
+  "editJob.onlyOpen": "A job can be changed only until someone takes it on.",
+  // Reminders. {{name}} is the person reminded.
+  "nudge.pay": "Remind {{name}} to pay",
+  "nudge.due": "Remind {{name}} it's due",
+  "nudge.sent": "Reminder sent",
+  "nudge.payFor": "{{name}} asked to be paid.",
+  "nudge.dueFor": "{{name}} says this is due soon.",
+  // The family calendar. {{name}} is who did it.
+  "cal.title": "Calendar",
+  "cal.intro": "When each job was posted, taken on, done, graded and paid, and when it is due.",
+  "cal.whose": "Whose jobs",
+  "cal.everyone": "Everyone",
+  "cal.nothing": "Nothing happened this day.",
+  "cal.key": "What the pictures mean",
+  "cal.kind.posted": "Posted",
+  "cal.kind.accepted": "Taken on",
+  "cal.kind.done": "Done",
+  "cal.kind.graded": "Graded",
+  "cal.kind.paid": "Paid",
+  "cal.kind.due": "Due",
+  "cal.kind.late": "Late",
+  "cal.kind.missed": "Missed",
+  "cal.event.posted": "{{name}} posted it.",
+  "cal.event.accepted": "{{name}} took it on.",
+  "cal.event.done": "{{name}} finished it.",
+  "cal.event.graded": "{{name}} graded it.",
+  "cal.event.paid": "{{name}} paid for it.",
+  "cal.event.due": "It is due.",
+  "cal.event.late": "It is late.",
+  "cal.event.missed": "It was missed.",
 
   // A job's grades. {{name}} is a grade's name as it was typed.
   "rubric.starter.great": "Great job",
@@ -360,7 +419,14 @@ export const en = {
   "calendar.care": "Anyone who has the link can see your jobs and when they are due. It carries no names. Keep it to your family.",
 } as const;
 
-export type MessageKey = keyof typeof en;
-export type Messages = Record<MessageKey, string>;
+/** A key as written here, plural suffix and all. */
+export type EnglishKey = keyof typeof en;
+type StripPlural<K> = K extends `${infer Base}_${"zero" | "one" | "two" | "few" | "many" | "other"}` ? Base : K;
+/** A key as code asks for it: `x` stands for `x_one` / `x_other`, read with `{ count }`. */
+export type MessageKey = StripPlural<EnglishKey>;
+export type Messages = Record<EnglishKey, string>;
+type PluralBase = EnglishKey extends infer K ? (K extends `${infer Base}_other` ? Base : never) : never;
+/** One language's words: English's keys, plus the plural forms that language has beyond English's two. */
+export type Translation = Partial<Messages> & Partial<Record<`${PluralBase}_${"zero" | "two" | "few" | "many"}`, string>>;
 
 export default en as Messages;

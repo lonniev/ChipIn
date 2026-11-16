@@ -9,7 +9,7 @@ import type { MessageKey } from "../i18n/en.ts";
 
 export type Standing =
   | "posted" | "expired" | "claimed" | "done" | "assessed"
-  | "appealed" | "owed" | "paid" | "rejected" | "withdrawn";
+  | "appealed" | "owed" | "paid" | "rejected" | "withdrawn" | "missed";
 
 export type Role = "purchaser" | "audience" | "performer" | "assessor" | "tie_breaker";
 
@@ -44,7 +44,7 @@ export function movesFor(task: Stands): Move[] {
 
 /** Nothing more can happen to it. */
 export function isFinished(task: Pick<Stands, "standing" | "final">): boolean {
-  if (task.standing === "paid" || task.standing === "rejected" || task.standing === "withdrawn") return true;
+  if (task.standing === "paid" || task.standing === "rejected" || task.standing === "withdrawn" || task.standing === "missed") return true;
   return task.standing === "assessed" && task.final;
 }
 
@@ -58,3 +58,7 @@ export function laneOf(task: Stands): Lane {
 
 /** The message that says where a job stands. */
 export const standingKey = (standing: Standing) => `standing.${standing}` as const satisfies MessageKey;
+
+/** Its terms may still change: nobody has taken it on, and it is yours. */
+export const mayEdit = (task: Pick<Stands, "standing" | "your_roles">) =>
+  (task.standing === "posted" || task.standing === "expired") && task.your_roles.includes("purchaser");

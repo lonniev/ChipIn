@@ -2,7 +2,7 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import { translate } from "@tollbooth-dpyc/web";
 import { registerChipIn, say, WORDS, type Translate } from "../i18n/index.ts";
-import { byReward, rubricFrom, starterRows, topSats } from "./rubric.ts";
+import { byReward, rubricFrom, starterRows, topSats , lateFrom } from "./rubric.ts";
 
 await registerChipIn();
 const t: Translate = (key, vars) => translate(key, vars, WORDS);
@@ -45,4 +45,11 @@ test("rewards read highest first without changing the rubric", () => {
   const grades = [{ name: "b", sats: 1, criteria: "" }, { name: "a", sats: 9, criteria: "" }];
   assert.deepEqual(byReward(grades).map((g) => g.name), ["a", "b"]);
   assert.equal(grades[0].name, "b");
+});
+
+test("the late choice is checked before it is sent", () => {
+  assert.deepEqual(lateFrom("full", "abc"), { late: { kind: "full" } });
+  assert.deepEqual(lateFrom("cancel", ""), { late: { kind: "cancel" } });
+  assert.deepEqual(lateFrom("discount", " 15 "), { late: { kind: "discount", pct_per_day: 15 } });
+  for (const bad of ["0", "101", "", "ten", "1.5", "-5"]) assert.ok("problem" in lateFrom("discount", bad), bad);
 });

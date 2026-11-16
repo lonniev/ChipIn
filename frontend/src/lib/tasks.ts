@@ -11,6 +11,21 @@ export interface Assessment {
   reasons: string;
   at: number;
   appeal?: { reasons: string; at: number; first_grade?: string; first_sats?: number; decision_reasons?: string };
+  /** Set when lateness took sats off: what the grade earns on time, and how much came off. */
+  full_sats?: number;
+  days_late?: number;
+  pct_off?: number;
+}
+
+/** What happens when a job is done after its due day. */
+export type LateRule = { kind: "full" } | { kind: "discount"; pct_per_day: number } | { kind: "cancel" };
+
+export type NudgeKind = "pay" | "due";
+
+/** A reminder sent about a job: who sent it and when. Cleared when the job moves on. */
+export interface Nudge {
+  by: string;
+  at: number;
 }
 
 export interface Task {
@@ -30,6 +45,15 @@ export interface Task {
   every_days: number;
   assessment?: Assessment | null;
   rejection?: { by: string; reasons: string; at: number } | null;
+  /** When it was posted, taken on, finished and paid. */
+  created_at: number;
+  claimed_at?: number;
+  accomplished_at?: number;
+  paid_at?: number;
+  late: LateRule;
+  /** Whole days past the due day: to when it was done, or to now while it is being done. */
+  days_late: number;
+  nudges: Partial<Record<NudgeKind, Nudge>>;
 }
 
 export interface Payout {
@@ -79,9 +103,18 @@ export interface NewJob {
   audience: string[];
   needed_by: number;
   every_days: number;
+  late: LateRule;
 }
 
 export const postTask = async (job: NewJob) => (await ask<{ task: Task }>("post_task", { ...job })).task;
+
+/** Change an open job's terms. Give only what changes. */
+export const editTask = async (taskId: string, changes: Partial<NewJob>) =>
+  (await ask<{ task: Task }>("edit_task", { task_id: taskId, ...changes })).task;
+
+/** Remind the other side: the performer asks to be paid, the purchaser says it is due. */
+export const nudge = async (taskId: string, kind: NudgeKind) =>
+  (await ask<{ task: Task }>("nudge_task", { task_id: taskId, kind })).task;
 
 /** The moves that need nothing but the job. */
 const PLAIN = {

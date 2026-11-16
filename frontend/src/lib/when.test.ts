@@ -2,7 +2,7 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import { translate } from "@tollbooth-dpyc/web";
 import { registerChipIn, say, WORDS, type Translate } from "../i18n/index.ts";
-import { dayFrom, dueText as dueSaid, endOfDay, repeatText as repeatSaid } from "./when.ts";
+import { dayFrom, dueText as dueSaid, endOfDay, repeatText as repeatSaid , lateRuleText, lateText as lateTextSaid } from "./when.ts";
 
 // As a page says them, in English.
 await registerChipIn();
@@ -51,4 +51,18 @@ test("repeats read plainly", () => {
   assert.equal(repeatText(1), "Every day");
   assert.equal(repeatText(7), "Every week");
   assert.equal(repeatText(3), "Every 3 days");
+});
+
+test("lateness is said in days, and on time says nothing", () => {
+  assert.equal(lateTextSaid(0), null);
+  assert.deepEqual(lateTextSaid(1), { key: "late.days", vars: { count: 1 } });
+  assert.equal(say(t, lateTextSaid(1)), "1 day late");
+  assert.equal(say(t, lateTextSaid(3)), "3 days late");
+});
+
+test("a job says what lateness costs", () => {
+  assert.equal(say(t, lateRuleText({ kind: "full" })), "Late work is paid in full.");
+  assert.equal(say(t, lateRuleText({ kind: "discount", pct_per_day: 10 })), "Each day late takes 10% off.");
+  assert.equal(say(t, lateRuleText({ kind: "cancel" })), "If the due day passes first, it is cancelled.");
+  assert.equal(say(t, lateRuleText(undefined)), "Late work is paid in full.");
 });
