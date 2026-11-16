@@ -1,0 +1,1 @@
+- The "Need a wallet?" button in the Guide is an ordinary button, readable in light and dark, without its second line.

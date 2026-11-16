@@ -440,3 +440,8 @@ table.ledger tr.grade-given td { background: color-mix(in srgb, var(--gold) 22%,
 .picture-set-on { border-color: var(--tb-accent); background: color-mix(in srgb, var(--tb-accent) 12%, var(--tb-surface)); }
 
 .invoice-qr { justify-self: center; margin-inline: auto; }
+
+/* The "Need a wallet?" door as an ordinary button: its own colours, its title only. */
+.wallet-door .tb-wc-door-mark { all: unset; display: inline-flex; }
+.wallet-door .tb-ps-fact-title { all: unset; }
+.wallet-door .tb-ps-fact-line { display: none; }
