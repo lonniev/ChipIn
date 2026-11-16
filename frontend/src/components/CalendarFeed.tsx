@@ -1,4 +1,4 @@
-/** Chores in the phone's own calendar: make a private link, open it in the calendar app, or take it away. */
+/** Jobs in the phone's own calendar: make a private link, open it in the calendar app, or take it away. */
 
 import { useEffect, useState } from "react";
 import { CalendarPlus, Check, Copy, Trash2 } from "lucide-react";

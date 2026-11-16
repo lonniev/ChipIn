@@ -1,4 +1,4 @@
-/** Where a chore stands, as an icon and a word. */
+/** Where a job stands, as an icon and a word. */
 
 import { BadgeCheck, Ban, CircleDot, ClipboardCheck, Hand, Hourglass, Scale, Star, Undo2, Zap } from "lucide-react";
 import { useT } from "../i18n/I18nContext";

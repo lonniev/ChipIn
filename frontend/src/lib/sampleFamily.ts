@@ -6,7 +6,7 @@
 import type { MessageKey } from "../i18n/en.ts";
 import type { Member } from "./family.ts";
 import type { Role, Standing } from "./moves.ts";
-import type { SampleChore } from "./samples.ts";
+import type { SampleJob } from "./samples.ts";
 import type { Payout, Task } from "./tasks.ts";
 
 const sampleId = (c: string) => "npub1" + c.repeat(58);
@@ -28,7 +28,7 @@ export const viewerNpub = (viewer: Viewer) => (viewer === "mom" ? MOM : SAM);
 
 const DAY = 86_400;
 
-/** Where each sample chore stands in this family's week: who has it, how far along, and how it was graded. */
+/** Where each sample job stands in this family's week: who has it, how far along, and how it was graded. */
 const WEEK: { sample: number; standing: Standing; by: string | null; dueIn: number; grade?: number; final?: boolean; paidAgo?: number }[] = [
   { sample: 0, standing: "posted", by: null, dueIn: 0 },
   { sample: 1, standing: "claimed", by: SAM, dueIn: 1 },
@@ -49,12 +49,12 @@ function rolesOf(viewer: Viewer, performer: string | null): Role[] {
   return performer === null ? ["audience"] : [];
 }
 
-function rubricOf(sample: SampleChore) {
+function rubricOf(sample: SampleJob) {
   return { grades: sample.rows.map((r) => ({ name: r.name, sats: Number(r.sats), criteria: r.criteria })), appeal: "" };
 }
 
-/** The family's chores as `viewer` sees them, made from the sample chores in the language on screen. */
-export function sampleTasks(viewer: Viewer, now: number, samples: ReadonlyArray<SampleChore>): Task[] {
+/** The family's jobs as `viewer` sees them, made from the sample jobs in the language on screen. */
+export function sampleTasks(viewer: Viewer, now: number, samples: ReadonlyArray<SampleJob>): Task[] {
   return WEEK.map((w, i) => {
     const sample = samples[w.sample];
     const rubric = rubricOf(sample);
@@ -81,7 +81,7 @@ export function sampleTasks(viewer: Viewer, now: number, samples: ReadonlyArray<
   }).filter((t) => t.your_roles.length > 0);
 }
 
-/** The invoice the sample's owed chore would show. It pays nobody. */
+/** The invoice the sample's owed job would show. It pays nobody. */
 export function samplePayout(task: Task, now: number): Payout | null {
   if (task.standing !== "owed" || !task.assessment) return null;
   const invoice = "lnbc" + "sample".repeat(30);

@@ -12,7 +12,7 @@ const sampleTasks = (viewer: Viewer, now: number) => tasksFrom(viewer, now, samp
 
 const NOW = 1_800_000_000;
 
-test("Sam sees chores he may take, chores he is doing, and what he was paid", () => {
+test("Sam sees jobs he may take, jobs he is doing, and what he was paid", () => {
   const tasks = sampleTasks("sam", NOW);
   assert.ok(tasks.every((t) => t.performer === SAM || t.performer === null));
   assert.ok(tasks.some((t) => movesFor(t).includes("claim")));
@@ -22,7 +22,7 @@ test("Sam sees chores he may take, chores he is doing, and what he was paid", ()
   assert.ok(earned > 0 && coming > 0);
 });
 
-test("Mom sees every chore, with work to check and a chore to pay", () => {
+test("Mom sees every job, with work to check and a job to pay", () => {
   const tasks = sampleTasks("mom", NOW);
   assert.equal(tasks.length, 11);
   assert.ok(tasks.every((t) => t.purchaser === MOM));
@@ -37,7 +37,7 @@ test("every lane has something in it for both of them", () => {
   }
 });
 
-test("each sample chore has its own id, and only the owed one has an invoice", () => {
+test("each sample job has its own id, and only the owed one has an invoice", () => {
   const tasks = sampleTasks("mom", NOW);
   assert.equal(new Set(tasks.map((t) => t.task_id)).size, tasks.length);
   assert.equal(tasks.filter((t) => samplePayout(t, NOW)).length, 1);

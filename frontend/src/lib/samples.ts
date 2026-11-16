@@ -1,7 +1,7 @@
 /**
- * Chores a family can start from. Each one says where, when, and what "done"
+ * Jobs a family can start from. Each one says where, when, and what "done"
  * looks like, because a child cannot do "sweep" without knowing which floor.
- * Together they show the kinds of chore there are: a daily habit, a weekly
+ * Together they show the kinds of job there are: a daily habit, a weekly
  * job, a big one-off, something for the mind, and a kindness.
  *
  * This file holds what is the same in every language: each sample's picture,
@@ -13,7 +13,7 @@ import type { GradeRow } from "./rubric.ts";
 
 interface SampleShape {
   key: string;
-  /** One of CHORE_PICTURES. */
+  /** One of JOB_PICTURES. */
   picture: string;
   /** 0 once, 1 every day, 7 every week. */
   everyDays: 0 | 1 | 7;
@@ -33,24 +33,24 @@ export const SAMPLE_SHAPES = [
 
 export type SampleKey = (typeof SAMPLE_SHAPES)[number]["key"];
 
-/** One sample chore's words in one language. */
+/** One sample job's words in one language. */
 export interface SampleText {
-  /** The kind of chore this one shows. */
+  /** The kind of job this one shows. */
   kind: string;
   title: string;
   /** Where, when, and how to finish: one sentence to a line, lines separated by "\n". */
   description: string;
   /** Each grade's name and what earns it, in the order `SAMPLE_SHAPES` lists its sats. */
   grades: { name: string; criteria: string }[];
-  /** What a child learns from a chore of this kind. */
+  /** What a child learns from a job of this kind. */
   teaches: string;
 }
 
 export type SamplesText = Record<SampleKey, SampleText>;
 
-export interface SampleChore {
+export interface SampleJob {
   key: SampleKey;
-  /** One of CHORE_PICTURES. */
+  /** One of JOB_PICTURES. */
   picture: string;
   title: string;
   /** Where, when, and how to finish. */
@@ -58,14 +58,14 @@ export interface SampleChore {
   /** 0 once, 1 every day, 7 every week. */
   everyDays: 0 | 1 | 7;
   rows: GradeRow[];
-  /** The kind of chore this one shows. */
+  /** The kind of job this one shows. */
   kind: string;
-  /** What a child learns from a chore of this kind. */
+  /** What a child learns from a job of this kind. */
   teaches: string;
 }
 
-/** The sample chores as a page shows them: this file's structure with one language's words. */
-export function samplesIn(text: SamplesText): SampleChore[] {
+/** The sample jobs as a page shows them: this file's structure with one language's words. */
+export function samplesIn(text: SamplesText): SampleJob[] {
   return SAMPLE_SHAPES.map((shape) => {
     const words = text[shape.key];
     return {

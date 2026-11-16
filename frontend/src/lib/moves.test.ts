@@ -5,12 +5,12 @@ import { isFinished, laneOf, movesFor, standingKey, type Role, type Standing } f
 
 const at = (standing: Standing, your_roles: Role[], final = false) => ({ standing, your_roles, final });
 
-test("a child in the audience may claim an open chore, and the parent may withdraw it", () => {
+test("a child in the audience may claim an open job, and the parent may withdraw it", () => {
   assert.deepEqual(movesFor(at("posted", ["audience"])), ["claim"]);
   assert.deepEqual(movesFor(at("posted", ["purchaser", "assessor"])), ["withdraw"]);
 });
 
-test("an expired chore can only be withdrawn", () => {
+test("an expired job can only be withdrawn", () => {
   assert.deepEqual(movesFor(at("expired", ["audience"])), []);
   assert.deepEqual(movesFor(at("expired", ["purchaser"])), ["withdraw"]);
 });
@@ -37,7 +37,7 @@ test("only the tie-breaker decides an appeal", () => {
   assert.deepEqual(movesFor(at("appealed", ["performer", "assessor"])), []);
 });
 
-test("an owed chore is the parent's to pay and the child's to confirm", () => {
+test("an owed job is the parent's to pay and the child's to confirm", () => {
   assert.deepEqual(movesFor(at("owed", ["purchaser"], true)), ["pay"]);
   assert.deepEqual(movesFor(at("owed", ["performer"], true)), ["confirm_paid"]);
 });
@@ -48,14 +48,14 @@ test("one npub holding every role sees every move, so a parent can try it alone"
   assert.deepEqual(movesFor(at("owed", all, true)), ["pay", "confirm_paid"]);
 });
 
-test("paid, rejected and withdrawn chores are finished and offer nothing", () => {
+test("paid, rejected and withdrawn jobs are finished and offer nothing", () => {
   for (const s of ["paid", "rejected", "withdrawn"] as const) {
     assert.deepEqual(movesFor(at(s, ["purchaser", "performer", "assessor", "tie_breaker", "audience"], true)), []);
     assert.equal(laneOf(at(s, ["purchaser"], true)), "finished");
   }
 });
 
-test("a chore sits with you when you can move it, and waits otherwise", () => {
+test("a job sits with you when you can move it, and waits otherwise", () => {
   assert.equal(laneOf(at("done", ["assessor"])), "yours");
   assert.equal(laneOf(at("done", ["performer"])), "waiting");
 });

@@ -1,4 +1,4 @@
-/** The front door: what ChipIn does for a family, a few chores to show it, and where to learn more. */
+/** The front door: what ChipIn does for a family, a few jobs to show it, and where to learn more. */
 
 import { Link } from "react-router-dom";
 import SampleCard from "../components/SampleCard";
@@ -18,7 +18,7 @@ export default function Home() {
         {scene && <img src={scene} alt={t("home.sceneAlt")} className="lesson-art" width={960} height={644} />}
         <h1 className="text-4xl font-semibold">{t("app.tagline")}</h1>
         <div className="hero-lines">
-          <p>{t("home.line.chores")}</p>
+          <p>{t("home.line.jobs")}</p>
           <p>{t("home.line.reward")}</p>
           <p>{t("home.line.learn")}</p>
           <p>{t("home.line.bitcoin")}</p>

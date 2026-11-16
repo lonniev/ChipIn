@@ -1,6 +1,6 @@
 /**
  * What someone has earned through ChipIn over time, and where that pace leads.
- * Every number comes from their own paid chores; nothing is assumed.
+ * Every number comes from their own paid jobs; nothing is assumed.
  */
 
 const WEEK = 7 * 86_400;
@@ -30,7 +30,7 @@ export function runningTotal(tasks: Earned[], me: string): Point[] {
 
 /**
  * Sats earned per week, from the first payment to now.
- * Less than a week of history counts as one week, so a first chore does not read as a fortune.
+ * Less than a week of history counts as one week, so a first job does not read as a fortune.
  */
 export function perWeek(history: Point[], now: number): number {
   if (!history.length) return 0;

@@ -1,5 +1,5 @@
 /**
- * Les tâches d'exemple, en français. Chacune dit où, quand, et à quoi on voit que c'est fait,
+ * Les petits boulots d'exemple, en français. Chacun dit où, quand, et à quoi on voit que c'est fait,
  * une phrase par ligne (les lignes sont séparées par \n).
  * Les notes gardent le même ordre que dans `content/en/samples.ts`.
  */
@@ -44,7 +44,7 @@ export const samples: SamplesText = {
     teaches: "Commence la journée en terminant quelque chose."
   },
   "trash-cans": {
-    kind: "Un travail de chaque semaine",
+    kind: "Un petit boulot de chaque semaine",
     title: "Sortir les poubelles au bord de la rue",
     description: "Jeudi soir, avant la nuit.\nRoule les deux poubelles du côté de la maison jusqu'au bout de l'allée, couvercles fermés.\nRentre-les vendredi après l'école.",
     grades: [
@@ -84,7 +84,7 @@ export const samples: SamplesText = {
     teaches: "Quelqu'un dépend de ton travail."
   },
   "weed-bed": {
-    kind: "Un gros travail, une seule fois",
+    kind: "Un gros boulot, une seule fois",
     title: "Désherber le massif de fleurs devant la maison",
     description: "Ce samedi matin, avant le repas de midi.\nLe massif près des marches de l'entrée, de l'allée jusqu'à la clôture.\nArrache chaque mauvaise herbe avec sa racine, et mets-les dans le bac des déchets de jardin.",
     grades: [

@@ -18,12 +18,12 @@ export const lessons: LessonsText = {
       more: [
         "Bitcoin est né en 2009, créé par quelqu'un qui signait Satoshi Nakamoto.",
         "Le plus petit morceau s'appelle un satoshi en son honneur, et on dit sat pour faire court.",
-        "Un bitcoin entier vaut bien plus que ce que rapportent la plupart des tâches, alors on compte les salaires en sats.",
+        "Un bitcoin entier vaut bien plus que ce que rapportent la plupart des petits boulots, alors on compte les salaires en sats.",
         "Mille sats font 0,00001 bitcoin.",
         "Un sat ne peut pas être coupé en plus petit, et il ne peut pas être copié.",
         "Quand on te paie 500 sats, tu possèdes 500 des sats qui existent, et personne d'autre ne les possède."
       ],
-      tryThis: "Trouve la plus grosse récompense de ta liste de tâches et calcule quelle part d'un bitcoin elle représente.",
+      tryThis: "Trouve la plus grosse récompense de ta liste de petits boulots et calcule quelle part d'un bitcoin elle représente.",
       ask: "Pourquoi est-ce utile d'avoir une monnaie qui se compte en tout petits morceaux ?"
     },
     "where-sats-live": {
@@ -61,7 +61,7 @@ export const lessons: LessonsText = {
         "Le paiement prend une seconde ou deux et ne coûte presque rien.",
         "Personne ne garde tes sats en chemin."
       ],
-      tryThis: "Quand une tâche est à payer, ouvre ton portefeuille, appuie sur Recevoir et fais la demande toi-même.",
+      tryThis: "Quand un petit boulot est à payer, ouvre ton portefeuille, appuie sur Recevoir et fais la demande toi-même.",
       ask: "Pourquoi est-ce la personne payée qui écrit la demande, et celle qui paie qui l'approuve ?"
     },
     "why-nobody-can-make-more": {
@@ -99,14 +99,14 @@ export const lessons: LessonsText = {
         "On est payé quand on fait quelque chose qui a de la valeur pour une autre personne.",
         "Le boulanger est payé parce que tu préfères avoir le pain plutôt que les pièces.",
         "Chacun de vous deux y gagne, et c'est cela, un échange juste.",
-        "Une tâche, c'est le même échange en plus petit.",
+        "Un petit boulot à la maison, c'est le même échange en plus petit.",
         "Mieux tu sers, plus ton travail a de valeur."
       ],
       saying: {
         text: "Dans tout labeur il y a du profit, mais les simples paroles ne conduisent qu'à la misère.",
         from: "Proverbes 14:23"
       },
-      tryThis: "Choisis une tâche et fais-la un peu mieux que ce que la note demande.",
+      tryThis: "Choisis un petit boulot et fais-le un peu mieux que ce que la note demande.",
       ask: "Qui a été aidé par le dernier travail que tu as fait ?"
     },
     "save-some": {
@@ -128,7 +128,7 @@ export const lessons: LessonsText = {
         text: "Celui qui amasse par son travail verra son bien grandir.",
         from: "Proverbes 13:11"
       },
-      tryThis: "Choisis quelque chose qui vaut la peine d'attendre, et compte combien de tâches il faudra.",
+      tryThis: "Choisis quelque chose qui vaut la peine d'attendre, et compte combien de petits boulots il faudra.",
       ask: "Qu'est-ce que notre famille possède parce que quelqu'un a épargné pour l'avoir ?"
     },
     "keep-your-word": {
@@ -141,8 +141,8 @@ export const lessons: LessonsText = {
       more: [
         "Le commerce repose sur des promesses.",
         "Le marchand promet que sa balance est juste, et le maçon promet que le mur tiendra.",
-        "Quand tu prends une tâche, quelqu'un cesse de s'en inquiéter parce que tu as dit que tu la ferais.",
-        "Si tu ne peux pas finir, dis-le tôt et rends la tâche.",
+        "Quand tu prends un petit boulot, quelqu'un cesse de s'en inquiéter parce que tu as dit que tu le ferais.",
+        "Si tu ne peux pas finir, dis-le tôt et rends le petit boulot.",
         "À celui qui est connu pour tenir parole, on propose le meilleur travail.",
         "Cette réputation se gagne en des années et se perd en un jour."
       ],
@@ -150,7 +150,7 @@ export const lessons: LessonsText = {
         text: "Celui qui est fidèle dans les plus petites choses est fidèle aussi dans les grandes.",
         from: "Luc 16:10"
       },
-      tryThis: "Si tu as pris une tâche que tu ne peux pas finir, rends-la aujourd'hui et explique pourquoi.",
+      tryThis: "Si tu as pris un petit boulot que tu ne peux pas finir, rends-le aujourd'hui et explique pourquoi.",
       ask: "En qui as-tu le plus confiance pour faire ce qu'il dit, et pourquoi ?"
     },
     "give-some": {
@@ -165,7 +165,7 @@ export const lessons: LessonsText = {
         "Voilà pourquoi gagner vient en premier : cela te rend capable de donner.",
         "Depuis longtemps, les familles croyantes mettent de côté un dixième avant de dépenser quoi que ce soit.",
         "Un don fait discrètement aide celui qui le reçoit et façonne celui qui le donne.",
-        "Donner de son temps compte aussi : une tâche faite pour un voisin, sans demander de récompense.",
+        "Donner de son temps compte aussi : un petit boulot fait pour un voisin, sans demander de récompense.",
         "Décide de ta part avant que les sats arrivent, et donner deviendra une habitude."
       ],
       saying: {
@@ -179,7 +179,7 @@ export const lessons: LessonsText = {
       title: "Pourquoi épargner, et pour quoi ?",
       lines: [
         "L'épargne transforme beaucoup de petites récompenses en une grande chose.",
-        "Un but donne une raison à chaque tâche.",
+        "Un but donne une raison à chaque petit boulot.",
         "Choisis quelque chose qui vaut l'attente."
       ],
       more: [
@@ -201,7 +201,7 @@ export const lessons: LessonsText = {
     "where-else-to-earn": {
       title: "Où gagner d'autres sats ?",
       lines: [
-        "Les tâches à la maison sont une façon.",
+        "Les petits boulots à la maison sont une façon.",
         "Toute personne qui a un portefeuille Lightning peut te payer.",
         "La façon la plus sûre est de fabriquer ou de faire quelque chose que les gens veulent."
       ],
@@ -233,7 +233,7 @@ export const lessons: LessonsText = {
       more: [
         "Commence près de chez toi : ton église, un voisin dans le besoin, une famille qui traverse une période difficile.",
         "Si ton église n'accepte pas encore les sats, donne à la quête et propose ton aide pour mettre cela en place.",
-        "Un don de temps compte : une tâche faite pour quelqu'un qui ne peut pas la faire.",
+        "Un don de temps compte : un petit boulot fait pour quelqu'un qui ne peut pas le faire.",
         "Plus loin, certains groupes acceptent directement les sats et disent ce qu'ils en font.",
         "Avant de donner à quelqu'un que tu ne connais pas, demande à un parent de regarder de qui il s'agit.",
         "Donne discrètement, et ne compte pas les mercis."
@@ -254,7 +254,7 @@ export const lessons: LessonsText = {
       title: "Qu'est-ce qui vaut la peine d'être acheté ?",
       lines: [
         "Achète des choses qui durent, qui instruisent ou qui t'aident à travailler.",
-        "Une chose disparue en un jour vaut rarement une semaine de tâches.",
+        "Une chose disparue en un jour vaut rarement une semaine de petits boulots.",
         "Avant de dépenser, attends une nuit."
       ],
       more: [
@@ -279,7 +279,7 @@ export const lessons: LessonsText = {
       lines: [
         "Une vertu est une bonne habitude du cœur.",
         "Les chrétiens en enseignent sept depuis longtemps : trois données par Dieu et quatre que chacun peut pratiquer.",
-        "Les tâches sont un bon endroit pour s'y exercer."
+        "Les petits boulots sont un bon endroit pour s'y exercer."
       ],
       more: [
         "Les trois vertus théologales viennent de la première lettre de saint Paul aux Corinthiens.",
@@ -308,7 +308,7 @@ export const lessons: LessonsText = {
         {
           group: "Cardinale",
           name: "Prudence",
-          says: "Bien choisir : réfléchir avant de prendre une tâche ou de dépenser un sat."
+          says: "Bien choisir : réfléchir avant de prendre un petit boulot ou de dépenser un sat."
         },
         {
           group: "Cardinale",
@@ -330,7 +330,7 @@ export const lessons: LessonsText = {
         text: "Maintenant donc demeurent la foi, l'espérance et la charité, ces trois-là ; mais la plus grande des trois, c'est la charité.",
         from: "1 Corinthiens 13:13"
       },
-      tryThis: "Choisis une vertu pour la semaine et remarque chaque fois qu'une tâche te la demande.",
+      tryThis: "Choisis une vertu pour la semaine et remarque chaque fois qu'un petit boulot te la demande.",
       ask: "Laquelle des sept te vient le plus facilement, et laquelle est la plus difficile ?"
     }
   },

@@ -1,7 +1,7 @@
 /**
- * Los quehaceres de muestra, en español. Cada uno dice dónde, cuándo y cómo se ve cuando está "hecho",
+ * Los trabajos de muestra, en español. Cada uno dice dónde, cuándo y cómo se ve cuando está "hecho",
  * una oración por línea (las líneas se separan con \n).
- * Cada quehacer mantiene sus calificaciones en el mismo orden: los sats de cada una están en `src/lib/samples.ts`.
+ * Cada trabajo mantiene sus calificaciones en el mismo orden: los sats de cada una están en `src/lib/samples.ts`.
  */
 
 import type { SamplesText } from "../../lib/samples.ts";

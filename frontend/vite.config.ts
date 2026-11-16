@@ -22,7 +22,7 @@ export default defineConfig({
     react(), tailwindcss(),
     agentGuide({
       name: "ChipIn",
-      summary: "A family learns the worth of work: post a chore with what each grade earns, grade the work, and pay by Lightning invoice.",
+      summary: "A family learns the worth of work: post a job with what each grade earns, grade the work, and pay by Lightning invoice.",
       site: "https://chipin.tollbooth-dpyc.com",
       mcpUrl: "https://taskbooth-mcp.fastmcp.app/mcp",
       toolPrefix: "taskbooth",

@@ -1,4 +1,4 @@
-/** Task Booth's tools, as ChipIn calls them. A chore is a Task Booth task. */
+/** Task Booth's tools, as ChipIn calls them. A job is a Task Booth task. */
 
 import { callTool } from "@tollbooth-dpyc/web";
 import type { Role, Standing } from "./moves.ts";
@@ -72,7 +72,7 @@ export const getTask = (taskId: string) => ask<{ task: Task; payout?: Payout }>(
 export const taskHistory = async (taskId: string) =>
   (await ask<{ events: TaskEvent[] }>("task_history", { task_id: taskId })).events;
 
-export interface NewChore {
+export interface NewJob {
   title: string;
   description: string;
   rubric: Rubric;
@@ -81,9 +81,9 @@ export interface NewChore {
   every_days: number;
 }
 
-export const postTask = async (chore: NewChore) => (await ask<{ task: Task }>("post_task", { ...chore })).task;
+export const postTask = async (job: NewJob) => (await ask<{ task: Task }>("post_task", { ...job })).task;
 
-/** The moves that need nothing but the chore. */
+/** The moves that need nothing but the job. */
 const PLAIN = {
   claim: "claim_task",
   release: "release_claim",

@@ -97,7 +97,7 @@ export default function Learn() {
 
       {chosen && <PictureChoice />}
 
-      <p className="muted text-right">{t.rich("learn.ready", { chores: <Link to="/chores" className="ent">{t("chores.go")}</Link> })}</p>
+      <p className="muted text-right">{t.rich("learn.ready", { jobs: <Link to="/jobs" className="ent">{t("jobs.go")}</Link> })}</p>
     </div>
   );
 }

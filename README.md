@@ -1,14 +1,14 @@
 # ChipIn
 
-A family learns the worth of work: children do chores, parents reward a job well done, and the reward is a little bitcoin.
+A family learns the worth of work: children take on jobs, parents reward a job well done, and the reward is a little bitcoin.
 
-A parent posts a chore with what each grade earns.
+A parent posts a job with what each grade earns.
 A child claims it, does it, and marks it done.
 The parent checks the work and picks a grade.
 The sats go from the parent's own Lightning wallet to the child's.
 
 ChipIn is a web page over the [Task Booth](https://github.com/lonniev/taskbooth-mcp) Operator, a Tollbooth DPYC™ service.
-Task Booth keeps the chores and never holds the sats.
+Task Booth keeps the jobs and never holds the sats.
 Everyone signs in with their own Nostr npub.
 
 ## Run locally

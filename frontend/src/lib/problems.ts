@@ -2,7 +2,7 @@
  * Refusals the Operator words for an agent, which ChipIn says its own way.
  */
 
-/** Nothing can be paid yet: the person who did the chore has to ask for their sats first. */
+/** Nothing can be paid yet: the person who did the job has to ask for their sats first. */
 export function waitsOnTheirRequest(message: string): boolean {
   return /payout_address/.test(message);
 }

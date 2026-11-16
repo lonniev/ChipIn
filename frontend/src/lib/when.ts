@@ -36,7 +36,7 @@ export function dayFrom(now: number, days: number): string {
   return `${d.getFullYear()}-${two(d.getMonth() + 1)}-${two(d.getDate())}`;
 }
 
-/** How often a chore comes round, as a message for the page to say. Nothing for a chore done once. */
+/** How often a job comes round, as a message for the page to say. Nothing for a job done once. */
 export function repeatText(everyDays: number): Said | null {
   if (everyDays <= 0) return null;
   if (everyDays === 1) return { key: "repeat.daily" };

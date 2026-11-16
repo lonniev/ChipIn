@@ -127,11 +127,11 @@ body {
   padding: 0.75rem; border-radius: 0.625rem; background: var(--tb-surface-2);
 }
 
-/* A named person or chore is a link to it. */
+/* A named person or job is a link to it. */
 .ent { color: inherit; text-decoration: underline; text-decoration-color: color-mix(in srgb, currentColor 40%, transparent); text-underline-offset: 3px; }
 .ent:hover, .ent:focus-visible { color: var(--tb-accent); text-decoration-color: currentColor; }
 
-/* Where a chore stands. */
+/* Where a job stands. */
 .badge {
   display: inline-flex; align-items: center; gap: 0.25rem; border-radius: 999px; white-space: nowrap;
   padding: 0.125rem 0.625rem; font-size: 0.8125rem; font-weight: 600;
@@ -142,17 +142,17 @@ body {
 .badge-done, .badge-appealed { border-color: var(--tb-accent); color: var(--tb-accent); }
 .badge-rejected, .badge-expired { border-color: var(--bad); color: var(--bad); }
 
-/* The chore list: what it is on the left, what it earns and the next tap on the right. */
-.chore-row { display: flex; align-items: center; justify-content: space-between; gap: 0.75rem; padding: 0.75rem 0; }
-.chore-row + .chore-row { border-top: 1px solid var(--tb-line); }
-.chore-main { display: grid; gap: 0.25rem; min-width: 0; }
-.chore-title { font-size: 1.125rem; font-weight: 600; overflow-wrap: anywhere; }
-.chore-meta { display: flex; flex-wrap: wrap; align-items: center; gap: 0.25rem 0.75rem; font-size: 0.875rem; }
-.chore-side { display: grid; justify-items: end; gap: 0.375rem; flex: none; }
-.chore-sats { font-size: 1.25rem; font-weight: 600; }
-.chore-sats::after { content: " sats"; font-size: 0.8125rem; font-weight: 400; color: var(--tb-muted); }
+/* The job list: what it is on the left, what it earns and the next tap on the right. */
+.job-row { display: flex; align-items: center; justify-content: space-between; gap: 0.75rem; padding: 0.75rem 0; }
+.job-row + .job-row { border-top: 1px solid var(--tb-line); }
+.job-main { display: grid; gap: 0.25rem; min-width: 0; }
+.job-title { font-size: 1.125rem; font-weight: 600; overflow-wrap: anywhere; }
+.job-meta { display: flex; flex-wrap: wrap; align-items: center; gap: 0.25rem 0.75rem; font-size: 0.875rem; }
+.job-side { display: grid; justify-items: end; gap: 0.375rem; flex: none; }
+.job-sats { font-size: 1.25rem; font-weight: 600; }
+.job-sats::after { content: " sats"; font-size: 0.8125rem; font-weight: 400; color: var(--tb-muted); }
 
-/* One chore's facts: the word on the left, the fact on the right. */
+/* One job's facts: the word on the left, the fact on the right. */
 .facts { display: grid; grid-template-columns: auto 1fr; gap: 0.375rem 1rem; }
 .facts dt { color: var(--tb-muted); }
 .facts dd { text-align: right; overflow-wrap: anywhere; }
@@ -173,7 +173,7 @@ table.ledger tr.grade-given td { background: color-mix(in srgb, var(--gold) 22%,
   font-family: var(--font-mono); font-size: 0.75rem; padding: 0.5rem; border-radius: 0.5rem; background: var(--tb-surface-2);
 }
 
-/* The new-chore form's grades. */
+/* The new-job form's grades. */
 .grade-row { display: grid; grid-template-columns: minmax(6rem, 1fr) minmax(6rem, 2fr) 6.5rem auto; gap: 0.5rem; align-items: center; }
 @media (max-width: 36rem) {
   .grade-row { grid-template-columns: 1fr 6.5rem auto; }
@@ -250,21 +250,21 @@ table.ledger tr.grade-given td { background: color-mix(in srgb, var(--gold) 22%,
 }
 .face-big { width: 2.75rem; height: 2.75rem; font-size: 1.25rem; }
 
-/* A chore: a card with its picture, its coin, and one big button. */
-.chore-list { display: grid; gap: 0.75rem; }
-.chore { background: var(--tb-surface); border: 2px solid var(--tb-line); border-radius: 1.25rem; overflow: hidden; }
-.chore-yours { border-color: var(--tb-accent); }
-.chore-finished { opacity: 0.8; }
-.chore-open { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 0.875rem; padding: 0.875rem 1rem; }
-.chore-open:hover { background: var(--tb-surface-2); }
-.chore-picture { font-size: 2.25rem; line-height: 1; }
-.chore-words { display: grid; gap: 0.25rem; min-width: 0; }
-.chore-title { font-size: 1.25rem; font-weight: 700; overflow-wrap: anywhere; }
-.chore-meta { font-size: 0.9375rem; }
-.chore-foot { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 0.75rem; padding: 0 1rem 0.875rem; }
-.chore-head { display: flex; align-items: center; gap: 0.75rem; font-size: 1.75rem; font-weight: 700; overflow-wrap: anywhere; }
+/* A job: a card with its picture, its coin, and one big button. */
+.job-list { display: grid; gap: 0.75rem; }
+.job { background: var(--tb-surface); border: 2px solid var(--tb-line); border-radius: 1.25rem; overflow: hidden; }
+.job-yours { border-color: var(--tb-accent); }
+.job-finished { opacity: 0.8; }
+.job-open { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 0.875rem; padding: 0.875rem 1rem; }
+.job-open:hover { background: var(--tb-surface-2); }
+.job-picture { font-size: 2.25rem; line-height: 1; }
+.job-words { display: grid; gap: 0.25rem; min-width: 0; }
+.job-title { font-size: 1.25rem; font-weight: 700; overflow-wrap: anywhere; }
+.job-meta { font-size: 0.9375rem; }
+.job-foot { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 0.75rem; padding: 0 1rem 0.875rem; }
+.job-head { display: flex; align-items: center; gap: 0.75rem; font-size: 1.75rem; font-weight: 700; overflow-wrap: anywhere; }
 
-/* What a chore earns, as a gold coin. */
+/* What a job earns, as a gold coin. */
 .coin {
   display: inline-grid; place-items: center; min-width: 4rem; height: 4rem; padding: 0 0.625rem; border-radius: 999px;
   font-size: 1.125rem; font-weight: 800; color: var(--on-gold);
@@ -288,7 +288,7 @@ table.ledger tr.grade-given td { background: color-mix(in srgb, var(--gold) 22%,
   background: var(--gold); color: var(--on-gold);
 }
 
-/* The new-chore form: pictures and people to tap. */
+/* The new-job form: pictures and people to tap. */
 .pictures { display: flex; flex-wrap: wrap; gap: 0.5rem; }
 .picture {
   width: 3.5rem; height: 3.5rem; font-size: 1.875rem; line-height: 1; border-radius: 1rem;
@@ -307,7 +307,7 @@ table.ledger tr.grade-given td { background: color-mix(in srgb, var(--gold) 22%,
 .how-steps li { display: flex; align-items: center; gap: 0.75rem; }
 .how-steps li > span { font-size: 1.5rem; width: 2rem; text-align: center; }
 
-/* Sample chores and lessons: cards a parent reads and a child can follow. */
+/* Sample jobs and lessons: cards a parent reads and a child can follow. */
 .section-title { font-size: 1.375rem; font-weight: 700; }
 .samples, .lessons { display: grid; gap: 0.75rem; grid-template-columns: repeat(auto-fit, minmax(min(100%, 19rem), 1fr)); }
 .sample, .lesson { display: grid; gap: 0.5rem; align-content: start; }
@@ -330,7 +330,7 @@ table.ledger tr.grade-given td { background: color-mix(in srgb, var(--gold) 22%,
 .starters .pick { text-align: left; }
 .hero-lines { display: grid; gap: 0.25rem; font-size: 1.125rem; }
 
-/* Finding chores: a search box, three orders, and the month. */
+/* Finding jobs: a search box, three orders, and the month. */
 .browse { display: grid; gap: 0.625rem; }
 .browse-search { display: flex; align-items: center; gap: 0.5rem; color: var(--tb-muted); }
 .browse-search .field { flex: 1; min-width: 0; }

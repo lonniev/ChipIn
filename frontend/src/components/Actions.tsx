@@ -1,5 +1,5 @@
 /**
- * The buttons a chore offers the signed-in person: large, and well apart.
+ * The buttons a job offers the signed-in person: large, and well apart.
  * A move that takes something back asks for a second tap. A move that needs
  * words (a grade, a reason) opens a small form in place.
  */
@@ -27,9 +27,9 @@ type Asking = "grade" | "decide" | "reject" | "appeal" | null;
 export default function Actions({ task, onChanged, onPay, quick = false }: {
   task: Task;
   onChanged: (task: Task) => void;
-  /** Open the invoice; the chore page owns it. */
+  /** Open the invoice; the job page owns it. */
   onPay?: () => void;
-  /** On a list card: only the one-tap moves that carry a chore forward. */
+  /** On a list card: only the one-tap moves that carry a job forward. */
   quick?: boolean;
 }) {
   const [busy, setBusy] = useState(false);

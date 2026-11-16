@@ -95,7 +95,7 @@ export const quotes: QuoteText[] = [
     author: "John Heywood"
   },
   {
-    text: "Le plus beau cadeau que la vie puisse offrir, et de loin, c'est la chance de travailler dur à une tâche qui en vaut la peine.",
+    text: "Le plus beau cadeau que la vie puisse offrir, et de loin, c'est la chance de travailler dur à un travail qui en vaut la peine.",
     author: "Theodore Roosevelt"
   }
 ];

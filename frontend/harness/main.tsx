@@ -4,9 +4,9 @@
  * Look around (`src/lib/sampleFamily.ts`).
  *
  *   (none)          Sam's board        ?view=mom       Mom's board
- *   ?view=sheet     Mom's owed chore, with its invoice
- *   ?view=ask       Sam's owed chore, asking for his sats
- *   ?view=check     Mom's chore to grade
+ *   ?view=sheet     Mom's owed job, with its invoice
+ *   ?view=ask       Sam's owed job, asking for his sats
+ *   ?view=check     Mom's job to grade
  *   ?view=savings   Sam's savings, with a sample price
  *   &theme=dark
  */
@@ -15,8 +15,8 @@ import { MemoryRouter } from "react-router-dom";
 import { useSamples, useT } from "../src/i18n/I18nContext";
 import { SampleFamilyProvider } from "../src/lib/FamilyContext";
 import { sampleMembers, samplePayout, sampleTasks, viewerNpub, type Viewer } from "../src/lib/sampleFamily";
-import { Sheet } from "../src/views/Chore";
-import { Board } from "../src/views/Chores";
+import { Sheet } from "../src/views/Job";
+import { Board } from "../src/views/Jobs";
 import { SavingsSheet, WorthPanel } from "../src/views/Savings";
 import "../src/index.css";
 
@@ -46,7 +46,7 @@ function Pages() {
         )}
         {!one && view !== "savings" && (
           <>
-            <h1 className="text-3xl font-bold">{t("chores.title")}</h1>
+            <h1 className="text-3xl font-bold">{t("jobs.title")}</h1>
             <Board tasks={tasks} me={viewerNpub(viewer)} now={now} onChanged={() => {}} />
           </>
         )}
