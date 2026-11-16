@@ -1,0 +1,2 @@
+- A job's details can be written in Markdown: headings, bold and italic, lists and checklists, links, quotes, tables, pictures from https addresses, and code blocks. A "Bigger editor" button opens a full-screen sheet with formatting buttons and a preview; the job page shows the details formatted. Nothing in them can run: raw HTML is never drawn, links go only to web pages and email, and the details stay within 4,000 letters.
+- The details box on the job form keeps its five-line height on iPad, where it had shrunk to two.

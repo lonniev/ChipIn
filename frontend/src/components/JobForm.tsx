@@ -4,12 +4,15 @@
  * Every text box grows with what is written.
  */
 
-import { useState } from "react";
+import { lazy, Suspense, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { Minus, Plus, Trash2, UserPlus } from "lucide-react";
+import { Maximize2, Minus, Plus, Trash2, UserPlus } from "lucide-react";
 import { useAppShell } from "@tollbooth-dpyc/web/react";
 import { jobHref, Face } from "./Links";
 import GrowText from "./GrowText";
+
+// The big editor and its Markdown preview load only when opened.
+const SpecEditor = lazy(() => import("./SpecEditor"));
 import { useT } from "../i18n";
 import { useSamples } from "../lib/content";
 import type { MessageKey } from "../i18n/en";
@@ -58,6 +61,7 @@ export default function JobForm({ editing }: { editing?: Task }) {
   const [latePct, setLatePct] = useState(editing?.late.kind === "discount" ? String(editing.late.pct_per_day) : "10");
   const [problem, setProblem] = useState("");
   const [busy, setBusy] = useState(false);
+  const [big, setBig] = useState(false);
 
   const people = [{ npub: session.npub, name: t("newJob.me") }, ...members.filter((m) => m.npub !== session.npub)];
   const toggle = (npub: string) => setWho((list) => (list.includes(npub) ? list.filter((n) => n !== npub) : [...list, npub]));
@@ -128,11 +132,19 @@ export default function JobForm({ editing }: { editing?: Task }) {
           <GrowText oneLine className="field-title" value={title} onText={setTitle} maxLength={TITLE_MAX} placeholder={t("newJob.whatPlaceholder")} />
         </label>
 
-        <label className="grid gap-1">
-          <span className="label">{t("newJob.where")}</span>
-          <GrowText minRows={5} value={description} onText={setDescription} maxLength={DETAILS_MAX} placeholder={t("newJob.wherePlaceholder")} />
+        <div className="grid gap-1">
+          <div className="flex items-end justify-between gap-2">
+            <label htmlFor="job-details" className="label">{t("newJob.where")}</label>
+            <button type="button" className="chip" onClick={() => setBig(true)}><Maximize2 size={16} aria-hidden />{t("spec.open")}</button>
+          </div>
+          <GrowText id="job-details" minRows={5} value={description} onText={setDescription} maxLength={DETAILS_MAX} placeholder={t("newJob.wherePlaceholder")} />
           {left <= COUNT_FROM && <span className="muted text-right text-sm num">{t("newJob.charsLeft", { count: left })}</span>}
-        </label>
+          {big && (
+            <Suspense fallback={null}>
+              <SpecEditor value={description} maxLength={DETAILS_MAX} onDone={(text) => { setDescription(text); setBig(false); }} />
+            </Suspense>
+          )}
+        </div>
 
         <fieldset className="grid gap-2">
           <legend className="label">{t("newJob.who")}</legend>
