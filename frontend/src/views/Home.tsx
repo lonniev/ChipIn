@@ -2,16 +2,14 @@
 
 import { Link } from "react-router-dom";
 import SampleCard from "../components/SampleCard";
-import { artFor } from "../lib/lessonArt";
-import { usePictures } from "../lib/PicturesContext";
+import { useLessonArt } from "../lib/PicturesContext";
 import { SAMPLE_CHORES } from "../lib/samples";
 
 /** One of each rhythm: a daily habit, a weekly job, a big one-off, and a kindness. */
 const SHOWN = [0, 2, 4, 6].map((i) => SAMPLE_CHORES[i]);
 
 export default function Home() {
-  const { set } = usePictures();
-  const scene = artFor("earn-it", set);
+  const scene = useLessonArt("earn-it");
   return (
     <div className="page grid gap-4 py-6">
       <section className="card grid gap-4 p-6">

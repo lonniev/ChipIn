@@ -1,0 +1,2 @@
+- A guest sees the site in their device's light or dark setting.
+- A guest sees a different family in each lesson painting, drawn afresh each time. Signed in, a family sees the set it chose; the choice is offered on Family and on Learn once signed in.

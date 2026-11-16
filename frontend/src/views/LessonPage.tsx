@@ -2,14 +2,13 @@
 
 import { ArrowLeft, ArrowRight, ExternalLink } from "lucide-react";
 import { Link, Navigate, useParams } from "react-router-dom";
-import { artFor } from "../lib/lessonArt";
 import { lessonAt, LESSONS } from "../lib/lessons";
-import { usePictures } from "../lib/PicturesContext";
+import { useLessonArt } from "../lib/PicturesContext";
 
 export default function LessonPage() {
   const { slug = "" } = useParams();
   const lesson = lessonAt(slug);
-  const { set } = usePictures();
+  const art = useLessonArt(slug);
   if (!lesson) return <Navigate to="/learn" replace />;
   const next = LESSONS[(LESSONS.indexOf(lesson) + 1) % LESSONS.length];
 
@@ -19,7 +18,7 @@ export default function LessonPage() {
         <Link to="/learn" className="btn btn-quiet"><ArrowLeft size={22} aria-hidden />Learn</Link>
       </div>
       <article className="card panel lesson lesson-long">
-        {artFor(lesson.slug, set) && <img src={artFor(lesson.slug, set)} alt="" className="lesson-art" width={960} height={644} />}
+        {art && <img src={art} alt="" className="lesson-art" width={960} height={644} />}
         <h1 className="lesson-head"><span aria-hidden>{lesson.picture}</span>{lesson.title}</h1>
         {lesson.lines.map((line) => <p key={line} className="lesson-lead">{line}</p>)}
         {lesson.more.map((line) => <p key={line}>{line}</p>)}
