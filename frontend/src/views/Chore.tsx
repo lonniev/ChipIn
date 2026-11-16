@@ -10,6 +10,8 @@ import RequestPanel from "../components/RequestPanel";
 import { People, PersonLink } from "../components/Links";
 import StandingBadge from "../components/StandingBadge";
 import Waiting from "../components/Waiting";
+import { useLocale, useT } from "../i18n/I18nContext";
+import { say } from "../i18n/translate";
 import { useFamily } from "../lib/FamilyContext";
 import { splitPicture } from "../lib/face";
 import { byReward } from "../lib/rubric";
@@ -19,6 +21,8 @@ import { dueText, repeatText } from "../lib/when";
 
 function History({ taskId }: { taskId: string }) {
   const { name } = useFamily();
+  const t = useT();
+  const locale = useLocale();
   const [events, setEvents] = useState<TaskEvent[] | null>(null);
   const [problem, setProblem] = useState("");
 
@@ -33,15 +37,15 @@ function History({ taskId }: { taskId: string }) {
 
   return (
     <details className="card panel" onToggle={(e) => void open(e.currentTarget.open)}>
-      <summary className="panel-title cursor-pointer">History</summary>
+      <summary className="panel-title cursor-pointer">{t("history.title")}</summary>
       {problem && <p className="error mt-2">{problem}</p>}
-      {!events && !problem && <p className="muted mt-2">Fetching…</p>}
+      {!events && !problem && <p className="muted mt-2">{t("history.fetching")}</p>}
       {events && (
         <ul className="mt-2">
           {events.map((e) => (
             <li key={e.seq} className="history-row">
               <span>{name(e.actor)} · {e.action.replace(/_/g, " ")}{e.grade ? ` · ${e.grade}` : ""}</span>
-              <time className="muted num" dateTime={new Date(e.at * 1000).toISOString()}>{new Date(e.at * 1000).toLocaleString()}</time>
+              <time className="muted num" dateTime={new Date(e.at * 1000).toISOString()}>{new Date(e.at * 1000).toLocaleString(locale)}</time>
             </li>
           ))}
         </ul>
@@ -55,6 +59,7 @@ export function Sheet({ task, payout, now, onChanged, onPay, onRequested = () =>
   task: Task; payout: Payout | null; now: number; onChanged: (t: Task) => void; onPay: () => void;
   onRequested?: (p: Payout) => void; paying?: boolean; problem?: string;
 }) {
+  const t = useT();
   const graded = task.assessment;
   const { picture, rest } = splitPicture(task.title);
   const owed = task.standing === "owed";
@@ -72,48 +77,48 @@ export function Sheet({ task, payout, now, onChanged, onPay, onRequested = () =>
         </div>
         {task.description && <p className="whitespace-pre-wrap">{task.description}</p>}
         <dl className="facts">
-          <dt>Due</dt><dd>{dueText(task.needed_by, now)}{task.every_days > 0 && <> · <Repeat size={14} aria-hidden className="inline" /> {repeatText(task.every_days)}</>}</dd>
-          <dt>Posted by</dt><dd><PersonLink npub={task.purchaser} /></dd>
+          <dt>{t("chore.due")}</dt><dd>{say(t, dueText(task.needed_by, now))}{task.every_days > 0 && <> · <Repeat size={14} aria-hidden className="inline" /> {say(t, repeatText(task.every_days))}</>}</dd>
+          <dt>{t("chore.postedBy")}</dt><dd><PersonLink npub={task.purchaser} /></dd>
           {task.performer
-            ? <><dt>Doing it</dt><dd><PersonLink npub={task.performer} /></dd></>
-            : <><dt>Who may do it</dt><dd><People npubs={task.audience} /></dd></>}
-          {graded && <><dt>Grade</dt><dd>{graded.grade} · <span className="num">{formatSats(graded.sats)} sats</span>{!task.final && " · waiting to be accepted"}</dd></>}
+            ? <><dt>{t("chore.doingIt")}</dt><dd><PersonLink npub={task.performer} /></dd></>
+            : <><dt>{t("chore.whoMay")}</dt><dd><People npubs={task.audience} /></dd></>}
+          {graded && <><dt>{t("chore.grade")}</dt><dd>{graded.grade} · <span className="num">{t("sats.amount", { sats: formatSats(graded.sats) })}</span>{!task.final && ` · ${t("chore.waitingAccepted")}`}</dd></>}
         </dl>
-        {graded?.reasons && <p className="muted">“{graded.reasons}”</p>}
-        {graded?.appeal?.reasons && <p className="muted">Appeal: “{graded.appeal.reasons}”</p>}
-        {task.rejection?.reasons && <p className="muted">“{task.rejection.reasons}”</p>}
+        {graded?.reasons && <p className="muted">{t("quote.marks", { text: graded.reasons })}</p>}
+        {graded?.appeal?.reasons && <p className="muted">{t("chore.appealQuote", { reasons: graded.appeal.reasons })}</p>}
+        {task.rejection?.reasons && <p className="muted">{t("quote.marks", { text: task.rejection.reasons })}</p>}
         {task.standing === "paid" && graded && (
-          <p className="paid-banner"><span aria-hidden>🎉</span> Paid <span className="num">{formatSats(graded.sats)}</span> sats</p>
+          <p className="paid-banner"><span aria-hidden>🎉</span> {t.rich("chore.paidBanner", { sats: <span className="num">{formatSats(graded.sats)}</span> })}</p>
         )}
         <Actions task={task} onChanged={onChanged} onPay={onPay} />
-        {paying && <p className="muted text-right">Asking for the invoice…</p>}
+        {paying && <p className="muted text-right">{t("chore.askingInvoice")}</p>}
         {waiting && task.performer && !mayAsk && (
-          <p className="muted text-right"><span aria-hidden>⏳</span> <PersonLink npub={task.performer} /> asks for their sats first.</p>
+          <p className="muted text-right"><span aria-hidden>⏳</span> {t.rich("chore.asksFirst", { person: <PersonLink npub={task.performer} /> })}</p>
         )}
         {problem && !waiting && <p className="error text-right">{problem}</p>}
       </section>
 
       {mayAsk && graded && (
         <section className="card panel grid gap-2">
-          <h2 className="panel-title">Get your sats</h2>
+          <h2 className="panel-title">{t("chore.getYourSats")}</h2>
           <RequestPanel taskId={task.task_id} sats={graded.sats} onTaken={onRequested} />
         </section>
       )}
 
       {owed && live && (
         <section className="card panel grid gap-2">
-          <h2 className="panel-title text-right">{mayPay ? "Pay from your wallet" : "The invoice"}</h2>
+          <h2 className="panel-title text-right">{mayPay ? t("chore.payFromWallet") : t("chore.theInvoice")}</h2>
           <InvoicePanel payout={live} now={now} />
           {task.performer && (
             <p className="muted text-right text-sm">
-              The sats go straight to <PersonLink npub={task.performer} />, who taps “I got it!” when they arrive.
+              {t.rich("chore.satsGoStraight", { person: <PersonLink npub={task.performer} /> })}
             </p>
           )}
         </section>
       )}
 
       <section className="card panel">
-        <h2 className="panel-title mb-1">Rewards</h2>
+        <h2 className="panel-title mb-1">{t("chore.rewards")}</h2>
         <table className="ledger">
           <tbody>
             {byReward(task.rubric.grades).map((g) => (
@@ -133,6 +138,7 @@ export function Sheet({ task, payout, now, onChanged, onPay, onRequested = () =>
 
 export default function Chore() {
   const { taskId = "" } = useParams();
+  const t = useT();
   const [task, setTask] = useState<Task | null>(null);
   const [payout, setPayout] = useState<Payout | null>(null);
   const [problem, setProblem] = useState("");
@@ -172,7 +178,7 @@ export default function Chore() {
     return (
       <div className="page">
         <div className="card panel">
-          {problem ? <p className="error">{problem}</p> : <Waiting heading="Fetching the chore…" />}
+          {problem ? <p className="error">{problem}</p> : <Waiting heading={t("waiting.fetchingChore")} />}
         </div>
       </div>
     );
@@ -181,8 +187,8 @@ export default function Chore() {
   return (
     <div className="page grid gap-3">
       <div className="toolbar">
-        <Link to="/chores" className="btn btn-quiet"><ArrowLeft size={22} aria-hidden />Chores</Link>
-        <button type="button" className="icon-btn" onClick={() => void load()} disabled={loading} aria-label="Look again" title="Look again">
+        <Link to="/chores" className="btn btn-quiet"><ArrowLeft size={22} aria-hidden />{t("nav.chores")}</Link>
+        <button type="button" className="icon-btn" onClick={() => void load()} disabled={loading} aria-label={t("actions.lookAgain")} title={t("actions.lookAgain")}>
           <RefreshCw size={22} aria-hidden />
         </button>
       </div>

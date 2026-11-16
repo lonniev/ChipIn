@@ -1,5 +1,8 @@
 /** A chore's rewards: the grades, and the sats each one earns. */
 
+import type { MessageKey } from "../i18n/en.ts";
+import type { Said } from "../i18n/translate.ts";
+
 export interface Grade {
   name: string;
   sats: number;
@@ -21,11 +24,14 @@ export interface GradeRow {
 export const MAX_GRADES = 12;
 export const MAX_GRADE_SATS = 100_000_000;
 
-export const STARTER_ROWS: GradeRow[] = [
-  { name: "Great job", sats: "1000", criteria: "" },
-  { name: "Good enough", sats: "500", criteria: "" },
-  { name: "Not done", sats: "0", criteria: "" },
-];
+/** The grades a new chore starts with, named in the language on screen. */
+export function starterRows(name: (key: MessageKey) => string): GradeRow[] {
+  return [
+    { name: name("rubric.starter.great"), sats: "1000", criteria: "" },
+    { name: name("rubric.starter.good"), sats: "500", criteria: "" },
+    { name: name("rubric.starter.none"), sats: "0", criteria: "" },
+  ];
+}
 
 /** The most a chore can earn. */
 export function topSats(rubric: Pick<Rubric, "grades">): number {
@@ -37,23 +43,23 @@ export function byReward(grades: Grade[]): Grade[] {
   return [...grades].sort((a, b) => b.sats - a.sats);
 }
 
-/** The form's rows as a rubric, or the sentence that says what to fix. */
-export function rubricFrom(rows: GradeRow[]): { rubric: Rubric } | { problem: string } {
+/** The form's rows as a rubric, or the message that says what to fix. */
+export function rubricFrom(rows: GradeRow[]): { rubric: Rubric } | { problem: Said } {
   const filled = rows.filter((r) => r.name.trim() || r.sats.trim());
-  if (!filled.length) return { problem: "Add at least one grade." };
-  if (filled.length > MAX_GRADES) return { problem: `A chore has at most ${MAX_GRADES} grades.` };
+  if (!filled.length) return { problem: { key: "rubric.needOne" } };
+  if (filled.length > MAX_GRADES) return { problem: { key: "rubric.tooMany", vars: { max: MAX_GRADES } } };
   const grades: Grade[] = [];
   const seen = new Set<string>();
   for (const row of filled) {
     const name = row.name.trim();
-    if (!name) return { problem: "Every grade needs a name." };
-    if (name.length > 60) return { problem: `"${name.slice(0, 20)}…" is longer than 60 characters.` };
+    if (!name) return { problem: { key: "rubric.needName" } };
+    if (name.length > 60) return { problem: { key: "rubric.nameLong", vars: { name: name.slice(0, 20) } } };
     const key = name.toLowerCase();
-    if (seen.has(key)) return { problem: `Two grades are named "${name}".` };
+    if (seen.has(key)) return { problem: { key: "rubric.twoNamed", vars: { name } } };
     seen.add(key);
-    if (!/^\d+$/.test(row.sats.trim())) return { problem: `"${name}" needs a whole number of sats.` };
+    if (!/^\d+$/.test(row.sats.trim())) return { problem: { key: "rubric.wholeNumber", vars: { name } } };
     const sats = Number(row.sats.trim());
-    if (sats > MAX_GRADE_SATS) return { problem: `"${name}" earns more than ${MAX_GRADE_SATS} sats.` };
+    if (sats > MAX_GRADE_SATS) return { problem: { key: "rubric.tooMuch", vars: { name, max: MAX_GRADE_SATS } } };
     grades.push({ name, sats, criteria: row.criteria.trim().slice(0, 500) });
   }
   return { rubric: { grades, appeal: "" } };

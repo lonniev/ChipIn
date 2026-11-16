@@ -1,6 +1,8 @@
 /** Your account: where you get paid, then the package's panels in their one order. */
 
 import CalendarFeed from "../components/CalendarFeed";
+import { useLanguage, useT } from "../i18n/I18nContext";
+import { LANGUAGES } from "../i18n/languages";
 import { useEffect, useState } from "react";
 import { Check } from "lucide-react";
 import { getMyProperties, setMyProperty } from "@tollbooth-dpyc/web";
@@ -34,6 +36,7 @@ function PayoutAddress() {
   const [saved, setSaved] = useState("");
   const [problem, setProblem] = useState("");
   const [busy, setBusy] = useState(false);
+  const t = useT();
 
   useEffect(() => {
     let live = true;
@@ -54,7 +57,7 @@ function PayoutAddress() {
     setProblem("");
     try {
       const r = await setMyProperty("payout_address", address.trim());
-      if (r.success === false) throw new Error(r.error ?? "The address was not saved.");
+      if (r.success === false) throw new Error(r.error ?? t("profile.payout.notSaved"));
       setSaved(address.trim());
     } catch (e) {
       setProblem((e as Error).message);
@@ -65,18 +68,36 @@ function PayoutAddress() {
 
   return (
     <section className="card panel grid gap-2" {...tourTarget("account.payout")}>
-      <h2 className="panel-title">Where you get paid</h2>
-      <p className="muted text-sm">If your wallet gives you a Lightning address, put it here and your sats arrive with no extra step. It looks like an email address. You can skip this.</p>
+      <h2 className="panel-title">{t("profile.payout.title")}</h2>
+      <p className="muted text-sm">{t("profile.payout.says")}</p>
       <form className="flex flex-wrap items-center justify-end gap-2" onSubmit={(e) => { e.preventDefault(); void save(); }}>
         <input
           className="field flex-1" value={address} onChange={(e) => setAddress(e.target.value)}
-          placeholder="name@wallet.example" aria-label="Lightning address" inputMode="email" autoCapitalize="none" spellCheck={false}
+          placeholder={t("profile.payout.placeholder")} aria-label={t("profile.payout.label")} inputMode="email" autoCapitalize="none" spellCheck={false}
         />
         <button type="submit" className="chip chip-accent" disabled={busy || address.trim() === saved}>
-          {saved && address.trim() === saved ? <><Check size={16} aria-hidden />Saved</> : "Save"}
+          {saved && address.trim() === saved ? <><Check size={16} aria-hidden />{t("profile.payout.saved")}</> : t("profile.payout.save")}
         </button>
       </form>
       {problem && <p className="error text-right">{problem}</p>}
+    </section>
+  );
+}
+
+/** The language the site is shown in. Each button reads in its own language, so anyone can find theirs. */
+function LanguageChoice() {
+  const { language, choose } = useLanguage();
+  const t = useT();
+  return (
+    <section className="card panel grid gap-2" id="language">
+      <h2 className="panel-title">{t("language.title")}</h2>
+      <div className="flex flex-wrap gap-2" role="group" aria-label={t("language.title")}>
+        {LANGUAGES.map((l) => (
+          <button key={l.code} type="button" lang={l.code} className={l.code === language ? "pick pick-on" : "pick"} aria-pressed={l.code === language} onClick={() => choose(l.code)}>
+            {l.name}
+          </button>
+        ))}
+      </div>
     </section>
   );
 }
@@ -89,7 +110,7 @@ export default function Profile() {
       <AccountPage
         npub={session.npub}
         heading={null}
-        before={<><PayoutAddress /><CalendarFeed /></>}
+        before={<><PayoutAddress /><CalendarFeed /><LanguageChoice /></>}
         usage={{ classNames: USAGE }}
         theme={{ classNames: { chip: "chip", active: "chip chip-on" } }}
         timezone={{ classNames: { select: "field" } }}

@@ -6,6 +6,7 @@
 import { useState } from "react";
 import { ClipboardPaste, Send } from "lucide-react";
 import { formatSats } from "@tollbooth-dpyc/web";
+import { useT } from "../i18n/I18nContext";
 import { useLooking } from "../lib/LookContext";
 import { looksLikeInvoice } from "../lib/problems";
 import { handInInvoice, type Payout } from "../lib/tasks";
@@ -16,11 +17,12 @@ export default function RequestPanel({ taskId, sats, onTaken }: { taskId: string
   const [problem, setProblem] = useState("");
 
   const looking = useLooking();
+  const t = useT();
 
   async function send(invoice: string) {
-    if (looking) return setProblem("This is a sample. Sign in to be paid for real.");
+    if (looking) return setProblem(t("request.sample"));
     if (!looksLikeInvoice(invoice)) {
-      setProblem("That is not a request from a wallet. Copy the whole thing and try again.");
+      setProblem(t("request.notRequest"));
       return;
     }
     setBusy(true);
@@ -35,31 +37,31 @@ export default function RequestPanel({ taskId, sats, onTaken }: { taskId: string
   }
 
   async function paste() {
-    if (looking) return setProblem("This is a sample. Sign in to be paid for real.");
+    if (looking) return setProblem(t("request.sample"));
     try {
       const copied = await navigator.clipboard.readText();
       setText(copied);
       await send(copied);
     } catch {
-      setProblem("Paste it into the box below.");
+      setProblem(t("request.pasteBelow"));
     }
   }
 
   return (
     <div className="grid gap-3">
       <ol className="how-steps">
-        <li><span aria-hidden>📱</span>Open your wallet.</li>
-        <li><span aria-hidden>⬇️</span>Tap Receive.</li>
-        <li><span aria-hidden>🪙</span>Ask for <strong className="num">{formatSats(sats)}</strong> sats.</li>
-        <li><span aria-hidden>📋</span>Copy it, then come back.</li>
+        <li><span aria-hidden>📱</span>{t("request.step.open")}</li>
+        <li><span aria-hidden>⬇️</span>{t("request.step.receive")}</li>
+        <li><span aria-hidden>🪙</span>{t.rich("request.step.ask", { sats: <strong className="num">{formatSats(sats)}</strong> })}</li>
+        <li><span aria-hidden>📋</span>{t("request.step.copy")}</li>
       </ol>
       <button type="button" className="btn btn-money" disabled={busy} onClick={() => void paste()}>
-        <ClipboardPaste size={22} aria-hidden />Paste it here
+        <ClipboardPaste size={22} aria-hidden />{t("request.paste")}
       </button>
       <div className="flex gap-2">
         <input className="field min-w-0 flex-1" value={text} onChange={(e) => setText(e.target.value)}
-          placeholder="lnbc…" aria-label="Request from your wallet" autoCapitalize="none" autoCorrect="off" spellCheck={false} />
-        <button type="button" className="btn btn-quiet" disabled={busy || !text.trim()} onClick={() => void send(text)} aria-label="Send it">
+          placeholder="lnbc…" aria-label={t("request.fromWallet")} autoCapitalize="none" autoCorrect="off" spellCheck={false} />
+        <button type="button" className="btn btn-quiet" disabled={busy || !text.trim()} onClick={() => void send(text)} aria-label={t("request.send")}>
           <Send size={22} aria-hidden />
         </button>
       </div>

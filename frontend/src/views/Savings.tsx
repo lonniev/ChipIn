@@ -8,6 +8,7 @@ import { useAppShell } from "@tollbooth-dpyc/web/react";
 import GrowthChart from "../components/GrowthChart";
 import WorthChart from "../components/WorthChart";
 import Waiting from "../components/Waiting";
+import { useLessons, useLocale, useT } from "../i18n/I18nContext";
 import { earningsOf } from "../lib/earnings";
 import { asBitcoin, carriedForward, perWeek, runningTotal } from "../lib/savings";
 import { btcPrice, listTasks, type PriceReading, type Task } from "../lib/tasks";
@@ -30,42 +31,50 @@ export function WorthPanel({ earned, ahead, now, fiat, onFiat, reading, problem 
   earned: number; ahead: { at: number; sats: number }[]; now: number; fiat: Fiat; onFiat: (f: Fiat) => void;
   reading: PriceReading | null; problem: string;
 }) {
+  const t = useT();
+  const locale = useLocale();
   const growth = reading ? yearlyGrowth(reading) : null;
   const points = reading ? worthAhead(ahead, reading.price, growth, now) : [];
   const end = points[points.length - 1];
-  const seen = reading ? new Date(reading.observed_at * 1000).toLocaleString(undefined, { dateStyle: "medium", timeStyle: "short" }) : "";
+  const seen = reading ? new Date(reading.observed_at * 1000).toLocaleString(locale, { dateStyle: "medium", timeStyle: "short" }) : "";
   return (
     <section className="card panel grid gap-2">
       <div className="toolbar">
-        <h2 className="panel-title">In your money</h2>
-        <div className="flex flex-wrap gap-1" role="group" aria-label="Currency">
+        <h2 className="panel-title">{t("worth.title")}</h2>
+        <div className="flex flex-wrap gap-1" role="group" aria-label={t("worth.currency")}>
           {FIATS.map((f) => (
             <button key={f} type="button" className={f === fiat ? "chip chip-on" : "chip"} aria-pressed={f === fiat} onClick={() => onFiat(f)}>{f}</button>
           ))}
         </div>
       </div>
       {problem && <p className="error text-right">{problem}</p>}
-      {!reading && !problem && <p className="muted text-right">Asking what a bitcoin costs…</p>}
+      {!reading && !problem && <p className="muted text-right">{t("worth.asking")}</p>}
       {reading && end && (
         <>
           <dl className="facts">
-            <dt>Worth today</dt><dd className="num">{asMoney(worth(earned, reading.price), fiat)}</dd>
-            <dt>One bitcoin</dt><dd className="num">{asMoney(reading.price, fiat)}</dd>
+            <dt>{t("worth.today")}</dt><dd className="num">{asMoney(worth(earned, reading.price), fiat, locale)}</dd>
+            <dt>{t("worth.oneBitcoin")}</dt><dd className="num">{asMoney(reading.price, fiat, locale)}</dd>
           </dl>
           <WorthChart points={points} fiat={fiat} grows={!!growth} />
           <dl className="facts">
-            <dt>In a year, at today's price</dt><dd className="num">{asMoney(end.steady, fiat)}</dd>
-            {growth && <><dt>In a year, if bitcoin keeps its pace</dt><dd className="num">{asMoney(end.grown, fiat)}</dd></>}
+            <dt>{t("worth.yearSteady")}</dt><dd className="num">{asMoney(end.steady, fiat, locale)}</dd>
+            {growth && <><dt>{t("worth.yearGrown")}</dt><dd className="num">{asMoney(end.grown, fiat, locale)}</dd></>}
           </dl>
           {growth && (
             <p className="muted text-sm">
-              Over the last {Math.round(growth.years)} years a bitcoin's price {growth.perYear >= 0 ? "grew" : "fell"} about{" "}
-              <span className="num">{Math.abs(Math.round(growth.perYear * 100))}%</span> a year in {fiat}.
+              {t.rich(growth.perYear >= 0 ? "worth.grew" : "worth.fell", {
+                years: Math.round(growth.years),
+                percent: <span className="num">{Math.abs(Math.round(growth.perYear * 100))}%</span>,
+                fiat,
+              })}
             </p>
           )}
-          <p className="muted text-sm">Nobody knows what it will do next. The price can fall as well as rise.</p>
+          <p className="muted text-sm">{t("worth.nobodyKnows")}</p>
           <p className="muted text-sm">
-            Price from <a href={reading.source_url} target="_blank" rel="noopener noreferrer" className="ent">{reading.source}</a>, seen {seen}.
+            {t.rich("worth.priceFrom", {
+              source: <a href={reading.source_url} target="_blank" rel="noopener noreferrer" className="ent">{reading.source}</a>,
+              when: seen,
+            })}
           </p>
         </>
       )}
@@ -74,6 +83,8 @@ export function WorthPanel({ earned, ahead, now, fiat, onFiat, reading, problem 
 }
 
 export function SavingsSheet({ tasks, me, now, worthPanel }: { tasks: Task[]; me: string; now: number; worthPanel?: (earned: number, ahead: { at: number; sats: number }[]) => React.ReactNode }) {
+  const t = useT();
+  const library = useLessons();
   const history = runningTotal(tasks, me);
   const { earned, coming } = earningsOf(tasks, me);
   const ahead = carriedForward(history, now);
@@ -84,9 +95,9 @@ export function SavingsSheet({ tasks, me, now, worthPanel }: { tasks: Task[]; me
     return (
       <div className="card panel empty">
         <span className="empty-picture" aria-hidden>🐷</span>
-        <p className="text-xl font-semibold">Nothing saved yet.</p>
-        <p className="muted">Your first paid chore starts the line.</p>
-        <Link to="/chores" className="btn btn-go">Go to your chores</Link>
+        <p className="text-xl font-semibold">{t("savings.nothing")}</p>
+        <p className="muted">{t("savings.firstPaid")}</p>
+        <Link to="/chores" className="btn btn-go">{t("chores.go")}</Link>
       </div>
     );
   }
@@ -95,36 +106,39 @@ export function SavingsSheet({ tasks, me, now, worthPanel }: { tasks: Task[]; me
     <>
       <div className="piggy">
         <div className="piggy-tile piggy-earned">
-          <span className="piggy-label">You earned</span>
+          <span className="piggy-label">{t("piggy.earned")}</span>
           <span className="piggy-sats num">{formatSats(earned)}</span>
           <span className="piggy-label num">₿ {asBitcoin(earned)}</span>
         </div>
         {coming > 0 && (
           <div className="piggy-tile">
-            <span className="piggy-label">On its way</span>
+            <span className="piggy-label">{t("piggy.coming")}</span>
             <span className="piggy-sats num">{formatSats(coming)}</span>
           </div>
         )}
       </div>
 
       <section className="card panel grid gap-2">
-        <h2 className="panel-title">A year from now</h2>
+        <h2 className="panel-title">{t("savings.yearFromNow")}</h2>
         <GrowthChart history={history} ahead={ahead} now={now} />
         <dl className="facts">
-          <dt>Your pace</dt><dd><span className="num">{formatSats(pace)}</span> sats a week</dd>
-          <dt>In a year, at that pace</dt><dd><span className="num">{formatSats(inAYear)}</span> sats</dd>
+          <dt>{t("savings.pace")}</dt><dd>{t.rich("savings.paceValue", { sats: <span className="num">{formatSats(pace)}</span> })}</dd>
+          <dt>{t("savings.inAYear")}</dt><dd>{t.rich("sats.amount", { sats: <span className="num">{formatSats(inAYear)}</span> })}</dd>
         </dl>
-        <p className="muted text-sm">The solid line is what you were paid. The dashed line is the same pace kept up.</p>
+        <p className="muted text-sm">{t("savings.lines")}</p>
       </section>
 
       {worthPanel?.(earned, ahead)}
 
       <section className="card panel grid gap-2">
-        <h2 className="panel-title">Where these sats are</h2>
-        <p>These are the sats ChipIn saw you paid for chores.</p>
-        <p>They sit in your own Lightning wallet, and only your wallet app knows its balance.</p>
-        <p>Open your wallet to see what you hold today.</p>
-        <p className="muted">Why save? <Link to="/learn/save-some" className="ent">Save some</Link> · <Link to="/learn/why-nobody-can-make-more" className="ent">Why can nobody make more?</Link></p>
+        <h2 className="panel-title">{t("savings.where.title")}</h2>
+        <p>{t("savings.where.saw")}</p>
+        <p>{t("savings.where.wallet")}</p>
+        <p>{t("savings.where.open")}</p>
+        <p className="muted">{t.rich("savings.whySave", {
+          saveSome: <Link to="/learn/save-some" className="ent">{library.at("save-some")?.title}</Link>,
+          whyScarce: <Link to="/learn/why-nobody-can-make-more" className="ent">{library.at("why-nobody-can-make-more")?.title}</Link>,
+        })}</p>
       </section>
     </>
   );
@@ -132,6 +146,7 @@ export function SavingsSheet({ tasks, me, now, worthPanel }: { tasks: Task[]; me
 
 export default function Savings() {
   const { session } = useAppShell();
+  const t = useT();
   const [tasks, setTasks] = useState<Task[] | null>(null);
   const [problem, setProblem] = useState("");
   const now = Math.floor(Date.now() / 1000);
@@ -159,9 +174,9 @@ export default function Savings() {
 
   return (
     <div className="page grid gap-4">
-      <h1 className="text-3xl font-bold">Savings</h1>
+      <h1 className="text-3xl font-bold">{t("savings.title")}</h1>
       {problem && <p className="card panel error">{problem}</p>}
-      {!tasks && !problem && <div className="card panel"><Waiting heading="Counting your sats…" /></div>}
+      {!tasks && !problem && <div className="card panel"><Waiting heading={t("waiting.counting")} /></div>}
       {tasks && (
         <SavingsSheet tasks={tasks} me={session.npub} now={now} worthPanel={(earned, ahead) => (
           <WorthPanel earned={earned} ahead={ahead} now={now} fiat={fiat} onFiat={choose} reading={reading} problem={priceProblem} />

@@ -31,9 +31,9 @@ test("members sort by name, and removing one leaves the rest", () => {
 
 test("a person is You, their name here, or a short npub", () => {
   const list = withMember([], A, "Sam");
-  assert.equal(nameOf(list, A, B), "Sam");
-  assert.equal(nameOf(list, A, A), "You");
-  assert.equal(nameOf(list, B, A), shortNpub(B));
+  assert.equal(nameOf(list, A, B, "You"), "Sam");
+  assert.equal(nameOf(list, A, A, "You"), "You");
+  assert.equal(nameOf(list, B, A, "You"), shortNpub(B));
   assert.equal(shortNpub(B), "npub1pppp…pppp");
 });
 

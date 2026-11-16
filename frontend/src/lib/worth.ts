@@ -57,7 +57,7 @@ export function worthAhead(ahead: Point[], price: number, growth: Growth | null,
   });
 }
 
-/** Money as the person's device writes it: "$1.23", "¥190". Small sums keep their cents. */
-export function asMoney(amount: number, fiat: string): string {
-  return new Intl.NumberFormat(undefined, { style: "currency", currency: fiat, maximumFractionDigits: amount >= 100 ? 0 : 2 }).format(amount);
+/** Money as the language on screen writes it, or the device's own way with none given: "$1.23", "¥190". Small sums keep their cents. */
+export function asMoney(amount: number, fiat: string, locale?: string): string {
+  return new Intl.NumberFormat(locale, { style: "currency", currency: fiat, maximumFractionDigits: amount >= 100 ? 0 : 2 }).format(amount);
 }

@@ -3,8 +3,10 @@
  * Nothing here is sent to Task Booth, and none of these ids is a real key.
  */
 
+import type { MessageKey } from "../i18n/en.ts";
+import type { Member } from "./family.ts";
 import type { Role, Standing } from "./moves.ts";
-import { SAMPLE_CHORES, type SampleChore } from "./samples.ts";
+import type { SampleChore } from "./samples.ts";
 import type { Payout, Task } from "./tasks.ts";
 
 const sampleId = (c: string) => "npub1" + c.repeat(58);
@@ -12,7 +14,14 @@ export const MOM = sampleId("q");
 export const SAM = sampleId("p");
 export const ADA = sampleId("z");
 
-export const SAMPLE_MEMBERS = [{ npub: MOM, name: "Mom" }, { npub: SAM, name: "Sam" }, { npub: ADA, name: "Ada" }];
+/** The sample family, named in the language on screen. */
+export function sampleMembers(name: (key: MessageKey) => string): Member[] {
+  return [
+    { npub: MOM, name: name("sample.member.mom") },
+    { npub: SAM, name: name("sample.member.sam") },
+    { npub: ADA, name: name("sample.member.ada") },
+  ];
+}
 
 export type Viewer = "sam" | "mom";
 export const viewerNpub = (viewer: Viewer) => (viewer === "mom" ? MOM : SAM);
@@ -44,10 +53,10 @@ function rubricOf(sample: SampleChore) {
   return { grades: sample.rows.map((r) => ({ name: r.name, sats: Number(r.sats), criteria: r.criteria })), appeal: "" };
 }
 
-/** The family's chores as `viewer` sees them. */
-export function sampleTasks(viewer: Viewer, now: number): Task[] {
+/** The family's chores as `viewer` sees them, made from the sample chores in the language on screen. */
+export function sampleTasks(viewer: Viewer, now: number, samples: ReadonlyArray<SampleChore>): Task[] {
   return WEEK.map((w, i) => {
-    const sample = SAMPLE_CHORES[w.sample];
+    const sample = samples[w.sample];
     const rubric = rubricOf(sample);
     const graded = w.grade === undefined ? null : rubric.grades[w.grade];
     return {

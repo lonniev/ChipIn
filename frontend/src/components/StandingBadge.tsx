@@ -1,7 +1,8 @@
 /** Where a chore stands, as an icon and a word. */
 
 import { BadgeCheck, Ban, CircleDot, ClipboardCheck, Hand, Hourglass, Scale, Star, Undo2, Zap } from "lucide-react";
-import { STANDING_WORD, type Standing } from "../lib/moves";
+import { useT } from "../i18n/I18nContext";
+import { standingKey, type Standing } from "../lib/moves";
 
 const ICON: Record<Standing, typeof Zap> = {
   posted: CircleDot,
@@ -18,10 +19,11 @@ const ICON: Record<Standing, typeof Zap> = {
 
 export default function StandingBadge({ standing }: { standing: Standing }) {
   const Icon = ICON[standing];
+  const t = useT();
   return (
     <span className={`badge badge-${standing}`}>
       <Icon size={14} aria-hidden />
-      {STANDING_WORD[standing]}
+      {t(standingKey(standing))}
     </span>
   );
 }

@@ -34,9 +34,9 @@ export function withoutMember(list: Member[], npub: string): Member[] {
   return list.filter((m) => m.npub !== npub);
 }
 
-/** What to call an npub: "You", the name this device gave it, or its short form. */
-export function nameOf(list: Member[], npub: string, me: string): string {
-  if (npub && npub === me) return "You";
+/** What to call an npub: `you` ("You", in the language on screen), the name this device gave it, or its short form. */
+export function nameOf(list: Member[], npub: string, me: string, you: string): string {
+  if (npub && npub === me) return you;
   return list.find((m) => m.npub === npub)?.name ?? shortNpub(npub);
 }
 

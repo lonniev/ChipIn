@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { Check, Copy, Trash2, UserPlus } from "lucide-react";
 import { useAppShell } from "@tollbooth-dpyc/web/react";
+import { useT } from "../i18n/I18nContext";
 import { useFamily } from "../lib/FamilyContext";
 import { Face } from "../components/Links";
 import { isNpub, shortNpub } from "../lib/family";
@@ -12,6 +13,7 @@ import { isNpub, shortNpub } from "../lib/family";
 export default function Family() {
   const { session } = useAppShell();
   const { members, add, remove } = useFamily();
+  const t = useT();
   const [params] = useSearchParams();
   const who = params.get("who") ?? "";
   const known = members.some((m) => m.npub === who);
@@ -28,8 +30,8 @@ export default function Family() {
   }, [who, known, session.npub]);
 
   function save() {
-    if (!name.trim()) return setProblem("Give them a name.");
-    if (!isNpub(npub)) return setProblem("That is not an npub. It starts with npub1.");
+    if (!name.trim()) return setProblem(t("family.giveName"));
+    if (!isNpub(npub)) return setProblem(t("family.notNpub"));
     add(npub, name);
     setName("");
     setNpub("");
@@ -44,22 +46,22 @@ export default function Family() {
 
   return (
     <div className="page grid gap-3">
-      <h1 className="text-3xl font-bold">Family</h1>
+      <h1 className="text-3xl font-bold">{t("family.title")}</h1>
 
       <section className={who === session.npub ? "card panel grid gap-2 who-on" : "card panel grid gap-2"}>
-        <h2 className="panel-title">You</h2>
+        <h2 className="panel-title">{t("family.you")}</h2>
         <div className="flex items-start gap-2">
           <p className="mono-box flex-1">{session.npub}</p>
-          <button type="button" className="icon-btn" onClick={() => void copyMine()} aria-label="Copy your npub" title="Copy your npub">
+          <button type="button" className="icon-btn" onClick={() => void copyMine()} aria-label={t("family.copyNpub")} title={t("family.copyNpub")}>
             {copied ? <Check size={16} aria-hidden /> : <Copy size={16} aria-hidden />}
           </button>
         </div>
-        <p className="muted text-sm">Whoever posts chores for you needs this npub.</p>
+        <p className="muted text-sm">{t("family.needsNpub")}</p>
       </section>
 
       <section className="card panel grid gap-2">
-        <h2 className="panel-title">People ({members.length})</h2>
-        {!members.length && <p className="muted">Nobody yet. Add each person by their npub.</p>}
+        <h2 className="panel-title">{t("family.people")} ({members.length})</h2>
+        {!members.length && <p className="muted">{t("family.nobody")}</p>}
         <ul>
           {members.map((m) => (
             <li key={m.npub} className={m.npub === who ? "member-row who-on" : "member-row"}>
@@ -68,20 +70,20 @@ export default function Family() {
               <button
                 type="button" className={sure === m.npub ? "btn btn-quiet" : "icon-btn"}
                 onClick={() => (sure === m.npub ? remove(m.npub) : setSure(m.npub))} onBlur={() => setSure("")}
-                aria-label={`Remove ${m.name}`} title={`Remove ${m.name}`}
+                aria-label={t("family.remove", { name: m.name })} title={t("family.remove", { name: m.name })}
               >
-                {sure === m.npub ? "Tap again to remove" : <Trash2 size={18} aria-hidden />}
+                {sure === m.npub ? t("family.tapAgainRemove") : <Trash2 size={18} aria-hidden />}
               </button>
             </li>
           ))}
         </ul>
         <form className="add-form" onSubmit={(e) => { e.preventDefault(); save(); }}>
-          <input className="field" value={name} maxLength={40} onChange={(e) => setName(e.target.value)} placeholder="Name" aria-label="Name" />
-          <input className="field flex-1" value={npub} onChange={(e) => setNpub(e.target.value)} placeholder="Their npub (npub1…)" aria-label="Their npub" autoCapitalize="none" spellCheck={false} />
-          <button type="submit" className="btn btn-go"><UserPlus size={22} aria-hidden />Add</button>
+          <input className="field" value={name} maxLength={40} onChange={(e) => setName(e.target.value)} placeholder={t("family.name")} aria-label={t("family.name")} />
+          <input className="field flex-1" value={npub} onChange={(e) => setNpub(e.target.value)} placeholder={t("family.theirNpubPlaceholder")} aria-label={t("family.theirNpub")} autoCapitalize="none" spellCheck={false} />
+          <button type="submit" className="btn btn-go"><UserPlus size={22} aria-hidden />{t("family.add")}</button>
         </form>
         {problem && <p className="error text-right">{problem}</p>}
-        <p className="muted text-sm">Names stay on this device.</p>
+        <p className="muted text-sm">{t("family.namesStay")}</p>
       </section>
       <PictureChoice />
     </div>

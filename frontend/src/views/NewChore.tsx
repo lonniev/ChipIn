@@ -5,23 +5,27 @@ import { Link, useNavigate } from "react-router-dom";
 import { Plus, Trash2, UserPlus } from "lucide-react";
 import { useAppShell } from "@tollbooth-dpyc/web/react";
 import { choreHref, Face } from "../components/Links";
+import { useSamples, useT } from "../i18n/I18nContext";
+import type { MessageKey } from "../i18n/en";
 import { useFamily } from "../lib/FamilyContext";
 import { CHORE_PICTURES } from "../lib/face";
-import { MAX_GRADES, rubricFrom, STARTER_ROWS, type GradeRow } from "../lib/rubric";
-import { SAMPLE_CHORES, type SampleChore } from "../lib/samples";
+import { MAX_GRADES, rubricFrom, starterRows, type GradeRow } from "../lib/rubric";
+import type { SampleChore } from "../lib/samples";
 import { postTask } from "../lib/tasks";
 import { dayFrom, endOfDay } from "../lib/when";
 
-const REPEATS = [
-  { days: 0, label: "Once" },
-  { days: 1, label: "Every day" },
-  { days: 7, label: "Every week" },
+const REPEATS: { days: number; label: MessageKey }[] = [
+  { days: 0, label: "repeat.once" },
+  { days: 1, label: "repeat.daily" },
+  { days: 7, label: "repeat.weekly" },
 ];
 
 export default function NewChore() {
   const { session } = useAppShell();
   const { members } = useFamily();
   const go = useNavigate();
+  const t = useT();
+  const samples = useSamples();
   const now = Math.floor(Date.now() / 1000);
 
   const [title, setTitle] = useState("");
@@ -30,11 +34,11 @@ export default function NewChore() {
   const [who, setWho] = useState<string[]>([]);
   const [due, setDue] = useState(dayFrom(now, 2));
   const [every, setEvery] = useState(0);
-  const [rows, setRows] = useState<GradeRow[]>(STARTER_ROWS);
+  const [rows, setRows] = useState<GradeRow[]>(() => starterRows(t));
   const [problem, setProblem] = useState("");
   const [busy, setBusy] = useState(false);
 
-  const people = [{ npub: session.npub, name: "Me" }, ...members.filter((m) => m.npub !== session.npub)];
+  const people = [{ npub: session.npub, name: t("newChore.me") }, ...members.filter((m) => m.npub !== session.npub)];
   const toggle = (npub: string) => setWho((list) => (list.includes(npub) ? list.filter((n) => n !== npub) : [...list, npub]));
   function startFrom(s: SampleChore) {
     setPicture(s.picture);
@@ -47,13 +51,13 @@ export default function NewChore() {
 
   async function post() {
     setProblem("");
-    if (!title.trim()) return setProblem("Give the chore a name.");
-    if (!who.length) return setProblem("Choose who may do it.");
+    if (!title.trim()) return setProblem(t("newChore.needName"));
+    if (!who.length) return setProblem(t("newChore.needWho"));
     const neededBy = endOfDay(due);
-    if (neededBy === null) return setProblem("Choose the day it is due.");
-    if (neededBy < now) return setProblem("That day has passed.");
+    if (neededBy === null) return setProblem(t("newChore.needDay"));
+    if (neededBy < now) return setProblem(t("newChore.dayPassed"));
     const made = rubricFrom(rows);
-    if ("problem" in made) return setProblem(made.problem);
+    if ("problem" in made) return setProblem(t(made.problem.key, made.problem.vars));
     setBusy(true);
     try {
       const task = await postTask({
@@ -70,20 +74,20 @@ export default function NewChore() {
   return (
     <div className="page">
       <form className="card panel mx-auto grid max-w-2xl gap-4" onSubmit={(e) => { e.preventDefault(); void post(); }}>
-        <h1 className="text-3xl font-bold">New chore</h1>
+        <h1 className="text-3xl font-bold">{t("chores.new")}</h1>
 
         <fieldset className="grid gap-2">
-          <legend className="label">Start from one of these</legend>
+          <legend className="label">{t("newChore.startFrom")}</legend>
           <div className="starters">
-            {SAMPLE_CHORES.map((s) => (
-              <button key={s.title} type="button" className={title === s.title ? "pick pick-on" : "pick"} onClick={() => startFrom(s)}>
+            {samples.map((s) => (
+              <button key={s.key} type="button" className={title === s.title ? "pick pick-on" : "pick"} onClick={() => startFrom(s)}>
                 <span aria-hidden>{s.picture}</span>{s.title}
               </button>
             ))}
           </div>
         </fieldset>
 
-        <div className="pictures" role="group" aria-label="Picture">
+        <div className="pictures" role="group" aria-label={t("newChore.picture")}>
           {CHORE_PICTURES.map((p) => (
             <button key={p} type="button" className={picture === p ? "picture picture-on" : "picture"} aria-pressed={picture === p} onClick={() => setPicture(p)}>
               {p}
@@ -92,18 +96,18 @@ export default function NewChore() {
         </div>
 
         <label className="grid gap-1">
-          <span className="label">What needs doing?</span>
-          <input className="field" value={title} maxLength={190} onChange={(e) => setTitle(e.target.value)} placeholder="Sweep the kitchen floor" />
+          <span className="label">{t("newChore.what")}</span>
+          <input className="field" value={title} maxLength={190} onChange={(e) => setTitle(e.target.value)} placeholder={t("newChore.whatPlaceholder")} />
         </label>
 
         <label className="grid gap-1">
-          <span className="label">Where, when, and what “done” looks like</span>
+          <span className="label">{t("newChore.where")}</span>
           <textarea className="field" rows={4} value={description} maxLength={4000} onChange={(e) => setDescription(e.target.value)}
-            placeholder={"Every evening, after supper is cleared.\nSweep under the table and along the cabinets.\nHang the broom back on its hook."} />
+            placeholder={t("newChore.wherePlaceholder")} />
         </label>
 
         <fieldset className="grid gap-2">
-          <legend className="label">Who can do it?</legend>
+          <legend className="label">{t("newChore.who")}</legend>
           <div className="flex flex-wrap gap-2">
             {people.map((p) => (
               <button key={p.npub} type="button" className={who.includes(p.npub) ? "pick pick-on" : "pick"} aria-pressed={who.includes(p.npub)} onClick={() => toggle(p.npub)}>
@@ -111,32 +115,32 @@ export default function NewChore() {
                 {p.name}
               </button>
             ))}
-            <Link to="/family" className="pick" title="Add someone"><UserPlus size={20} aria-hidden />Add someone</Link>
+            <Link to="/family" className="pick" title={t("newChore.addSomeone")}><UserPlus size={20} aria-hidden />{t("newChore.addSomeone")}</Link>
           </div>
         </fieldset>
 
         <div className="flex flex-wrap items-end gap-4">
           <label className="grid gap-1">
-            <span className="label">By when?</span>
+            <span className="label">{t("newChore.byWhen")}</span>
             <input type="date" className="field" value={due} min={dayFrom(now, 0)} onChange={(e) => setDue(e.target.value)} />
           </label>
-          <div className="flex flex-wrap gap-2" role="group" aria-label="Repeats">
+          <div className="flex flex-wrap gap-2" role="group" aria-label={t("newChore.repeats")}>
             {REPEATS.map((r) => (
               <button key={r.days} type="button" className={every === r.days ? "pick pick-on" : "pick"} aria-pressed={every === r.days} onClick={() => setEvery(r.days)}>
-                {r.label}
+                {t(r.label)}
               </button>
             ))}
           </div>
         </div>
 
         <fieldset className="grid gap-2">
-          <legend className="label">What does it earn?</legend>
+          <legend className="label">{t("newChore.earns")}</legend>
           {rows.map((row, i) => (
             <div key={i} className="grade-row">
-              <input className="field" value={row.name} maxLength={60} onChange={(e) => setRow(i, { name: e.target.value })} placeholder="Grade" aria-label="Grade name" />
-              <input className="field" value={row.criteria} maxLength={500} onChange={(e) => setRow(i, { criteria: e.target.value })} placeholder="What earns it" aria-label="What earns it" />
-              <input className="field num text-right" value={row.sats} inputMode="numeric" onChange={(e) => setRow(i, { sats: e.target.value })} placeholder="sats" aria-label="Sats" />
-              <button type="button" className="icon-btn icon-btn-sm" onClick={() => setRows((list) => list.filter((_, j) => j !== i))} aria-label="Remove this grade" title="Remove this grade">
+              <input className="field" value={row.name} maxLength={60} onChange={(e) => setRow(i, { name: e.target.value })} placeholder={t("newChore.gradePlaceholder")} aria-label={t("newChore.gradeName")} />
+              <input className="field" value={row.criteria} maxLength={500} onChange={(e) => setRow(i, { criteria: e.target.value })} placeholder={t("newChore.whatEarns")} aria-label={t("newChore.whatEarns")} />
+              <input className="field num text-right" value={row.sats} inputMode="numeric" onChange={(e) => setRow(i, { sats: e.target.value })} placeholder={t("newChore.satsPlaceholder")} aria-label={t("newChore.satsLabel")} />
+              <button type="button" className="icon-btn icon-btn-sm" onClick={() => setRows((list) => list.filter((_, j) => j !== i))} aria-label={t("newChore.removeGrade")} title={t("newChore.removeGrade")}>
                 <Trash2 size={14} aria-hidden />
               </button>
             </div>
@@ -144,7 +148,7 @@ export default function NewChore() {
           {rows.length < MAX_GRADES && (
             <div className="flex justify-end">
               <button type="button" className="chip" onClick={() => setRows((list) => [...list, { name: "", sats: "", criteria: "" }])}>
-                <Plus size={16} aria-hidden />Add a grade
+                <Plus size={16} aria-hidden />{t("newChore.addGrade")}
               </button>
             </div>
           )}
@@ -152,8 +156,8 @@ export default function NewChore() {
 
         {problem && <p className="error text-right">{problem}</p>}
         <div className="flex flex-wrap justify-end gap-2">
-          <Link to="/chores" className="btn btn-quiet">Cancel</Link>
-          <button type="submit" className="btn btn-go" disabled={busy}>{busy ? "Posting…" : "Post the chore"}</button>
+          <Link to="/chores" className="btn btn-quiet">{t("actions.cancel")}</Link>
+          <button type="submit" className="btn btn-go" disabled={busy}>{busy ? t("newChore.posting") : t("newChore.post")}</button>
         </div>
       </form>
     </div>

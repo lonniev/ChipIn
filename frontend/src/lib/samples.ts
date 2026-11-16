@@ -3,11 +3,53 @@
  * looks like, because a child cannot do "sweep" without knowing which floor.
  * Together they show the kinds of chore there are: a daily habit, a weekly
  * job, a big one-off, something for the mind, and a kindness.
+ *
+ * This file holds what is the same in every language: each sample's picture,
+ * rhythm, and the sats each grade earns. The words are per language, in
+ * `src/content/<language>/samples.ts`.
  */
 
-import type { GradeRow } from "./rubric";
+import type { GradeRow } from "./rubric.ts";
+
+interface SampleShape {
+  key: string;
+  /** One of CHORE_PICTURES. */
+  picture: string;
+  /** 0 once, 1 every day, 7 every week. */
+  everyDays: 0 | 1 | 7;
+  /** What each grade earns, best first. The grades' names are per language, in the same order. */
+  sats: ReadonlyArray<string>;
+}
+
+export const SAMPLE_SHAPES = [
+  { key: "sweep-kitchen", picture: "🧹", everyDays: 1, sats: ["300", "150", "0"] },
+  { key: "make-bed", picture: "🛏️", everyDays: 1, sats: ["100", "0"] },
+  { key: "trash-cans", picture: "🗑️", everyDays: 7, sats: ["500", "250", "0"] },
+  { key: "walk-dog", picture: "🐕", everyDays: 1, sats: ["400", "200", "0"] },
+  { key: "weed-bed", picture: "🌱", everyDays: 0, sats: ["2000", "1000", "0"] },
+  { key: "read-chapter", picture: "📚", everyDays: 7, sats: ["600", "300", "0"] },
+  { key: "rake-leaves", picture: "🍂", everyDays: 0, sats: ["1500", "700", "0"] },
+] as const satisfies ReadonlyArray<SampleShape>;
+
+export type SampleKey = (typeof SAMPLE_SHAPES)[number]["key"];
+
+/** One sample chore's words in one language. */
+export interface SampleText {
+  /** The kind of chore this one shows. */
+  kind: string;
+  title: string;
+  /** Where, when, and how to finish: one sentence to a line, lines separated by "\n". */
+  description: string;
+  /** Each grade's name and what earns it, in the order `SAMPLE_SHAPES` lists its sats. */
+  grades: { name: string; criteria: string }[];
+  /** What a child learns from a chore of this kind. */
+  teaches: string;
+}
+
+export type SamplesText = Record<SampleKey, SampleText>;
 
 export interface SampleChore {
+  key: SampleKey;
   /** One of CHORE_PICTURES. */
   picture: string;
   title: string;
@@ -22,104 +64,19 @@ export interface SampleChore {
   teaches: string;
 }
 
-const none: GradeRow = { name: "Not done", sats: "0", criteria: "" };
-
-export const SAMPLE_CHORES: ReadonlyArray<SampleChore> = [
-  {
-    picture: "🧹",
-    title: "Sweep the kitchen floor",
-    description:
-      "Every evening, after supper is cleared.\nSweep under the table and along the cabinets.\nEmpty the dustpan into the trash and hang the broom back on its hook.",
-    everyDays: 1,
-    rows: [
-      { name: "Spotless", sats: "300", criteria: "No crumbs under the table or by the cabinets" },
-      { name: "Swept", sats: "150", criteria: "Swept, with a few spots missed" },
-      none,
-    ],
-    kind: "A daily habit",
-    teaches: "Small work done every day adds up.",
-  },
-  {
-    picture: "🛏️",
-    title: "Make your bed before school",
-    description:
-      "Every school morning, before breakfast.\nPull the sheet and blanket flat, and put the pillow at the top.\nPajamas go under the pillow.",
-    everyDays: 1,
-    rows: [
-      { name: "Made", sats: "100", criteria: "Flat, pillow at the top, nothing on the floor" },
-      none,
-    ],
-    kind: "A daily habit",
-    teaches: "Start the day by finishing something.",
-  },
-  {
-    picture: "🗑️",
-    title: "Take the trash cans to the curb",
-    description:
-      "Thursday evening, before dark.\nWheel both cans from the side of the house to the end of the driveway, lids shut.\nBring them back on Friday after school.",
-    everyDays: 7,
-    rows: [
-      { name: "Out and back", sats: "500", criteria: "Out on Thursday, back on Friday" },
-      { name: "Out only", sats: "250", criteria: "Out on time, but someone else brought them back" },
-      none,
-    ],
-    kind: "A weekly job",
-    teaches: "Others count on you to remember.",
-  },
-  {
-    picture: "🐕",
-    title: "Walk Rex around the block",
-    description:
-      "After school, before supper.\nTwenty minutes, on the leash, around the block.\nTake a bag, and fill his water bowl when you are back.",
-    everyDays: 1,
-    rows: [
-      { name: "Great walk", sats: "400", criteria: "Twenty minutes, bag used, water bowl filled" },
-      { name: "Short walk", sats: "200", criteria: "Out and back in under ten minutes" },
-      none,
-    ],
-    kind: "Caring for another",
-    teaches: "Someone depends on your work.",
-  },
-  {
-    picture: "🌱",
-    title: "Weed the front flower bed",
-    description:
-      "This Saturday morning, before lunch.\nThe bed by the front steps, from the walk to the fence.\nPull each weed out by the root, and put them in the yard waste bin.",
-    everyDays: 0,
-    rows: [
-      { name: "Great job", sats: "2000", criteria: "No weeds left, roots and all, and the walk swept" },
-      { name: "Good enough", sats: "1000", criteria: "Most weeds gone" },
-      none,
-    ],
-    kind: "A big one-off job",
-    teaches: "Harder work earns more.",
-  },
-  {
-    picture: "📚",
-    title: "Read a chapter and tell us about it",
-    description:
-      "Any evening this week, before bed.\nRead one whole chapter of your book.\nAt supper the next day, tell the family what happened in it.",
-    everyDays: 7,
-    rows: [
-      { name: "Read and told", sats: "600", criteria: "The whole chapter, and you told us the story" },
-      { name: "Read", sats: "300", criteria: "Read it, but could not say much about it" },
-      none,
-    ],
-    kind: "Work for the mind",
-    teaches: "Learning is work too, and it is worth being paid for.",
-  },
-  {
-    picture: "🍂",
-    title: "Rake the leaves for Mrs. Miller next door",
-    description:
-      "Saturday afternoon, with her say-so first.\nRake her front lawn into one pile by the curb.\nPut the rake back in our shed.",
-    everyDays: 0,
-    rows: [
-      { name: "Lawn cleared", sats: "1500", criteria: "The whole front lawn, in one pile" },
-      { name: "Half done", sats: "700", criteria: "Part of the lawn" },
-      none,
-    ],
-    kind: "A kindness",
-    teaches: "Work is a way to serve a neighbor.",
-  },
-];
+/** The sample chores as a page shows them: this file's structure with one language's words. */
+export function samplesIn(text: SamplesText): SampleChore[] {
+  return SAMPLE_SHAPES.map((shape) => {
+    const words = text[shape.key];
+    return {
+      key: shape.key,
+      picture: shape.picture,
+      title: words.title,
+      description: words.description,
+      everyDays: shape.everyDays,
+      rows: shape.sats.map((sats, i) => ({ name: words.grades[i]?.name ?? "", sats, criteria: words.grades[i]?.criteria ?? "" })),
+      kind: words.kind,
+      teaches: words.teaches,
+    };
+  });
+}

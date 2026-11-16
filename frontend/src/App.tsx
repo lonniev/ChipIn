@@ -1,12 +1,13 @@
-import { lazy, Suspense, type ReactNode } from "react";
+import { lazy, Suspense, useMemo, type ReactNode } from "react";
 import { BrowserRouter, Link, Navigate, Route, Routes, useLocation } from "react-router-dom";
 import { BookOpen, DoorOpen, GraduationCap, HandCoins, ListChecks, PiggyBank, Users, Wallet as WalletIcon } from "lucide-react";
 import farm from "./assets/farm.webp";
 import { AppShell, SiteNav, TourProvider, Wallet, matchesPath, useAppShell, useTour } from "@tollbooth-dpyc/web/react";
 import Waiting from "./components/Waiting";
+import { I18nProvider, useT } from "./i18n/I18nContext";
 import { FamilyProvider } from "./lib/FamilyContext";
 import { PicturesProvider } from "./lib/PicturesContext";
-import { TOURS } from "./lib/tours";
+import { toursIn } from "./lib/tours";
 
 // Each page is its own chunk, fetched the first time it opens.
 const Chore = lazy(() => import("./views/Chore"));
@@ -21,17 +22,15 @@ const NewChore = lazy(() => import("./views/NewChore"));
 const Profile = lazy(() => import("./views/Profile"));
 const Savings = lazy(() => import("./views/Savings"));
 
-const WELCOME = "A family learns the worth of work.";
-
 const PAGES = [
-  { href: "/look", label: "Welcome", icon: <DoorOpen size={18} aria-hidden /> },
-  { href: "/chores", label: "Chores", icon: <ListChecks size={18} aria-hidden /> },
-  { href: "/savings", label: "Savings", icon: <PiggyBank size={18} aria-hidden /> },
-  { href: "/family", label: "Family", icon: <Users size={18} aria-hidden /> },
-  { href: "/wallet", label: "Tollbooth wallet", icon: <WalletIcon size={18} aria-hidden /> },
-  { href: "/learn", label: "Learn", icon: <GraduationCap size={18} aria-hidden /> },
-  { href: "/guide", label: "Guide", icon: <BookOpen size={18} aria-hidden /> },
-];
+  { href: "/look", label: "nav.welcome", icon: <DoorOpen size={18} aria-hidden /> },
+  { href: "/chores", label: "nav.chores", icon: <ListChecks size={18} aria-hidden /> },
+  { href: "/savings", label: "nav.savings", icon: <PiggyBank size={18} aria-hidden /> },
+  { href: "/family", label: "nav.family", icon: <Users size={18} aria-hidden /> },
+  { href: "/wallet", label: "nav.wallet", icon: <WalletIcon size={18} aria-hidden /> },
+  { href: "/learn", label: "nav.learn", icon: <GraduationCap size={18} aria-hidden /> },
+  { href: "/guide", label: "nav.guide", icon: <BookOpen size={18} aria-hidden /> },
+] as const;
 
 const NAV_CLASSES = {
   root: "flex flex-wrap items-center gap-2",
@@ -66,14 +65,15 @@ function Brand() {
 function Nav() {
   const { session } = useAppShell();
   const { pathname } = useLocation();
+  const t = useT();
   if (!session.signedIn) {
     return (
       <header className="site-bar flex flex-wrap items-center gap-2 px-4 py-2.5">
         <Brand />
-        <Link to="/look" className="chip ml-auto">Welcome</Link>
-        <Link to="/learn" className="chip">Learn</Link>
-        <Link to="/guide" className="chip">Guide</Link>
-        <Link to="/signin" className="chip chip-accent">Sign in</Link>
+        <Link to="/look" className="chip ml-auto">{t("nav.welcome")}</Link>
+        <Link to="/learn" className="chip">{t("nav.learn")}</Link>
+        <Link to="/guide" className="chip">{t("nav.guide")}</Link>
+        <Link to="/signin" className="chip chip-accent">{t("nav.signIn")}</Link>
       </header>
     );
   }
@@ -81,10 +81,10 @@ function Nav() {
     <header className="site-bar px-4 py-2">
       <SiteNav
         brand={<Brand />}
-        items={PAGES}
+        items={PAGES.map((p) => ({ ...p, label: t(p.label) }))}
         isActive={(href) => matchesPath(pathname, href)}
         renderLink={({ href, ...p }) => <Link to={href} {...p} />}
-        account={{ npub: session.npub, links: [{ href: "/profile", label: "Profile & theme" }], onSignOut: session.signOut }}
+        account={{ npub: session.npub, links: [{ href: "/profile", label: t("nav.profile") }], onSignOut: session.signOut }}
         classNames={NAV_CLASSES}
       />
     </header>
@@ -93,6 +93,7 @@ function Nav() {
 
 function Footer() {
   const { status } = useAppShell();
+  const t = useT();
   return (
     <footer className="site-bar space-y-1 px-4 py-4 text-center text-xs text-[var(--tb-muted)]" style={{ borderTop: "1px solid var(--tb-line)" }}>
       <div>
@@ -101,9 +102,9 @@ function Footer() {
         {status?.tollbooth_dpyc_version && ` · SDK ${status.tollbooth_dpyc_version}`}
       </div>
       <div>
-        Monetized with{" "}
+        {t("footer.monetizedWith")}{" "}
         <a href="https://tollbooth-dpyc.com" target="_blank" rel="noopener noreferrer" className="underline">Tollbooth DPYC™</a>
-        {" · "}Apache-2.0 · Patent Pending (US Prov. 64/045,999)
+        {" · "}Apache-2.0 · {t("footer.patentPending")}
       </div>
     </footer>
   );
@@ -121,13 +122,14 @@ function SignIn({ gate }: { gate: ReactNode }) {
 
 function WalletPage() {
   useTour("wallet");
+  const t = useT();
   return (
     <div className="page grid gap-3">
       <section className="card panel grid gap-1">
-        <h1 className="text-2xl font-bold">Tollbooth DPYC™ wallet</h1>
-        <p>This wallet holds api_sats, which pay for using ChipIn.</p>
-        <p>A parent tops it up here.</p>
-        <p>The sats you earn from chores go to your own Lightning wallet; see <Link to="/savings" className="ent">Savings</Link>.</p>
+        <h1 className="text-2xl font-bold">{t("wallet.title")}</h1>
+        <p>{t("wallet.holds")}</p>
+        <p>{t("wallet.topUp")}</p>
+        <p>{t.rich("wallet.earned", { savings: <Link to="/savings" className="ent">{t("nav.savings")}</Link> })}</p>
       </section>
       <Wallet />
     </div>
@@ -136,15 +138,17 @@ function WalletPage() {
 
 function Site() {
   const { session, gate } = useAppShell();
+  const t = useT();
+  const tours = useMemo(() => toursIn(t), [t]);
   return (
     <BrowserRouter>
-      <TourProvider tours={TOURS}>
+      <TourProvider tours={tours}>
         <div className="backdrop" style={{ backgroundImage: `url(${farm})` }} aria-hidden />
         <Nav />
         <main className="flex-1">
           <PicturesProvider signedIn={session.signedIn}>
           <FamilyProvider me={session.signedIn ? session.npub : ""}>
-            <Suspense fallback={<div className="page"><div className="card panel"><Waiting heading="Opening the page…" /></div></div>}>
+            <Suspense fallback={<div className="page"><div className="card panel"><Waiting heading={t("waiting.openingPage")} /></div></div>}>
               <Routes>
                 <Route index element={session.signedIn ? <Navigate to="/chores" replace /> : <Home />} />
                 <Route path="signin" element={session.signedIn ? <Navigate to="/chores" replace /> : <SignIn gate={gate} />} />
@@ -173,10 +177,20 @@ function Site() {
   );
 }
 
-export default function App() {
+function Shell() {
+  const t = useT();
   return (
-    <AppShell theme="system" gateOptions={{ welcome: WELCOME }} signedOut={() => <Site />}>
+    <AppShell theme="system" gateOptions={{ welcome: t("app.tagline") }} signedOut={() => <Site />}>
       {() => <Site />}
     </AppShell>
+  );
+}
+
+/** The language sits above everything, so a guest reads the site in their browser's language. */
+export default function App() {
+  return (
+    <I18nProvider>
+      <Shell />
+    </I18nProvider>
   );
 }

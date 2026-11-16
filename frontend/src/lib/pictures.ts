@@ -3,11 +3,13 @@
  * like them. The choice stays on the device: it is nobody else's business.
  */
 
+/** Each set's name on screen is the message `pictures.<key>`. */
 export const PICTURE_SETS = [
-  { key: "white", label: "White" },
-  { key: "african", label: "African" },
-  { key: "hispanic", label: "Hispanic" },
-  { key: "asian", label: "Asian" },
+  { key: "white" },
+  { key: "african" },
+  { key: "hispanic" },
+  { key: "asian" },
+  { key: "indian" },
 ] as const;
 
 export type PictureSet = (typeof PICTURE_SETS)[number]["key"];

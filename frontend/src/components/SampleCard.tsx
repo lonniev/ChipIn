@@ -2,10 +2,13 @@
 
 import { Repeat } from "lucide-react";
 import { formatSats } from "@tollbooth-dpyc/web";
+import { useT } from "../i18n/I18nContext";
+import { say } from "../i18n/translate";
 import type { SampleChore } from "../lib/samples";
 import { repeatText } from "../lib/when";
 
 export default function SampleCard({ sample }: { sample: SampleChore }) {
+  const t = useT();
   return (
     <article className="card panel sample">
       <p className="sample-kind">{sample.kind}</p>
@@ -13,7 +16,7 @@ export default function SampleCard({ sample }: { sample: SampleChore }) {
       <ul className="sample-lines">
         {sample.description.split("\n").map((line) => <li key={line}>{line}</li>)}
       </ul>
-      {sample.everyDays > 0 && <p className="muted"><Repeat size={16} aria-hidden className="inline" /> {repeatText(sample.everyDays)}</p>}
+      {sample.everyDays > 0 && <p className="muted"><Repeat size={16} aria-hidden className="inline" /> {say(t, repeatText(sample.everyDays))}</p>}
       <table className="ledger">
         <tbody>
           {sample.rows.map((row) => (

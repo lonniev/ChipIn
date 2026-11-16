@@ -5,6 +5,8 @@
  * page draws, from the roles Task Booth says the person holds (`your_roles`).
  */
 
+import type { MessageKey } from "../i18n/en.ts";
+
 export type Standing =
   | "posted" | "expired" | "claimed" | "done" | "assessed"
   | "appealed" | "owed" | "paid" | "rejected" | "withdrawn";
@@ -54,15 +56,5 @@ export function laneOf(task: Stands): Lane {
   return isFinished(task) ? "finished" : "waiting";
 }
 
-export const STANDING_WORD: Record<Standing, string> = {
-  posted: "Open",
-  expired: "Expired",
-  claimed: "Claimed",
-  done: "To check",
-  assessed: "Graded",
-  appealed: "Appealed",
-  owed: "To pay",
-  paid: "Paid",
-  rejected: "Rejected",
-  withdrawn: "Withdrawn",
-};
+/** The message that says where a chore stands. */
+export const standingKey = (standing: Standing) => `standing.${standing}` as const satisfies MessageKey;

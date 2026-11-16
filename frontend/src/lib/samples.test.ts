@@ -2,7 +2,10 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import { CHORE_PICTURES } from "./face.ts";
 import { rubricFrom } from "./rubric.ts";
-import { SAMPLE_CHORES } from "./samples.ts";
+import { samples as englishSamples } from "../content/en/samples.ts";
+import { samplesIn } from "./samples.ts";
+
+const SAMPLE_CHORES = samplesIn(englishSamples);
 
 test("every sample can be posted as it stands", () => {
   for (const s of SAMPLE_CHORES) {

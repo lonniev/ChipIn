@@ -4,7 +4,7 @@
  */
 
 import { splitPicture } from "./face.ts";
-import { STANDING_WORD, type Standing } from "./moves.ts";
+import type { Standing } from "./moves.ts";
 
 export interface Browsable {
   task_id: string;
@@ -28,11 +28,14 @@ export function personOf(task: Pick<Browsable, "performer" | "purchaser">): stri
   return task.performer ?? task.purchaser;
 }
 
-/** Every word typed is found somewhere in the chore: its title, details, people or standing. */
-export function matches(task: Browsable, query: string, name: (npub: string) => string): boolean {
+/**
+ * Every word typed is found somewhere in the chore: its title, details, people or standing.
+ * `standing` says where a chore stands in the language on screen.
+ */
+export function matches(task: Browsable, query: string, name: (npub: string) => string, standing: (s: Standing) => string): boolean {
   const words = query.toLowerCase().split(/\s+/).filter(Boolean);
   if (!words.length) return true;
-  const hay = [task.title, task.description, name(task.purchaser), task.performer ? name(task.performer) : "", STANDING_WORD[task.standing]]
+  const hay = [task.title, task.description, name(task.purchaser), task.performer ? name(task.performer) : "", standing(task.standing)]
     .join(" ").toLowerCase();
   return words.every((w) => hay.includes(w));
 }

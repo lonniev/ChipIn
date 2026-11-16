@@ -1,6 +1,13 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { dayFrom, dueText, endOfDay, repeatText } from "./when.ts";
+import english from "../i18n/en.ts";
+import { say, translator } from "../i18n/translate.ts";
+import { dayFrom, dueText as dueSaid, endOfDay, repeatText as repeatSaid } from "./when.ts";
+
+// As a page says them, in English.
+const t = translator(english, english);
+const dueText = (neededBy: number, now: number) => say(t, dueSaid(neededBy, now));
+const repeatText = (everyDays: number) => say(t, repeatSaid(everyDays));
 
 const noon = (y: number, m: number, d: number) => Math.floor(new Date(y, m - 1, d, 12).getTime() / 1000);
 
@@ -28,6 +35,14 @@ test("the end of a day is its last second, and a day that does not exist is refu
 test("a date field's day crosses a month end", () => {
   assert.equal(dayFrom(noon(2026, 11, 29), 2), "2026-12-01");
   assert.equal(dayFrom(noon(2026, 11, 15), 0), "2026-11-15");
+});
+
+test("what is said is a message and its numbers, so any language can say it", () => {
+  const now = noon(2026, 11, 15);
+  assert.deepEqual(dueSaid(endOfDay("2026-11-18")!, now), { key: "due.inDays", vars: { days: 3 } });
+  assert.deepEqual(dueSaid(endOfDay("2026-11-11")!, now), { key: "due.daysAgo", vars: { days: 4 } });
+  assert.equal(repeatSaid(0), null);
+  assert.deepEqual(repeatSaid(3), { key: "repeat.everyDays", vars: { days: 3 } });
 });
 
 test("repeats read plainly", () => {
