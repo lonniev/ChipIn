@@ -1,6 +1,6 @@
 /** One job: where it stands, its rewards, what you may do, and the invoice when it is owed. */
 
-import { useCallback, useEffect, useState } from "react";
+import { lazy, Suspense, useCallback, useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import { AlarmClock, ArrowLeft, Pencil, RefreshCw, Repeat } from "lucide-react";
 import { formatSats } from "@tollbooth-dpyc/web";
@@ -22,6 +22,9 @@ import { byReward } from "../lib/rubric";
 import { waitsOnTheirRequest } from "../lib/problems";
 import { getTask, requestPayout, taskHistory, type Payout, type Task, type TaskEvent } from "../lib/tasks";
 import { dueText, lateRuleText, lateText, repeatText } from "../lib/when";
+
+// The details are Markdown; the renderer loads with the first job opened, plain text meanwhile.
+const MarkdownText = lazy(() => import("../components/MarkdownText"));
 
 function History({ taskId }: { taskId: string }) {
   const { name } = useFamily();
@@ -85,7 +88,11 @@ export function Sheet({ task, payout, now, onChanged, onPay, onRequested = () =>
         <NudgeBell task={task} now={now} />
         {late && <p className="late-chip"><AlarmClock size={18} aria-hidden />{say(t, late)}</p>}
         {task.standing === "missed" && <p className="missed-banner">{t("job.missedBanner")}</p>}
-        {task.description && <p className="whitespace-pre-wrap">{task.description}</p>}
+        {task.description && (
+          <Suspense fallback={<p className="whitespace-pre-wrap">{task.description}</p>}>
+            <MarkdownText text={task.description} />
+          </Suspense>
+        )}
         <dl className="facts">
           <dt>{t("job.due")}</dt><dd>{say(t, dueText(task.needed_by, now))}{task.every_days > 0 && <> · <Repeat size={14} aria-hidden className="inline" /> {say(t, repeatText(task.every_days))}</>}</dd>
           <dt>{t("job.ifLate")}</dt><dd>{say(t, lateRuleText(task.late))}</dd>
