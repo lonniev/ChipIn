@@ -2,7 +2,7 @@ import { existsSync } from "node:fs";
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { BITCOIN_EVER, bookHref, CHARACTER_LESSONS, lessonAt, LESSONS, MONEY_LESSONS, USE_LESSONS, VIRTUES_LESSON, SATS_PER_BITCOIN, SHELVES, WORDS } from "./lessons.ts";
-import { PICTURE_SETS, pictureSetFrom } from "./pictures.ts";
+import { PICTURE_SETS, pictureSetAt, pictureSetFrom } from "./pictures.ts";
 import { CHIPIN_QUOTES } from "./quotes.ts";
 
 const lessons = [...LESSONS];
@@ -92,4 +92,11 @@ test("a stored choice that is not a set falls back to the first", () => {
   assert.equal(pictureSetFrom("asian"), "asian");
   assert.equal(pictureSetFrom("purple"), "white");
   assert.equal(pictureSetFrom(null), "white");
+});
+
+test("a roll from 0 up to 1 lands on each set in turn, and never off the end", () => {
+  assert.deepEqual([0, 0.25, 0.5, 0.75].map(pictureSetAt), ["white", "african", "hispanic", "asian"]);
+  assert.equal(pictureSetAt(0.999999), "asian");
+  assert.equal(pictureSetAt(1), "asian");
+  assert.equal(pictureSetAt(-0.1), "white");
 });

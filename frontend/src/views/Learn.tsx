@@ -3,15 +3,13 @@
 import { BookOpen, ChevronRight, ExternalLink } from "lucide-react";
 import { Link } from "react-router-dom";
 import PictureChoice from "../components/PictureChoice";
-import { artFor } from "../lib/lessonArt";
-import { usePictures } from "../lib/PicturesContext";
+import { useLessonArt, usePictures } from "../lib/PicturesContext";
 import {
   bookHref, BOOKSHELF_HREF, CHARACTER_LESSONS, MONEY_LESSONS, ORANGE_BIBLE_HREF, SHELVES, USE_LESSONS, VIRTUES_LESSON, WORDS, type Lesson,
 } from "../lib/lessons";
 
 function LessonCard({ lesson }: { lesson: Lesson }) {
-  const { set } = usePictures();
-  const art = artFor(lesson.slug, set);
+  const art = useLessonArt(lesson.slug);
   return (
     <Link to={`/learn/${lesson.slug}`} className="card panel lesson lesson-link">
       {art && <img src={art} alt="" className="lesson-art" loading="lazy" width={960} height={644} />}
@@ -31,6 +29,7 @@ function LessonCard({ lesson }: { lesson: Lesson }) {
 const out = { target: "_blank", rel: "noopener noreferrer" } as const;
 
 export default function Learn() {
+  const { chosen } = usePictures();
   return (
     <div className="page grid gap-4">
       <h1 className="text-3xl font-bold">Learn about sats</h1>
@@ -94,7 +93,7 @@ export default function Learn() {
         </div>
       </section>
 
-      <PictureChoice />
+      {chosen && <PictureChoice />}
 
       <p className="muted text-right">Ready to earn some? <Link to="/chores" className="ent">Go to your chores</Link></p>
     </div>

@@ -21,7 +21,7 @@ const NewChore = lazy(() => import("./views/NewChore"));
 const Profile = lazy(() => import("./views/Profile"));
 const Savings = lazy(() => import("./views/Savings"));
 
-const WELCOME = "Chores for the household, paid in sats.";
+const WELCOME = "A family learns the worth of work.";
 
 const PAGES = [
   { href: "/look", label: "Welcome", icon: <DoorOpen size={18} aria-hidden /> },
@@ -142,7 +142,7 @@ function Site() {
         <div className="backdrop" style={{ backgroundImage: `url(${farm})` }} aria-hidden />
         <Nav />
         <main className="flex-1">
-          <PicturesProvider>
+          <PicturesProvider signedIn={session.signedIn}>
           <FamilyProvider me={session.signedIn ? session.npub : ""}>
             <Suspense fallback={<div className="page"><div className="card panel"><Waiting heading="Opening the page…" /></div></div>}>
               <Routes>
@@ -175,7 +175,7 @@ function Site() {
 
 export default function App() {
   return (
-    <AppShell theme="light" gateOptions={{ welcome: WELCOME }} signedOut={() => <Site />}>
+    <AppShell theme="system" gateOptions={{ welcome: WELCOME }} signedOut={() => <Site />}>
       {() => <Site />}
     </AppShell>
   );

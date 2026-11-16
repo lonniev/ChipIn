@@ -18,3 +18,9 @@ export const PICTURES_KEY = "chipin:pictures";
 export function pictureSetFrom(stored: unknown): PictureSet {
   return PICTURE_SETS.some((s) => s.key === stored) ? (stored as PictureSet) : DEFAULT_PICTURES;
 }
+
+/** One of the sets, picked by a number from 0 up to 1, such as `Math.random()`. */
+export function pictureSetAt(roll: number): PictureSet {
+  const i = Math.min(PICTURE_SETS.length - 1, Math.max(0, Math.floor(roll * PICTURE_SETS.length)));
+  return PICTURE_SETS[i].key;
+}

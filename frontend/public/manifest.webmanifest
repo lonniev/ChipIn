@@ -1,7 +1,7 @@
 {
   "name": "ChipIn",
   "short_name": "ChipIn",
-  "description": "Chores for the household, paid in sats.",
+  "description": "A family learns the worth of work.",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#faf5ea",
