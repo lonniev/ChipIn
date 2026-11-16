@@ -97,7 +97,7 @@ export function SavingsSheet({ tasks, me, now, worthPanel }: { tasks: Task[]; me
         <span className="empty-picture" aria-hidden>🐷</span>
         <p className="text-xl font-semibold">{t("savings.nothing")}</p>
         <p className="muted">{t("savings.firstPaid")}</p>
-        <Link to="/chores" className="btn btn-go">{t("chores.go")}</Link>
+        <Link to="/jobs" className="btn btn-go">{t("jobs.go")}</Link>
       </div>
     );
   }

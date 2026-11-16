@@ -29,7 +29,7 @@ test("every content folder is one of the languages, and has its UI catalog besid
   }
 });
 
-test("the English content has words for every lesson, shelf, book and sample chore", () => {
+test("the English content has words for every lesson, shelf, book and sample job", () => {
   for (const shape of LESSON_SHAPES) {
     const text = english.lessons.lessons[shape.slug];
     assert.ok(text, shape.slug);
@@ -89,7 +89,7 @@ for (const [code, pack] of Object.entries(packs)) {
     }
   });
 
-  test(`${code}: every sample chore has its words and a name for every grade`, () => {
+  test(`${code}: every sample job has its words and a name for every grade`, () => {
     assert.deepEqual(Object.keys(pack.samples).sort(), Object.keys(english.samples).sort());
     const mine = samplesIn(pack.samples), theirs = samplesIn(english.samples);
     theirs.forEach((model, i) => {

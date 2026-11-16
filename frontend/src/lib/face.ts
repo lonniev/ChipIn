@@ -14,11 +14,11 @@ export function initialOf(name: string): string {
   return first ? first.toUpperCase() : "?";
 }
 
-/** Pictures a chore's name can start with. */
-export const CHORE_PICTURES = ["🧹", "🛏️", "🍽️", "🗑️", "🧺", "🐕", "🌱", "🍂", "📚", "🚗", "🛒"];
+/** Pictures a job's name can start with. */
+export const JOB_PICTURES = ["🧹", "🛏️", "🍽️", "🗑️", "🧺", "🐕", "🌱", "🍂", "📚", "🚗", "🛒"];
 
 /** The picture a title starts with, and the rest of it. */
 export function splitPicture(title: string): { picture: string; rest: string } {
-  const found = CHORE_PICTURES.find((p) => title.startsWith(p));
+  const found = JOB_PICTURES.find((p) => title.startsWith(p));
   return found ? { picture: found, rest: title.slice(found.length).trim() } : { picture: "", rest: title };
 }

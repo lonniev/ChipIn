@@ -52,8 +52,8 @@ test("a message's places are filled, and a place nobody filled stays visible", (
 });
 
 test("t says a key in the catalog's words, and in English when the catalog lacks it", () => {
-  const t = translator({ "nav.chores": "Corvées", "due.inDays": "dans {days} jours" }, english);
-  assert.equal(t("nav.chores"), "Corvées");
+  const t = translator({ "nav.jobs": "Petits boulots", "due.inDays": "dans {days} jours" }, english);
+  assert.equal(t("nav.jobs"), "Petits boulots");
   assert.equal(t("due.inDays", { days: 3 }), "dans 3 jours");
   assert.equal(t("nav.family"), "Family");
   assert.equal(t("actions.paySats"), "Pay {sats} sats");

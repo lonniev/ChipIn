@@ -1,2 +1,2 @@
 - Learn adds four topics on what sats are for: why save and for what, where else to earn, where to give, and what is worth buying. Each names a few places to look.
-- Learn adds the seven virtues, three theological and four cardinal, as they show up in chores.
+- Learn adds the seven virtues, three theological and four cardinal, as they show up in jobs.

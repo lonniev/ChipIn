@@ -21,12 +21,12 @@ export const lessons: LessonsText = {
       more: [
         "Bitcoin began in 2009, made by someone who signed as Satoshi Nakamoto.",
         "The smallest piece is named a satoshi after him, and people say sat for short.",
-        "A whole bitcoin is far more than most chores earn, so wages are counted in sats.",
+        "A whole bitcoin is far more than most jobs earn, so wages are counted in sats.",
         "One thousand sats is 0.00001 bitcoin.",
         "A sat cannot be cut smaller, and it cannot be copied.",
         "When you are paid 500 sats, you hold 500 of the sats that exist, and nobody else holds those."
       ],
-      tryThis: "Find the biggest reward on your chores list and work out what part of a bitcoin it is.",
+      tryThis: "Find the biggest reward on your jobs list and work out what part of a bitcoin it is.",
       ask: "Why might it help to have money that can be counted in very small pieces?"
     },
     "where-sats-live": {
@@ -64,7 +64,7 @@ export const lessons: LessonsText = {
         "The payment takes a second or two and costs almost nothing.",
         "Nobody in the middle holds your sats on the way."
       ],
-      tryThis: "When a chore is owed to you, open your wallet, tap Receive, and make the request yourself.",
+      tryThis: "When a job is owed to you, open your wallet, tap Receive, and make the request yourself.",
       ask: "Why does the person being paid write the request, and the payer only approve it?"
     },
     "why-nobody-can-make-more": {
@@ -102,14 +102,14 @@ export const lessons: LessonsText = {
         "People are paid when they do something another person values.",
         "A baker is paid because you would rather have the bread than the coins.",
         "Both of you come away better off, and that is what a fair trade is.",
-        "A chore is the same trade on a small scale.",
+        "A job at home is the same trade on a small scale.",
         "The better you serve, the more your work is worth."
       ],
       saying: {
         text: "In all labour there is profit: but the talk of the lips tendeth only to penury.",
         from: "Proverbs 14:23"
       },
-      tryThis: "Pick one chore and do it a little better than the grade asks.",
+      tryThis: "Pick one job and do it a little better than the grade asks.",
       ask: "Who was helped by the last piece of work you did?"
     },
     "save-some": {
@@ -131,7 +131,7 @@ export const lessons: LessonsText = {
         text: "He that gathereth by labour shall increase.",
         from: "Proverbs 13:11"
       },
-      tryThis: "Choose something worth waiting for, and count how many chores it will take.",
+      tryThis: "Choose something worth waiting for, and count how many jobs it will take.",
       ask: "What is something our family has because somebody saved for it?"
     },
     "keep-your-word": {
@@ -144,7 +144,7 @@ export const lessons: LessonsText = {
       more: [
         "Trade runs on promises.",
         "A shopkeeper promises the scale is honest, and a builder promises the wall will stand.",
-        "When you take a chore, someone stops worrying about it because you said you would do it.",
+        "When you take a job, someone stops worrying about it because you said you would do it.",
         "If you cannot finish, say so early and give it back.",
         "A person known for keeping their word is offered the best work.",
         "That name takes years to earn and a day to lose."
@@ -153,7 +153,7 @@ export const lessons: LessonsText = {
         text: "He that is faithful in that which is least is faithful also in much.",
         from: "Luke 16:10"
       },
-      tryThis: "If you have taken a chore you cannot finish, give it back today and say why.",
+      tryThis: "If you have taken a job you cannot finish, give it back today and say why.",
       ask: "Whom do you trust most to do what they say, and why?"
     },
     "give-some": {
@@ -168,7 +168,7 @@ export const lessons: LessonsText = {
         "That is why earning comes first: it makes you able to give.",
         "Families of faith have long set aside a tenth before spending anything.",
         "A gift given quietly helps the one who receives it and shapes the one who gives.",
-        "Giving time counts as well: a chore done for a neighbor, with no reward asked.",
+        "Giving time counts as well: a job done for a neighbor, with no reward asked.",
         "Decide your share before the sats arrive, and giving becomes a habit."
       ],
       saying: {
@@ -182,7 +182,7 @@ export const lessons: LessonsText = {
       title: "Why save, and for what?",
       lines: [
         "Saving turns many small rewards into one big thing.",
-        "A goal gives each chore a reason.",
+        "A goal gives each job a reason.",
         "Pick something worth the wait."
       ],
       more: [
@@ -204,7 +204,7 @@ export const lessons: LessonsText = {
     "where-else-to-earn": {
       title: "Where else can I earn sats?",
       lines: [
-        "Chores at home are one way.",
+        "Jobs at home are one way.",
         "Anyone with a Lightning wallet can pay you.",
         "The surest way is to make or do something people want."
       ],
@@ -236,7 +236,7 @@ export const lessons: LessonsText = {
       more: [
         "Begin close to home: your church, a neighbor in need, a family having a hard season.",
         "If your church does not take sats yet, give in the plate and offer to help them set it up.",
-        "A gift of time counts: a chore done for someone who cannot do it.",
+        "A gift of time counts: a job done for someone who cannot do it.",
         "Farther off, some groups take sats directly and say what they do with them.",
         "Before giving to anyone you do not know, ask a parent to look at who they are.",
         "Give quietly, and do not keep count of thanks."
@@ -257,7 +257,7 @@ export const lessons: LessonsText = {
       title: "What is worth buying?",
       lines: [
         "Buy things that last, teach, or help you work.",
-        "A thing that is gone in a day is rarely worth a week of chores.",
+        "A thing that is gone in a day is rarely worth a week of jobs.",
         "Before you spend, wait one night."
       ],
       more: [
@@ -282,7 +282,7 @@ export const lessons: LessonsText = {
       lines: [
         "A virtue is a good habit of the heart.",
         "Christians have long taught seven: three given by God and four that anyone can practice.",
-        "Chores are a good place to practice them."
+        "Jobs are a good place to practice them."
       ],
       more: [
         "The three theological virtues come from Saint Paul's first letter to the Corinthians.",
@@ -311,7 +311,7 @@ export const lessons: LessonsText = {
         {
           group: "Cardinal",
           name: "Prudence",
-          says: "Choosing well: thinking before you take a chore or spend a sat."
+          says: "Choosing well: thinking before you take a job or spend a sat."
         },
         {
           group: "Cardinal",
@@ -333,7 +333,7 @@ export const lessons: LessonsText = {
         text: "And now abideth faith, hope, charity, these three; but the greatest of these is charity.",
         from: "1 Corinthians 13:13"
       },
-      tryThis: "Pick one virtue for the week and notice each time a chore asks it of you.",
+      tryThis: "Pick one virtue for the week and notice each time a job asks it of you.",
       ask: "Which of the seven comes easiest to you, and which is hardest?"
     }
   },

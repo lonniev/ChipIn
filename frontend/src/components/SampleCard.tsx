@@ -1,13 +1,13 @@
-/** One sample chore, shown whole: what, where and when, and what each grade earns. */
+/** One sample job, shown whole: what, where and when, and what each grade earns. */
 
 import { Repeat } from "lucide-react";
 import { formatSats } from "@tollbooth-dpyc/web";
 import { useT } from "../i18n/I18nContext";
 import { say } from "../i18n/translate";
-import type { SampleChore } from "../lib/samples";
+import type { SampleJob } from "../lib/samples";
 import { repeatText } from "../lib/when";
 
-export default function SampleCard({ sample }: { sample: SampleChore }) {
+export default function SampleCard({ sample }: { sample: SampleJob }) {
   const t = useT();
   return (
     <article className="card panel sample">

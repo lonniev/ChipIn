@@ -1,4 +1,4 @@
-/** Every chore you have a part in: the ones waiting on you first, each a card with one big button. */
+/** Every job you have a part in: the ones waiting on you first, each a card with one big button. */
 
 import { useCallback, useEffect, useState, type ReactNode } from "react";
 import { Link } from "react-router-dom";
@@ -6,7 +6,7 @@ import { Bell, CalendarDays, CheckCheck, Hourglass, List, Plus, RefreshCw, Repea
 import { formatSats } from "@tollbooth-dpyc/web";
 import { useAppShell } from "@tollbooth-dpyc/web/react";
 import Actions from "../components/Actions";
-import { PersonLink, useChoreHref } from "../components/Links";
+import { PersonLink, useJobHref } from "../components/Links";
 import MonthCalendar from "../components/MonthCalendar";
 import PiggyBank from "../components/PiggyBank";
 import StandingBadge from "../components/StandingBadge";
@@ -32,15 +32,15 @@ const LANES: { lane: Lane; title: MessageKey; icon: typeof Bell }[] = [
 function Card({ task, now, onChanged }: { task: Task; now: number; onChanged: (t: Task) => void }) {
   const { picture, rest } = splitPicture(task.title);
   const who = task.performer ?? task.purchaser;
-  const choreHref = useChoreHref();
+  const jobHref = useJobHref();
   const t = useT();
   return (
-    <li className={`chore chore-${laneOf(task)}`}>
-      <Link to={choreHref(task.task_id)} className="chore-open">
-        <span className="chore-picture" aria-hidden>{picture || "⭐"}</span>
-        <span className="chore-words">
-          <span className="chore-title">{rest}</span>
-          <span className="chore-meta muted">
+    <li className={`job job-${laneOf(task)}`}>
+      <Link to={jobHref(task.task_id)} className="job-open">
+        <span className="job-picture" aria-hidden>{picture || "⭐"}</span>
+        <span className="job-words">
+          <span className="job-title">{rest}</span>
+          <span className="job-meta muted">
             <StandingBadge standing={task.standing} />
             <span>{say(t, dueText(task.needed_by, now))}</span>
             {task.every_days > 0 && <Repeat size={16} aria-label={say(t, repeatText(task.every_days))} />}
@@ -48,7 +48,7 @@ function Card({ task, now, onChanged }: { task: Task; now: number; onChanged: (t
         </span>
         <span className="coin num">{formatSats(task.assessment?.sats ?? topSats(task.rubric))}</span>
       </Link>
-      <div className="chore-foot">
+      <div className="job-foot">
         <PersonLink npub={who} />
         <Actions task={task} onChanged={onChanged} quick />
       </div>
@@ -65,7 +65,7 @@ const ORDERS: { order: Order; label: MessageKey }[] = [
 /** Search, order and the month view appear once the list is long enough to need them. */
 const BROWSE_FROM = 4;
 
-/** What you earned, a way to find a chore, then the chores: in lanes, in sections, or on a month. */
+/** What you earned, a way to find a job, then the jobs: in lanes, in sections, or on a month. */
 export function Board({ tasks, me, now, onChanged }: { tasks: Task[]; me: string; now: number; onChanged: (t: Task) => void }) {
   const { earned, coming } = earningsOf(tasks, me);
   const { name } = useFamily();
@@ -76,7 +76,7 @@ export function Board({ tasks, me, now, onChanged }: { tasks: Task[]; me: string
 
   const found = tasks.filter((task) => matches(task, query, name, (s) => t(standingKey(s))));
   const list = (rows: Task[]): ReactNode => (
-    <ul className="chore-list">{rows.map((task) => <Card key={task.task_id} task={task} now={now} onChanged={onChanged} />)}</ul>
+    <ul className="job-list">{rows.map((task) => <Card key={task.task_id} task={task} now={now} onChanged={onChanged} />)}</ul>
   );
   const byDue = grouped(found, "due", name)[0]?.rows ?? [];
 
@@ -153,7 +153,7 @@ export function Board({ tasks, me, now, onChanged }: { tasks: Task[]; me: string
   );
 }
 
-export default function Chores() {
+export default function Jobs() {
   const { session } = useAppShell();
   const t = useT();
   const [tasks, setTasks] = useState<Task[] | null>(null);
@@ -180,23 +180,23 @@ export default function Chores() {
   return (
     <div className="page grid gap-4">
       <div className="toolbar">
-        <h1 className="text-3xl font-bold">{t("chores.title")}</h1>
+        <h1 className="text-3xl font-bold">{t("jobs.title")}</h1>
         <div className="toolbar-actions">
           <button type="button" className="icon-btn" onClick={() => void load()} disabled={loading} aria-label={t("actions.lookAgain")} title={t("actions.lookAgain")}>
             <RefreshCw size={22} aria-hidden />
           </button>
-          <Link to="/chores/new" className="fab" aria-label={t("chores.new")} title={t("chores.new")}><Plus size={28} aria-hidden /></Link>
+          <Link to="/jobs/new" className="fab" aria-label={t("jobs.new")} title={t("jobs.new")}><Plus size={28} aria-hidden /></Link>
         </div>
       </div>
 
       {problem && <p className="card panel error">{problem}</p>}
-      {loading && !tasks && <div className="card panel"><Waiting heading={t("waiting.fetchingChores")} /></div>}
+      {loading && !tasks && <div className="card panel"><Waiting heading={t("waiting.fetchingJobs")} /></div>}
 
       {tasks && !tasks.length && (
         <div className="card panel empty">
           <span className="empty-picture" aria-hidden>🧹</span>
-          <p className="text-xl font-semibold">{t("chores.none")}</p>
-          <Link to="/chores/new" className="btn btn-go"><Plus size={22} aria-hidden />{t("chores.postFirst")}</Link>
+          <p className="text-xl font-semibold">{t("jobs.none")}</p>
+          <Link to="/jobs/new" className="btn btn-go"><Plus size={22} aria-hidden />{t("jobs.postFirst")}</Link>
         </div>
       )}
 

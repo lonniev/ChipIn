@@ -10,17 +10,17 @@ const name = (n: string) => names[n] ?? n;
 const standing = (s: Standing) => english[standingKey(s)];
 const at = (y: number, m: number, d: number) => Math.floor(new Date(y, m - 1, d, 23, 59, 59).getTime() / 1000);
 
-const chore = (id: string, title: string, more: Partial<Browsable> = {}): Browsable => ({
+const job = (id: string, title: string, more: Partial<Browsable> = {}): Browsable => ({
   task_id: id, title, description: "", purchaser: MOM, performer: SAM, standing: "claimed", needed_by: at(2026, 11, 20), ...more,
 });
 
-const sweep = chore("1", "🧹 Sweep the kitchen floor", { description: "After supper.", needed_by: at(2026, 11, 18) });
-const bins = chore("2", "🗑️ Take the trash cans to the curb", { performer: ADA, needed_by: at(2026, 11, 19), standing: "owed" });
-const weed = chore("3", "🌱 Weed the front flower bed", { performer: null, standing: "posted", needed_by: at(2026, 11, 21) });
-const porch = chore("4", "🧹 Sweep the porch", { performer: ADA, needed_by: at(2026, 11, 17) });
+const sweep = job("1", "🧹 Sweep the kitchen floor", { description: "After supper.", needed_by: at(2026, 11, 18) });
+const bins = job("2", "🗑️ Take the trash cans to the curb", { performer: ADA, needed_by: at(2026, 11, 19), standing: "owed" });
+const weed = job("3", "🌱 Weed the front flower bed", { performer: null, standing: "posted", needed_by: at(2026, 11, 21) });
+const porch = job("4", "🧹 Sweep the porch", { performer: ADA, needed_by: at(2026, 11, 17) });
 const all = [sweep, bins, weed, porch];
 
-test("search finds a chore by its title, its details, a person's name, or where it stands", () => {
+test("search finds a job by its title, its details, a person's name, or where it stands", () => {
   const found = (q: string) => all.filter((t) => matches(t, q, name, standing)).map((t) => t.task_id);
   assert.deepEqual(found("sweep"), ["1", "4"]);
   assert.deepEqual(found("supper"), ["1"]);
@@ -31,9 +31,9 @@ test("search finds a chore by its title, its details, a person's name, or where 
   assert.deepEqual(found("dragon"), []);
 });
 
-test("a chore's kind is its picture, and its person is whoever is doing it or else who posted it", () => {
+test("a job's kind is its picture, and its person is whoever is doing it or else who posted it", () => {
   assert.equal(kindOf(sweep), "🧹");
-  assert.equal(kindOf(chore("9", "Tidy up")), "⭐");
+  assert.equal(kindOf(job("9", "Tidy up")), "⭐");
   assert.equal(personOf(sweep), SAM);
   assert.equal(personOf(weed), MOM);
 });
@@ -70,7 +70,7 @@ test("a month is whole weeks, Sunday first, holding every one of its days once",
   assert.equal(aug[0][0].inMonth, false);
 });
 
-test("chores land on the local day they are due", () => {
+test("jobs land on the local day they are due", () => {
   const days = byDay(all);
   assert.deepEqual(days.get("2026-11-18")?.map((t) => t.task_id), ["1"]);
   assert.equal(dayKey(at(2026, 1, 5)), "2026-01-05");

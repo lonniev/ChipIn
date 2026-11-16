@@ -1,15 +1,15 @@
-/** A named person or chore is a link to it. A person has a face. */
+/** A named person or job is a link to it. A person has a face. */
 
 import { Link } from "react-router-dom";
 import { useFamily } from "../lib/FamilyContext";
 import { useLooking } from "../lib/LookContext";
 import { hueOf, initialOf } from "../lib/face";
 
-export const choreHref = (taskId: string) => `/chores/${encodeURIComponent(taskId)}`;
-/** Where a chore opens: its page, or its sample page while looking around. */
-export function useChoreHref(): (taskId: string) => string {
+export const jobHref = (taskId: string) => `/jobs/${encodeURIComponent(taskId)}`;
+/** Where a job opens: its page, or its sample page while looking around. */
+export function useJobHref(): (taskId: string) => string {
   const looking = useLooking();
-  return looking ? (taskId) => `/look/chores/${encodeURIComponent(taskId)}` : choreHref;
+  return looking ? (taskId) => `/look/jobs/${encodeURIComponent(taskId)}` : jobHref;
 }
 export const personHref = (npub: string) => `/family?who=${encodeURIComponent(npub)}`;
 

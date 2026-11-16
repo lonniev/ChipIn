@@ -1,4 +1,4 @@
-/** Look around before signing in: a sample family's chores, a chore's page, and savings. Nothing here is real. */
+/** Look around before signing in: a sample family's jobs, a job's page, and savings. Nothing here is real. */
 
 import { useMemo } from "react";
 import { ArrowLeft } from "lucide-react";
@@ -7,8 +7,8 @@ import { useSamples, useT } from "../i18n/I18nContext";
 import { SampleFamilyProvider } from "../lib/FamilyContext";
 import { LookContext } from "../lib/LookContext";
 import { sampleMembers, samplePayout, sampleTasks, viewerNpub, type Viewer } from "../lib/sampleFamily";
-import { Sheet } from "./Chore";
-import { Board } from "./Chores";
+import { Sheet } from "./Job";
+import { Board } from "./Jobs";
 import { SavingsSheet } from "./Savings";
 
 const VIEWERS: Viewer[] = ["sam", "mom"];
@@ -48,7 +48,7 @@ export default function Look() {
 
           {(task || savings) && (
             <div className="toolbar">
-              <Link to={home} className="btn btn-quiet"><ArrowLeft size={22} aria-hidden />{t("nav.chores")}</Link>
+              <Link to={home} className="btn btn-quiet"><ArrowLeft size={22} aria-hidden />{t("nav.jobs")}</Link>
             </div>
           )}
 
@@ -56,7 +56,7 @@ export default function Look() {
           {savings && <SavingsSheet tasks={sampleTasks("sam", now, samples)} me={viewerNpub("sam")} now={now} />}
           {!task && !savings && (
             <>
-              <h2 className="text-3xl font-bold">{t("chores.title")}</h2>
+              <h2 className="text-3xl font-bold">{t("jobs.title")}</h2>
               <Board tasks={tasks} me={me} now={now} onChanged={() => {}} />
             </>
           )}

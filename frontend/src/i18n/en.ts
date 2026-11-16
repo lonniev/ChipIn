@@ -12,7 +12,7 @@ export const en = {
 
   // The bar across the top.
   "nav.welcome": "Welcome",
-  "nav.chores": "Chores",
+  "nav.jobs": "Jobs",
   "nav.savings": "Savings",
   "nav.family": "Family",
   "nav.wallet": "Tollbooth wallet",
@@ -26,8 +26,8 @@ export const en = {
 
   // Said while something is fetched.
   "waiting.openingPage": "Opening the page…",
-  "waiting.fetchingChore": "Fetching the chore…",
-  "waiting.fetchingChores": "Fetching the chores…",
+  "waiting.fetchingJob": "Fetching the job…",
+  "waiting.fetchingJobs": "Fetching the jobs…",
   "waiting.counting": "Counting your sats…",
 
   // Words used on many pages.
@@ -42,18 +42,18 @@ export const en = {
   "wallet.title": "Tollbooth DPYC™ wallet",
   "wallet.holds": "This wallet holds api_sats, which pay for using ChipIn.",
   "wallet.topUp": "A parent tops it up here.",
-  "wallet.earned": "The sats you earn from chores go to your own Lightning wallet; see {savings}.",
+  "wallet.earned": "The sats you earn from jobs go to your own Lightning wallet; see {savings}.",
 
   // The home page.
   "home.sceneAlt": "A mother hands her daughter a coin for sweeping the kitchen floor.",
-  "home.line.chores": "Children take on chores around the home.",
+  "home.line.jobs": "Children take on jobs around the home.",
   "home.line.reward": "Parents look at the work and reward a job well done.",
   "home.line.learn": "Everyone learns sound money, responsibility, and the good of a clean home.",
   "home.line.bitcoin": "The reward is a little bitcoin, real money a child can save, give or spend.",
   "home.lookFirst": "Look around first",
   "home.start": "Start your family",
   "home.learnMoney": "Learn about money",
-  "home.samples.title": "Chores a family might post",
+  "home.samples.title": "Jobs a family might post",
   "home.seeAll": "See them all",
 
   // Welcome: looking around a sample family.
@@ -61,9 +61,9 @@ export const en = {
   "look.intro": "Look around a sample family. Nothing here is real, and nothing you tap is sent.",
   "look.seeAs": "See it as",
   "look.sam.label": "Sam, a child",
-  "look.sam.says": "Sam sees chores he may take, the ones he is doing, and what he has earned.",
+  "look.sam.says": "Sam sees jobs he may take, the ones he is doing, and what he has earned.",
   "look.mom.label": "Mom, a parent",
-  "look.mom.says": "Mom sees every chore, the work waiting to be checked, and what she owes.",
+  "look.mom.says": "Mom sees every job, the work waiting to be checked, and what she owes.",
   "look.start": "Start your own",
   "sample.member.mom": "Mom",
   "sample.member.sam": "Sam",
@@ -71,12 +71,12 @@ export const en = {
   // {signIn} is a link that reads "Sign in".
   "sample.tried": "This is a sample. {signIn} to do it for real.",
 
-  // The chores list.
-  "chores.title": "Chores",
-  "chores.new": "New chore",
-  "chores.none": "No chores yet.",
-  "chores.postFirst": "Post the first one",
-  "chores.go": "Go to your chores",
+  // The jobs list.
+  "jobs.title": "Jobs",
+  "jobs.new": "New job",
+  "jobs.none": "No jobs yet.",
+  "jobs.postFirst": "Post the first one",
+  "jobs.go": "Go to your jobs",
   "lanes.yours": "Your turn",
   "lanes.waiting": "Waiting",
   "lanes.finished": "Finished",
@@ -84,11 +84,11 @@ export const en = {
   "order.due": "Due",
   "order.person": "Person",
   "order.kind": "Kind",
-  "browse.find": "Find a chore",
+  "browse.find": "Find a job",
   "browse.clear": "Clear",
   "browse.list": "List",
   "browse.month": "Month",
-  "browse.noMatch": "No chore matches “{query}”.",
+  "browse.noMatch": "No job matches “{query}”.",
   "piggy.earned": "You earned",
   "piggy.coming": "On its way",
   "piggy.saved": "{sats} sats saved",
@@ -100,7 +100,7 @@ export const en = {
   "month.after": "Month after",
   "month.nothing": "Nothing is due this day.",
 
-  // Where a chore stands.
+  // Where a job stands.
   "standing.posted": "Open",
   "standing.expired": "Expired",
   "standing.claimed": "Claimed",
@@ -112,7 +112,7 @@ export const en = {
   "standing.rejected": "Rejected",
   "standing.withdrawn": "Withdrawn",
 
-  // When a chore is due, and how often it comes round. {days} is 2 or more.
+  // When a job is due, and how often it comes round. {days} is 2 or more.
   "due.today": "today",
   "due.tomorrow": "tomorrow",
   "due.yesterday": "yesterday",
@@ -123,7 +123,7 @@ export const en = {
   "repeat.weekly": "Every week",
   "repeat.everyDays": "Every {days} days",
 
-  // The buttons a chore offers.
+  // The buttons a job offers.
   "actions.claim": "I'll do it!",
   "actions.mark_done": "I'm done!",
   "actions.release": "Give it back",
@@ -144,32 +144,32 @@ export const en = {
   "actions.askAgain": "Ask them to look again",
   "actions.neverMind": "Never mind",
 
-  // One chore's page. {person} is a family member's name.
-  "chore.due": "Due",
-  "chore.postedBy": "Posted by",
-  "chore.doingIt": "Doing it",
-  "chore.whoMay": "Who may do it",
-  "chore.grade": "Grade",
-  "chore.waitingAccepted": "waiting to be accepted",
-  "chore.appealQuote": "Appeal: “{reasons}”",
-  "chore.paidBanner": "Paid {sats} sats",
-  "chore.askingInvoice": "Asking for the invoice…",
-  "chore.asksFirst": "{person} asks for their sats first.",
-  "chore.getYourSats": "Get your sats",
-  "chore.payFromWallet": "Pay from your wallet",
-  "chore.theInvoice": "The invoice",
-  "chore.satsGoStraight": "The sats go straight to {person}, who taps “I got it!” when they arrive.",
-  "chore.rewards": "Rewards",
+  // One job's page. {person} is a family member's name.
+  "job.due": "Due",
+  "job.postedBy": "Posted by",
+  "job.doingIt": "Doing it",
+  "job.whoMay": "Who may do it",
+  "job.grade": "Grade",
+  "job.waitingAccepted": "waiting to be accepted",
+  "job.appealQuote": "Appeal: “{reasons}”",
+  "job.paidBanner": "Paid {sats} sats",
+  "job.askingInvoice": "Asking for the invoice…",
+  "job.asksFirst": "{person} asks for their sats first.",
+  "job.getYourSats": "Get your sats",
+  "job.payFromWallet": "Pay from your wallet",
+  "job.theInvoice": "The invoice",
+  "job.satsGoStraight": "The sats go straight to {person}, who taps “I got it!” when they arrive.",
+  "job.rewards": "Rewards",
   "history.title": "History",
   "history.fetching": "Fetching…",
 
-  // The invoice that pays a chore.
+  // The invoice that pays a job.
   "invoice.open": "Open in wallet",
   "invoice.copy": "Copy invoice",
   "invoice.goodFor": "Good for {minutes} more minutes.",
   "invoice.expired": "This invoice has expired. Ask for a new one.",
 
-  // Asking your own wallet for the sats a chore earned.
+  // Asking your own wallet for the sats a job earned.
   "request.sample": "This is a sample. Sign in to be paid for real.",
   "request.notRequest": "That is not a request from a wallet. Copy the whole thing and try again.",
   "request.pasteBelow": "Paste it into the box below.",
@@ -181,39 +181,39 @@ export const en = {
   "request.fromWallet": "Request from your wallet",
   "request.send": "Send it",
 
-  // Posting a chore.
-  "newChore.me": "Me",
-  "newChore.needName": "Give the chore a name.",
-  "newChore.needWho": "Choose who may do it.",
-  "newChore.needDay": "Choose the day it is due.",
-  "newChore.dayPassed": "That day has passed.",
-  "newChore.startFrom": "Start from one of these",
-  "newChore.picture": "Picture",
-  "newChore.what": "What needs doing?",
-  "newChore.whatPlaceholder": "Sweep the kitchen floor",
-  "newChore.where": "Where, when, and what “done” looks like",
-  "newChore.wherePlaceholder": "Every evening, after supper is cleared.\nSweep under the table and along the cabinets.\nHang the broom back on its hook.",
-  "newChore.who": "Who can do it?",
-  "newChore.addSomeone": "Add someone",
-  "newChore.byWhen": "By when?",
-  "newChore.repeats": "Repeats",
-  "newChore.earns": "What does it earn?",
-  "newChore.gradePlaceholder": "Grade",
-  "newChore.gradeName": "Grade name",
-  "newChore.whatEarns": "What earns it",
-  "newChore.satsPlaceholder": "sats",
-  "newChore.satsLabel": "Sats",
-  "newChore.removeGrade": "Remove this grade",
-  "newChore.addGrade": "Add a grade",
-  "newChore.posting": "Posting…",
-  "newChore.post": "Post the chore",
+  // Posting a job.
+  "newJob.me": "Me",
+  "newJob.needName": "Give the job a name.",
+  "newJob.needWho": "Choose who may do it.",
+  "newJob.needDay": "Choose the day it is due.",
+  "newJob.dayPassed": "That day has passed.",
+  "newJob.startFrom": "Start from one of these",
+  "newJob.picture": "Picture",
+  "newJob.what": "What needs doing?",
+  "newJob.whatPlaceholder": "Sweep the kitchen floor",
+  "newJob.where": "Where, when, and what “done” looks like",
+  "newJob.wherePlaceholder": "Every evening, after supper is cleared.\nSweep under the table and along the cabinets.\nHang the broom back on its hook.",
+  "newJob.who": "Who can do it?",
+  "newJob.addSomeone": "Add someone",
+  "newJob.byWhen": "By when?",
+  "newJob.repeats": "Repeats",
+  "newJob.earns": "What does it earn?",
+  "newJob.gradePlaceholder": "Grade",
+  "newJob.gradeName": "Grade name",
+  "newJob.whatEarns": "What earns it",
+  "newJob.satsPlaceholder": "sats",
+  "newJob.satsLabel": "Sats",
+  "newJob.removeGrade": "Remove this grade",
+  "newJob.addGrade": "Add a grade",
+  "newJob.posting": "Posting…",
+  "newJob.post": "Post the job",
 
-  // A chore's grades. {name} is a grade's name as it was typed.
+  // A job's grades. {name} is a grade's name as it was typed.
   "rubric.starter.great": "Great job",
   "rubric.starter.good": "Good enough",
   "rubric.starter.none": "Not done",
   "rubric.needOne": "Add at least one grade.",
-  "rubric.tooMany": "A chore has at most {max} grades.",
+  "rubric.tooMany": "A job has at most {max} grades.",
   "rubric.needName": "Every grade needs a name.",
   "rubric.nameLong": "\"{name}…\" is longer than 60 characters.",
   "rubric.twoNamed": "Two grades are named \"{name}\".",
@@ -224,7 +224,7 @@ export const en = {
   "family.title": "Family",
   "family.you": "You",
   "family.copyNpub": "Copy your npub",
-  "family.needsNpub": "Whoever posts chores for you needs this npub.",
+  "family.needsNpub": "Whoever posts jobs for you needs this npub.",
   "family.people": "People",
   "family.nobody": "Nobody yet. Add each person by their npub.",
   "family.remove": "Remove {name}",
@@ -249,11 +249,11 @@ export const en = {
   // The guide.
   "guide.title": "How it works",
   "guide.step.post.title": "Post",
-  "guide.step.post.says": "A parent posts a chore, who may do it, and what each grade earns.",
+  "guide.step.post.says": "A parent posts a job, who may do it, and what each grade earns.",
   "guide.step.claim.title": "Claim",
   "guide.step.claim.says": "A child taps “I'll do it!”.",
   "guide.step.do.title": "Do it",
-  "guide.step.do.says": "The child does the chore and taps “I'm done!”.",
+  "guide.step.do.says": "The child does the job and taps “I'm done!”.",
   "guide.step.grade.title": "Grade",
   "guide.step.grade.says": "The parent checks the work and picks a grade.",
   "guide.step.pay.title": "Pay",
@@ -265,19 +265,19 @@ export const en = {
   "guide.wallet.parentFirst": "A parent sets up their own first, then one for each child.",
   "guide.wallet.youngChild": "A young child's wallet can live on a parent's phone until they have their own.",
   "guide.wallet.backup": "Write down the wallet's backup words on paper and keep them with the family's important things.",
-  "guide.wallet.toBePaid": "To be paid, a child taps Receive in the wallet, asks for the sats the chore earned, and pastes the request into ChipIn.",
+  "guide.wallet.toBePaid": "To be paid, a child taps Receive in the wallet, asks for the sats the job earned, and pastes the request into ChipIn.",
   // {lesson} is a link that reads the lesson's title.
   "guide.wallet.more": "More on keeping it safe: {lesson}",
-  "guide.samples.title": "What a good chore says",
+  "guide.samples.title": "What a well-posted job says",
   "guide.samples.says": "Where, when, and what “done” looks like.",
   "guide.know.title": "Good to know",
   "guide.know.npub": "Everyone signs in with their own npub.",
   // {profile} is a link that reads "Profile".
-  "guide.know.wallet": "Any Lightning wallet works. When a chore is owed, the person who did it asks their wallet for the sats and pastes the request in. A Lightning address on their {profile} skips that step.",
+  "guide.know.wallet": "Any Lightning wallet works. When a job is owed, the person who did it asks their wallet for the sats and pastes the request in. A Lightning address on their {profile} skips that step.",
   "guide.know.profile": "Profile",
   "guide.know.straight": "The sats go from the parent's wallet straight to the child's.",
   "guide.know.disagree": "A child who disagrees with a grade may ask for one more look.",
-  "guide.know.yourself": "You can post a chore to yourself to try it.",
+  "guide.know.yourself": "You can post a job to yourself to try it.",
   // {learn} is a link that reads "Learn about sats".
   "guide.know.newToBitcoin": "New to Bitcoin? {learn}.",
 
@@ -297,8 +297,8 @@ export const en = {
   "learn.keep.says": "For parents, and for children ready for more.",
   "learn.moreBooks": "More books at Good Brew",
   "learn.orangeBible.says": "A Bible app that rewards daily reading with sats.",
-  // {chores} is a link that reads "Go to your chores".
-  "learn.ready": "Ready to earn some? {chores}",
+  // {jobs} is a link that reads "Go to your jobs".
+  "learn.ready": "Ready to earn some? {jobs}",
   "lesson.places": "Places to look",
   "lesson.try": "Try this",
   "lesson.ask": "Ask at supper",
@@ -306,14 +306,14 @@ export const en = {
   // Savings.
   "savings.title": "Savings",
   "savings.nothing": "Nothing saved yet.",
-  "savings.firstPaid": "Your first paid chore starts the line.",
+  "savings.firstPaid": "Your first paid job starts the line.",
   "savings.yearFromNow": "A year from now",
   "savings.pace": "Your pace",
   "savings.paceValue": "{sats} sats a week",
   "savings.inAYear": "In a year, at that pace",
   "savings.lines": "The solid line is what you were paid. The dashed line is the same pace kept up.",
   "savings.where.title": "Where these sats are",
-  "savings.where.saw": "These are the sats ChipIn saw you paid for chores.",
+  "savings.where.saw": "These are the sats ChipIn saw you paid for jobs.",
   "savings.where.wallet": "They sit in your own Lightning wallet, and only your wallet app knows its balance.",
   "savings.where.open": "Open your wallet to see what you hold today.",
   // {saveSome} and {whyScarce} are links that read two lessons' titles.
@@ -346,17 +346,17 @@ export const en = {
   "profile.payout.tour": "A Lightning address, if your wallet gives you one. Without it, you ask your wallet for the sats each time.",
   "language.title": "Language",
 
-  // Chores in the phone's calendar. {count} is how many times the link was read, as "(12)".
-  "calendar.feedName": "ChipIn chores",
-  "calendar.title": "Chores in your calendar",
-  "calendar.says": "Your phone's calendar can show each chore on the day it is due.",
+  // Jobs in the phone's calendar. {count} is how many times the link was read, as "(12)".
+  "calendar.feedName": "ChipIn jobs",
+  "calendar.title": "Jobs in your calendar",
+  "calendar.says": "Your phone's calendar can show each job on the day it is due.",
   "calendar.open": "Open in calendar",
   "calendar.copy": "Copy link",
   "calendar.yesRemove": "Yes, remove it",
   "calendar.remove": "Remove this link",
   "calendar.read": "read {count}",
   "calendar.add": "Add to my calendar",
-  "calendar.care": "Anyone who has the link can see your chores and when they are due. It carries no names. Keep it to your family.",
+  "calendar.care": "Anyone who has the link can see your jobs and when they are due. It carries no names. Keep it to your family.",
 } as const;
 
 export type MessageKey = keyof typeof en;

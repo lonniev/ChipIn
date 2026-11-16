@@ -1,9 +1,9 @@
 ## What ChipIn is for
 
-A household posts chores and pays for them in sats.
+A household posts jobs and pays for them in sats.
 ChipIn is a page over the Task Booth Operator; an agent uses Task Booth's tools directly.
 
-## A chore, start to finish
+## A job, start to finish
 
 `taskbooth_post_task` posts it with a rubric: the grades, and the sats each one earns.
 `taskbooth_claim_task` and `taskbooth_mark_done` are the performer's.

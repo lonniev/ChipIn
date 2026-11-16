@@ -10,21 +10,21 @@ import { PicturesProvider } from "./lib/PicturesContext";
 import { toursIn } from "./lib/tours";
 
 // Each page is its own chunk, fetched the first time it opens.
-const Chore = lazy(() => import("./views/Chore"));
-const Chores = lazy(() => import("./views/Chores"));
+const Job = lazy(() => import("./views/Job"));
+const Jobs = lazy(() => import("./views/Jobs"));
 const Family = lazy(() => import("./views/Family"));
 const Guide = lazy(() => import("./views/Guide"));
 const Home = lazy(() => import("./views/Home"));
 const Learn = lazy(() => import("./views/Learn"));
 const Look = lazy(() => import("./views/Look"));
 const LessonPage = lazy(() => import("./views/LessonPage"));
-const NewChore = lazy(() => import("./views/NewChore"));
+const NewJob = lazy(() => import("./views/NewJob"));
 const Profile = lazy(() => import("./views/Profile"));
 const Savings = lazy(() => import("./views/Savings"));
 
 const PAGES = [
   { href: "/look", label: "nav.welcome", icon: <DoorOpen size={18} aria-hidden /> },
-  { href: "/chores", label: "nav.chores", icon: <ListChecks size={18} aria-hidden /> },
+  { href: "/jobs", label: "nav.jobs", icon: <ListChecks size={18} aria-hidden /> },
   { href: "/savings", label: "nav.savings", icon: <PiggyBank size={18} aria-hidden /> },
   { href: "/family", label: "nav.family", icon: <Users size={18} aria-hidden /> },
   { href: "/wallet", label: "nav.wallet", icon: <WalletIcon size={18} aria-hidden /> },
@@ -150,17 +150,17 @@ function Site() {
           <FamilyProvider me={session.signedIn ? session.npub : ""}>
             <Suspense fallback={<div className="page"><div className="card panel"><Waiting heading={t("waiting.openingPage")} /></div></div>}>
               <Routes>
-                <Route index element={session.signedIn ? <Navigate to="/chores" replace /> : <Home />} />
-                <Route path="signin" element={session.signedIn ? <Navigate to="/chores" replace /> : <SignIn gate={gate} />} />
-                <Route path="chores" element={<SignedIn><Chores /></SignedIn>} />
-                <Route path="chores/new" element={<SignedIn><NewChore /></SignedIn>} />
-                <Route path="chores/:taskId" element={<SignedIn><Chore /></SignedIn>} />
+                <Route index element={session.signedIn ? <Navigate to="/jobs" replace /> : <Home />} />
+                <Route path="signin" element={session.signedIn ? <Navigate to="/jobs" replace /> : <SignIn gate={gate} />} />
+                <Route path="jobs" element={<SignedIn><Jobs /></SignedIn>} />
+                <Route path="jobs/new" element={<SignedIn><NewJob /></SignedIn>} />
+                <Route path="jobs/:taskId" element={<SignedIn><Job /></SignedIn>} />
                 <Route path="family" element={<SignedIn><Family /></SignedIn>} />
                 <Route path="wallet" element={<SignedIn><WalletPage /></SignedIn>} />
                 <Route path="profile" element={<SignedIn><Profile /></SignedIn>} />
                 <Route path="guide" element={<Guide />} />
                 <Route path="look" element={<Look />} />
-                <Route path="look/chores/:taskId" element={<Look />} />
+                <Route path="look/jobs/:taskId" element={<Look />} />
                 <Route path="look/:page" element={<Look />} />
                 <Route path="learn" element={<Learn />} />
                 <Route path="learn/:slug" element={<LessonPage />} />

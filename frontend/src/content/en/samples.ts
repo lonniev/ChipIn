@@ -1,9 +1,9 @@
 /**
- * The sample chores, in English. Each says where, when, and what "done" looks like,
+ * The sample jobs, in English. Each says where, when, and what "done" looks like,
  * one sentence to a line (lines are separated by \n).
  *
  * To translate: copy this folder, and translate the string values only.
- * Each chore keeps its grades in the same order: the sats each earns are in `src/lib/samples.ts`.
+ * Each job keeps its grades in the same order: the sats each earns are in `src/lib/samples.ts`.
  */
 
 import type { SamplesText } from "../../lib/samples.ts";

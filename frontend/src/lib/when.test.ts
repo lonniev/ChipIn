@@ -20,7 +20,7 @@ test("due times read as days from today", () => {
   assert.equal(dueText(endOfDay("2026-11-11")!, now), "4 days ago");
 });
 
-test("a chore due late tonight is still due today early this morning", () => {
+test("a job due late tonight is still due today early this morning", () => {
   const early = Math.floor(new Date(2026, 10, 15, 0, 5).getTime() / 1000);
   assert.equal(dueText(endOfDay("2026-11-15")!, early), "today");
 });

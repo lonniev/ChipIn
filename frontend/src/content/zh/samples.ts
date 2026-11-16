@@ -1,5 +1,5 @@
 /**
- * 示范家务，简体中文版。每一项都写明在哪里、什么时候、怎样才算“做完”，
+ * 示范活儿，简体中文版。每一项都写明在哪里、什么时候、怎样才算“做完”，
  * 一句一行（行与行之间用 \n 隔开）。
  */
 
@@ -43,7 +43,7 @@ export const samples: SamplesText = {
     teaches: "用做完一件事来开始新的一天。"
   },
   "trash-cans": {
-    kind: "每周的任务",
+    kind: "每周的活儿",
     title: "把垃圾桶推到路边",
     description: "星期四傍晚，天黑之前。\n把两个垃圾桶从屋子侧面推到车道尽头，盖子盖好。\n星期五放学后再把它们推回来。",
     grades: [
@@ -83,7 +83,7 @@ export const samples: SamplesText = {
     teaches: "有谁正依靠着你的劳动。"
   },
   "weed-bed": {
-    kind: "一次性的大任务",
+    kind: "一次性的大活儿",
     title: "给门前的花坛除草",
     description: "这个星期六上午，午饭之前。\n门前台阶旁的花坛，从小路到篱笆那一段。\n每棵杂草都要连根拔起，放进庭院垃圾桶。",
     grades: [
@@ -103,7 +103,7 @@ export const samples: SamplesText = {
     teaches: "越辛苦的活，挣得越多。"
   },
   "read-chapter": {
-    kind: "动脑的任务",
+    kind: "动脑的活儿",
     title: "读一章书，讲给我们听",
     description: "这个星期的任何一个晚上，睡觉之前。\n把你的书完整地读一章。\n第二天吃晚饭时，给全家讲讲里面发生了什么。",
     grades: [

@@ -1,5 +1,5 @@
 /**
- * The invoice that pays a chore: a link any wallet opens, a code to scan from
+ * The invoice that pays a job: a link any wallet opens, a code to scan from
  * another phone, and the text to copy. It is Task Booth's invoice, shown unchanged.
  */
 

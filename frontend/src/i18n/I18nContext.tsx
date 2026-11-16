@@ -10,7 +10,7 @@ import { createContext, Fragment, useCallback, useContext, useEffect, useMemo, u
 import english from "../content/en/index.ts";
 import { libraryIn, type Library } from "../lib/lessons.ts";
 import type { QuoteText } from "../lib/quotes.ts";
-import { samplesIn, type SampleChore } from "../lib/samples.ts";
+import { samplesIn, type SampleJob } from "../lib/samples.ts";
 import type { MessageKey } from "./en.ts";
 import { DEFAULT_LANGUAGE, LANGUAGE_KEY, languageForBrowser, languageFrom, localeFor, type Language } from "./languages.ts";
 import type { LanguagePack } from "./pack.ts";
@@ -33,7 +33,7 @@ interface I18n {
   choose: (language: Language) => void;
   t: T;
   library: Library;
-  samples: SampleChore[];
+  samples: SampleJob[];
   quotes: QuoteText[];
 }
 
@@ -106,8 +106,8 @@ export const useLocale = (): string => localeFor(useContext(Ctx).shown, preferre
 /** The lessons, glossary and bookshelf in the language on screen. */
 export const useLessons = (): Library => useContext(Ctx).library;
 
-/** The sample chores in the language on screen. */
-export const useSamples = (): SampleChore[] => useContext(Ctx).samples;
+/** The sample jobs in the language on screen. */
+export const useSamples = (): SampleJob[] => useContext(Ctx).samples;
 
 /** The quotations in the language on screen. */
 export const useQuotes = (): QuoteText[] => useContext(Ctx).quotes;

@@ -1,4 +1,4 @@
-/** Chores on a month: each day shows the pictures of what is due, and a tap lists them. */
+/** Jobs on a month: each day shows the pictures of what is due, and a tap lists them. */
 
 import { useState, type ReactNode } from "react";
 import { CalendarPlus, ChevronLeft, ChevronRight } from "lucide-react";

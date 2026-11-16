@@ -1,4 +1,4 @@
-/** How a chore goes, in six steps. */
+/** How a job goes, in six steps. */
 
 import { BadgeCheck, Check, ClipboardList, Hand, ThumbsUp, Zap } from "lucide-react";
 import { Link } from "react-router-dom";

@@ -1,6 +1,6 @@
 /**
  * How someone with any wallet gets paid: they ask their wallet for the sats
- * the chore earned, copy what it shows, and paste it here.
+ * the job earned, copy what it shows, and paste it here.
  */
 
 import { useState } from "react";

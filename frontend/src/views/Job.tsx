@@ -1,4 +1,4 @@
-/** One chore: where it stands, its rewards, what you may do, and the invoice when it is owed. */
+/** One job: where it stands, its rewards, what you may do, and the invoice when it is owed. */
 
 import { useCallback, useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
@@ -54,7 +54,7 @@ function History({ taskId }: { taskId: string }) {
   );
 }
 
-/** The chore itself: its facts, the buttons, the invoice when it is owed, and its rewards. */
+/** The job itself: its facts, the buttons, the invoice when it is owed, and its rewards. */
 export function Sheet({ task, payout, now, onChanged, onPay, onRequested = () => {}, paying = false, problem = "" }: {
   task: Task; payout: Payout | null; now: number; onChanged: (t: Task) => void; onPay: () => void;
   onRequested?: (p: Payout) => void; paying?: boolean; problem?: string;
@@ -72,53 +72,53 @@ export function Sheet({ task, payout, now, onChanged, onPay, onRequested = () =>
     <>
       <section className="card panel grid gap-3">
         <div className="flex flex-wrap items-start justify-between gap-2">
-          <h1 className="chore-head"><span className="chore-picture" aria-hidden>{picture || "⭐"}</span>{rest}</h1>
+          <h1 className="job-head"><span className="job-picture" aria-hidden>{picture || "⭐"}</span>{rest}</h1>
           <StandingBadge standing={task.standing} />
         </div>
         {task.description && <p className="whitespace-pre-wrap">{task.description}</p>}
         <dl className="facts">
-          <dt>{t("chore.due")}</dt><dd>{say(t, dueText(task.needed_by, now))}{task.every_days > 0 && <> · <Repeat size={14} aria-hidden className="inline" /> {say(t, repeatText(task.every_days))}</>}</dd>
-          <dt>{t("chore.postedBy")}</dt><dd><PersonLink npub={task.purchaser} /></dd>
+          <dt>{t("job.due")}</dt><dd>{say(t, dueText(task.needed_by, now))}{task.every_days > 0 && <> · <Repeat size={14} aria-hidden className="inline" /> {say(t, repeatText(task.every_days))}</>}</dd>
+          <dt>{t("job.postedBy")}</dt><dd><PersonLink npub={task.purchaser} /></dd>
           {task.performer
-            ? <><dt>{t("chore.doingIt")}</dt><dd><PersonLink npub={task.performer} /></dd></>
-            : <><dt>{t("chore.whoMay")}</dt><dd><People npubs={task.audience} /></dd></>}
-          {graded && <><dt>{t("chore.grade")}</dt><dd>{graded.grade} · <span className="num">{t("sats.amount", { sats: formatSats(graded.sats) })}</span>{!task.final && ` · ${t("chore.waitingAccepted")}`}</dd></>}
+            ? <><dt>{t("job.doingIt")}</dt><dd><PersonLink npub={task.performer} /></dd></>
+            : <><dt>{t("job.whoMay")}</dt><dd><People npubs={task.audience} /></dd></>}
+          {graded && <><dt>{t("job.grade")}</dt><dd>{graded.grade} · <span className="num">{t("sats.amount", { sats: formatSats(graded.sats) })}</span>{!task.final && ` · ${t("job.waitingAccepted")}`}</dd></>}
         </dl>
         {graded?.reasons && <p className="muted">{t("quote.marks", { text: graded.reasons })}</p>}
-        {graded?.appeal?.reasons && <p className="muted">{t("chore.appealQuote", { reasons: graded.appeal.reasons })}</p>}
+        {graded?.appeal?.reasons && <p className="muted">{t("job.appealQuote", { reasons: graded.appeal.reasons })}</p>}
         {task.rejection?.reasons && <p className="muted">{t("quote.marks", { text: task.rejection.reasons })}</p>}
         {task.standing === "paid" && graded && (
-          <p className="paid-banner"><span aria-hidden>🎉</span> {t.rich("chore.paidBanner", { sats: <span className="num">{formatSats(graded.sats)}</span> })}</p>
+          <p className="paid-banner"><span aria-hidden>🎉</span> {t.rich("job.paidBanner", { sats: <span className="num">{formatSats(graded.sats)}</span> })}</p>
         )}
         <Actions task={task} onChanged={onChanged} onPay={onPay} />
-        {paying && <p className="muted text-right">{t("chore.askingInvoice")}</p>}
+        {paying && <p className="muted text-right">{t("job.askingInvoice")}</p>}
         {waiting && task.performer && !mayAsk && (
-          <p className="muted text-right"><span aria-hidden>⏳</span> {t.rich("chore.asksFirst", { person: <PersonLink npub={task.performer} /> })}</p>
+          <p className="muted text-right"><span aria-hidden>⏳</span> {t.rich("job.asksFirst", { person: <PersonLink npub={task.performer} /> })}</p>
         )}
         {problem && !waiting && <p className="error text-right">{problem}</p>}
       </section>
 
       {mayAsk && graded && (
         <section className="card panel grid gap-2">
-          <h2 className="panel-title">{t("chore.getYourSats")}</h2>
+          <h2 className="panel-title">{t("job.getYourSats")}</h2>
           <RequestPanel taskId={task.task_id} sats={graded.sats} onTaken={onRequested} />
         </section>
       )}
 
       {owed && live && (
         <section className="card panel grid gap-2">
-          <h2 className="panel-title text-right">{mayPay ? t("chore.payFromWallet") : t("chore.theInvoice")}</h2>
+          <h2 className="panel-title text-right">{mayPay ? t("job.payFromWallet") : t("job.theInvoice")}</h2>
           <InvoicePanel payout={live} now={now} />
           {task.performer && (
             <p className="muted text-right text-sm">
-              {t.rich("chore.satsGoStraight", { person: <PersonLink npub={task.performer} /> })}
+              {t.rich("job.satsGoStraight", { person: <PersonLink npub={task.performer} /> })}
             </p>
           )}
         </section>
       )}
 
       <section className="card panel">
-        <h2 className="panel-title mb-1">{t("chore.rewards")}</h2>
+        <h2 className="panel-title mb-1">{t("job.rewards")}</h2>
         <table className="ledger">
           <tbody>
             {byReward(task.rubric.grades).map((g) => (
@@ -136,7 +136,7 @@ export function Sheet({ task, payout, now, onChanged, onPay, onRequested = () =>
   );
 }
 
-export default function Chore() {
+export default function Job() {
   const { taskId = "" } = useParams();
   const t = useT();
   const [task, setTask] = useState<Task | null>(null);
@@ -178,7 +178,7 @@ export default function Chore() {
     return (
       <div className="page">
         <div className="card panel">
-          {problem ? <p className="error">{problem}</p> : <Waiting heading={t("waiting.fetchingChore")} />}
+          {problem ? <p className="error">{problem}</p> : <Waiting heading={t("waiting.fetchingJob")} />}
         </div>
       </div>
     );
@@ -187,7 +187,7 @@ export default function Chore() {
   return (
     <div className="page grid gap-3">
       <div className="toolbar">
-        <Link to="/chores" className="btn btn-quiet"><ArrowLeft size={22} aria-hidden />{t("nav.chores")}</Link>
+        <Link to="/jobs" className="btn btn-quiet"><ArrowLeft size={22} aria-hidden />{t("nav.jobs")}</Link>
         <button type="button" className="icon-btn" onClick={() => void load()} disabled={loading} aria-label={t("actions.lookAgain")} title={t("actions.lookAgain")}>
           <RefreshCw size={22} aria-hidden />
         </button>

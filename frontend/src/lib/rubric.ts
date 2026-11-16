@@ -1,4 +1,4 @@
-/** A chore's rewards: the grades, and the sats each one earns. */
+/** A job's rewards: the grades, and the sats each one earns. */
 
 import type { MessageKey } from "../i18n/en.ts";
 import type { Said } from "../i18n/translate.ts";
@@ -24,7 +24,7 @@ export interface GradeRow {
 export const MAX_GRADES = 12;
 export const MAX_GRADE_SATS = 100_000_000;
 
-/** The grades a new chore starts with, named in the language on screen. */
+/** The grades a new job starts with, named in the language on screen. */
 export function starterRows(name: (key: MessageKey) => string): GradeRow[] {
   return [
     { name: name("rubric.starter.great"), sats: "1000", criteria: "" },
@@ -33,7 +33,7 @@ export function starterRows(name: (key: MessageKey) => string): GradeRow[] {
   ];
 }
 
-/** The most a chore can earn. */
+/** The most a job can earn. */
 export function topSats(rubric: Pick<Rubric, "grades">): number {
   return rubric.grades.reduce((most, g) => Math.max(most, g.sats), 0);
 }

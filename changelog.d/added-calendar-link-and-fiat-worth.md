@@ -1,2 +1,2 @@
-- Profile adds "Chores in your calendar": a private link your phone's calendar app subscribes to, with each chore on its due day. The month view links to it.
+- Profile adds "Jobs in your calendar": a private link your phone's calendar app subscribes to, with each job on its due day. The month view links to it.
 - Savings shows what your sats are worth in USD, EUR, GBP, CAD, CHF, AUD or JPY, and a year ahead at today's price and at the pace bitcoin has measured over the last four years. Prices come from mempool.space.

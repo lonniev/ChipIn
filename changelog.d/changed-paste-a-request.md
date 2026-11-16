@@ -1,2 +1,2 @@
-- Any Lightning wallet now works. When a chore is owed, the person who did it asks their wallet for the sats and pastes the request in.
-- A Lightning address on the Profile is optional, and taking a chore no longer asks for one.
+- Any Lightning wallet now works. When a job is owed, the person who did it asks their wallet for the sats and pastes the request in.
+- A Lightning address on the Profile is optional, and taking a job no longer asks for one.

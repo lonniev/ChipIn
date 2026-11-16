@@ -10,7 +10,7 @@ test("the Operator's no-address refusal is recognised", () => {
 });
 
 test("any other refusal is shown as it came", () => {
-  assert.equal(waitsOnTheirRequest("This chore is already taken."), false);
+  assert.equal(waitsOnTheirRequest("This job is already taken."), false);
   assert.equal(waitsOnTheirRequest(""), false);
 });
 

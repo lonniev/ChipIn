@@ -1,5 +1,5 @@
 /**
- * What the signed-in person may do to a chore from where it stands.
+ * What the signed-in person may do to a job from where it stands.
  *
  * Task Booth decides what is allowed; this table only chooses which buttons a
  * page draws, from the roles Task Booth says the person holds (`your_roles`).
@@ -50,11 +50,11 @@ export function isFinished(task: Pick<Stands, "standing" | "final">): boolean {
 
 export type Lane = "yours" | "waiting" | "finished";
 
-/** Where a chore sits on the list: waiting on you, waiting on someone else, or over. */
+/** Where a job sits on the list: waiting on you, waiting on someone else, or over. */
 export function laneOf(task: Stands): Lane {
   if (movesFor(task).length) return "yours";
   return isFinished(task) ? "finished" : "waiting";
 }
 
-/** The message that says where a chore stands. */
+/** The message that says where a job stands. */
 export const standingKey = (standing: Standing) => `standing.${standing}` as const satisfies MessageKey;

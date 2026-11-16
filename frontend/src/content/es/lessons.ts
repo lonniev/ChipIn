@@ -18,12 +18,12 @@ export const lessons: LessonsText = {
       more: [
         "Bitcoin empezó en 2009, creado por alguien que firmaba como Satoshi Nakamoto.",
         "El pedacito más pequeño se llama satoshi en su honor, y la gente le dice sat para abreviar.",
-        "Un bitcoin entero es mucho más de lo que gana casi cualquier quehacer, por eso los pagos se cuentan en sats.",
+        "Un bitcoin entero es mucho más de lo que gana casi cualquier trabajo, por eso los pagos se cuentan en sats.",
         "Mil sats son 0.00001 bitcoin.",
         "Un sat no se puede partir en algo más chico, y tampoco se puede copiar.",
         "Cuando te pagan 500 sats, tienes 500 de los sats que existen, y nadie más tiene esos."
       ],
-      tryThis: "Busca el premio más grande de tu lista de quehaceres y calcula qué parte de un bitcoin es.",
+      tryThis: "Busca el premio más grande de tu lista de trabajos y calcula qué parte de un bitcoin es.",
       ask: "¿Por qué puede ser útil tener un dinero que se cuenta en pedacitos muy pequeños?"
     },
     "where-sats-live": {
@@ -61,7 +61,7 @@ export const lessons: LessonsText = {
         "El pago tarda uno o dos segundos y cuesta casi nada.",
         "Nadie en medio guarda tus sats por el camino."
       ],
-      tryThis: "Cuando te deban un quehacer, abre tu billetera, toca Recibir y haz la solicitud tú mismo.",
+      tryThis: "Cuando te deban un trabajo, abre tu billetera, toca Recibir y haz la solicitud tú mismo.",
       ask: "¿Por qué quien recibe el pago escribe la solicitud, y quien paga solo la aprueba?"
     },
     "why-nobody-can-make-more": {
@@ -99,14 +99,14 @@ export const lessons: LessonsText = {
         "A la gente le pagan cuando hace algo que otra persona valora.",
         "Al panadero le pagan porque tú prefieres tener el pan que las monedas.",
         "Los dos salen ganando, y eso es un trato justo.",
-        "Un quehacer es ese mismo trato en pequeño.",
+        "Un trabajo en casa es ese mismo trato en pequeño.",
         "Mientras mejor sirves, más vale tu trabajo."
       ],
       saying: {
         text: "En todo trabajo hay provecho, y el hablar de los labios solo lleva a la pobreza.",
         from: "Proverbios 14:23"
       },
-      tryThis: "Elige un quehacer y hazlo un poco mejor de lo que pide la calificación.",
+      tryThis: "Elige un trabajo y hazlo un poco mejor de lo que pide la calificación.",
       ask: "¿A quién le ayudó el último trabajo que hiciste?"
     },
     "save-some": {
@@ -128,7 +128,7 @@ export const lessons: LessonsText = {
         text: "Quien reúne con su trabajo verá crecer lo que tiene.",
         from: "Proverbios 13:11"
       },
-      tryThis: "Elige algo por lo que valga la pena esperar, y cuenta cuántos quehaceres te va a tomar.",
+      tryThis: "Elige algo por lo que valga la pena esperar, y cuenta cuántos trabajos te va a tomar.",
       ask: "¿Qué tiene nuestra familia gracias a que alguien ahorró para eso?"
     },
     "keep-your-word": {
@@ -141,7 +141,7 @@ export const lessons: LessonsText = {
       more: [
         "El comercio funciona con promesas.",
         "Un tendero promete que su báscula es honesta, y un albañil promete que la pared va a aguantar.",
-        "Cuando tomas un quehacer, alguien deja de preocuparse por él porque tú dijiste que lo harías.",
+        "Cuando tomas un trabajo, alguien deja de preocuparse por él porque tú dijiste que lo harías.",
         "Si no vas a poder terminarlo, dilo pronto y devuélvelo.",
         "A quien tiene fama de cumplir su palabra le ofrecen el mejor trabajo.",
         "Ese buen nombre tarda años en ganarse y un día en perderse."
@@ -150,7 +150,7 @@ export const lessons: LessonsText = {
         text: "El que es fiel en lo más pequeño también es fiel en lo mucho.",
         from: "Lucas 16:10"
       },
-      tryThis: "Si tomaste un quehacer que no vas a poder terminar, devuélvelo hoy y di por qué.",
+      tryThis: "Si tomaste un trabajo que no vas a poder terminar, devuélvelo hoy y di por qué.",
       ask: "¿En quién confías más para que haga lo que dice, y por qué?"
     },
     "give-some": {
@@ -165,7 +165,7 @@ export const lessons: LessonsText = {
         "Por eso ganar va primero: te da con qué dar.",
         "Desde hace mucho, las familias de fe apartan la décima parte antes de gastar cualquier cosa.",
         "Un regalo dado en silencio ayuda a quien lo recibe y forma a quien lo da.",
-        "Dar tu tiempo también cuenta: un quehacer hecho para un vecino, sin pedir premio.",
+        "Dar tu tiempo también cuenta: un trabajo hecho para un vecino, sin pedir premio.",
         "Decide tu parte antes de que lleguen los sats, y dar se vuelve costumbre."
       ],
       saying: {
@@ -179,7 +179,7 @@ export const lessons: LessonsText = {
       title: "¿Por qué ahorrar, y para qué?",
       lines: [
         "Ahorrar convierte muchos premios pequeños en una cosa grande.",
-        "Una meta le da una razón a cada quehacer.",
+        "Una meta le da una razón a cada trabajo.",
         "Elige algo que valga la espera."
       ],
       more: [
@@ -201,7 +201,7 @@ export const lessons: LessonsText = {
     "where-else-to-earn": {
       title: "¿Dónde más puedo ganar sats?",
       lines: [
-        "Los quehaceres de la casa son una manera.",
+        "Los trabajos de la casa son una manera.",
         "Cualquier persona con una billetera Lightning te puede pagar.",
         "La manera más segura es hacer o fabricar algo que la gente quiera."
       ],
@@ -233,7 +233,7 @@ export const lessons: LessonsText = {
       more: [
         "Empieza cerca de casa: tu iglesia, un vecino necesitado, una familia que pasa por una temporada difícil.",
         "Si tu iglesia todavía no acepta sats, da en la ofrenda y ofrécete a ayudarles a prepararlo.",
-        "Un regalo de tiempo cuenta: un quehacer hecho para alguien que no puede hacerlo.",
+        "Un regalo de tiempo cuenta: un trabajo hecho para alguien que no puede hacerlo.",
         "Más lejos, algunos grupos reciben sats directamente y dicen qué hacen con ellos.",
         "Antes de darle a alguien que no conoces, pídele a mamá o papá que revise quiénes son.",
         "Da en silencio, y no lleves la cuenta de las gracias."
@@ -254,7 +254,7 @@ export const lessons: LessonsText = {
       title: "¿Qué vale la pena comprar?",
       lines: [
         "Compra cosas que duran, que enseñan o que te ayudan a trabajar.",
-        "Algo que se acaba en un día rara vez vale una semana de quehaceres.",
+        "Algo que se acaba en un día rara vez vale una semana de trabajos.",
         "Antes de gastar, espera una noche."
       ],
       more: [
@@ -279,7 +279,7 @@ export const lessons: LessonsText = {
       lines: [
         "Una virtud es un buen hábito del corazón.",
         "Los cristianos enseñan siete desde hace mucho: tres que da Dios y cuatro que cualquiera puede practicar.",
-        "Los quehaceres son un buen lugar para practicarlas."
+        "Los trabajos son un buen lugar para practicarlas."
       ],
       more: [
         "Las tres virtudes teologales vienen de la primera carta de San Pablo a los Corintios.",
@@ -308,7 +308,7 @@ export const lessons: LessonsText = {
         {
           group: "Cardinal",
           name: "Prudencia",
-          says: "Elegir bien: pensar antes de tomar un quehacer o gastar un sat."
+          says: "Elegir bien: pensar antes de tomar un trabajo o gastar un sat."
         },
         {
           group: "Cardinal",
@@ -330,7 +330,7 @@ export const lessons: LessonsText = {
         text: "Y ahora permanecen la fe, la esperanza y la caridad, estas tres; y la mayor de ellas es la caridad.",
         from: "1 Corintios 13:13"
       },
-      tryThis: "Elige una virtud para la semana y fíjate cada vez que un quehacer te la pida.",
+      tryThis: "Elige una virtud para la semana y fíjate cada vez que un trabajo te la pida.",
       ask: "¿Cuál de las siete te sale más fácil, y cuál te cuesta más?"
     }
   },
