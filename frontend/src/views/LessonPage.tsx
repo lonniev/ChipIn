@@ -2,20 +2,22 @@
 
 import { ArrowLeft, ArrowRight, ExternalLink } from "lucide-react";
 import { Link, Navigate, useParams } from "react-router-dom";
-import { lessonAt, LESSONS } from "../lib/lessons";
+import { useLessons, useT } from "../i18n/I18nContext";
 import { useLessonArt } from "../lib/PicturesContext";
 
 export default function LessonPage() {
   const { slug = "" } = useParams();
-  const lesson = lessonAt(slug);
+  const t = useT();
+  const library = useLessons();
+  const lesson = library.at(slug);
   const art = useLessonArt(slug);
   if (!lesson) return <Navigate to="/learn" replace />;
-  const next = LESSONS[(LESSONS.indexOf(lesson) + 1) % LESSONS.length];
+  const next = library.lessons[(library.lessons.indexOf(lesson) + 1) % library.lessons.length];
 
   return (
     <div className="page grid gap-3">
       <div className="toolbar">
-        <Link to="/learn" className="btn btn-quiet"><ArrowLeft size={22} aria-hidden />Learn</Link>
+        <Link to="/learn" className="btn btn-quiet"><ArrowLeft size={22} aria-hidden />{t("nav.learn")}</Link>
       </div>
       <article className="card panel lesson lesson-long">
         {art && <img src={art} alt="" className="lesson-art" width={960} height={644} />}
@@ -35,14 +37,14 @@ export default function LessonPage() {
         )}
         {lesson.saying && (
           <blockquote className="saying">
-            “{lesson.saying.text}”
+            {t("quote.marks", { text: lesson.saying.text })}
             <cite>{lesson.saying.from}</cite>
           </blockquote>
         )}
       </article>
       {lesson.links && (
         <section className="card panel grid gap-2">
-          <h2 className="panel-title"><span aria-hidden>🧭</span> Places to look</h2>
+          <h2 className="panel-title"><span aria-hidden>🧭</span> {t("lesson.places")}</h2>
           <ul className="shelf">
             {lesson.links.map((k) => (
               <li key={k.href}>
@@ -58,11 +60,11 @@ export default function LessonPage() {
         </section>
       )}
       <section className="card panel grid gap-1">
-        <h2 className="panel-title"><span aria-hidden>🛠️</span> Try this</h2>
+        <h2 className="panel-title"><span aria-hidden>🛠️</span> {t("lesson.try")}</h2>
         <p>{lesson.tryThis}</p>
       </section>
       <section className="card panel grid gap-1">
-        <h2 className="panel-title"><span aria-hidden>🍽️</span> Ask at supper</h2>
+        <h2 className="panel-title"><span aria-hidden>🍽️</span> {t("lesson.ask")}</h2>
         <p>{lesson.ask}</p>
       </section>
       <div className="flex justify-end">

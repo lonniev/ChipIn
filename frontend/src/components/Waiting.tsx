@@ -1,12 +1,13 @@
 /** A wait worth reading: the status line, then a quotation on work and thrift. */
 
 import { QuoteScroller } from "@tollbooth-dpyc/web/react";
-import { CHIPIN_QUOTES } from "../lib/quotes";
+import { useQuotes } from "../i18n/I18nContext";
 
 export default function Waiting({ heading }: { heading: string }) {
+  const quotes = useQuotes();
   return (
     <QuoteScroller
-      quotes={CHIPIN_QUOTES}
+      quotes={quotes}
       heading={heading}
       spinner
       intervalMs={6000}

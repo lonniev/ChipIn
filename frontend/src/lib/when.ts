@@ -1,5 +1,7 @@
 /** Times as a household says them. Task Booth speaks Unix seconds. */
 
+import type { Said } from "../i18n/translate.ts";
+
 const DAY = 86_400;
 
 /** The local calendar day a time falls on, as days since the epoch in local time. */
@@ -8,13 +10,13 @@ function dayNumber(seconds: number): number {
   return Math.round(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()) / (DAY * 1000));
 }
 
-/** "today", "tomorrow", "in 3 days", "yesterday", "4 days ago". */
-export function dueText(neededBy: number, now: number): string {
+/** "today", "tomorrow", "in 3 days", "yesterday", "4 days ago", as a message for the page to say. */
+export function dueText(neededBy: number, now: number): Said {
   const days = dayNumber(neededBy) - dayNumber(now);
-  if (days === 0) return "today";
-  if (days === 1) return "tomorrow";
-  if (days === -1) return "yesterday";
-  return days > 0 ? `in ${days} days` : `${-days} days ago`;
+  if (days === 0) return { key: "due.today" };
+  if (days === 1) return { key: "due.tomorrow" };
+  if (days === -1) return { key: "due.yesterday" };
+  return days > 0 ? { key: "due.inDays", vars: { days } } : { key: "due.daysAgo", vars: { days: -days } };
 }
 
 /** The last second of a `YYYY-MM-DD` day in this device's time zone, or null. */
@@ -34,9 +36,10 @@ export function dayFrom(now: number, days: number): string {
   return `${d.getFullYear()}-${two(d.getMonth() + 1)}-${two(d.getDate())}`;
 }
 
-export function repeatText(everyDays: number): string {
-  if (everyDays <= 0) return "";
-  if (everyDays === 1) return "Every day";
-  if (everyDays === 7) return "Every week";
-  return `Every ${everyDays} days`;
+/** How often a chore comes round, as a message for the page to say. Nothing for a chore done once. */
+export function repeatText(everyDays: number): Said | null {
+  if (everyDays <= 0) return null;
+  if (everyDays === 1) return { key: "repeat.daily" };
+  if (everyDays === 7) return { key: "repeat.weekly" };
+  return { key: "repeat.everyDays", vars: { days: everyDays } };
 }

@@ -1,10 +1,13 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
+import english from "../i18n/en.ts";
+import { standingKey, type Standing } from "./moves.ts";
 import { byDay, dayKey, grouped, kindOf, matches, monthWeeks, personOf, shiftMonth, type Browsable } from "./browse.ts";
 
 const MOM = "npub1mum", SAM = "npub1sam", ADA = "npub1ada";
 const names: Record<string, string> = { [MOM]: "Mom", [SAM]: "Sam", [ADA]: "Ada" };
 const name = (n: string) => names[n] ?? n;
+const standing = (s: Standing) => english[standingKey(s)];
 const at = (y: number, m: number, d: number) => Math.floor(new Date(y, m - 1, d, 23, 59, 59).getTime() / 1000);
 
 const chore = (id: string, title: string, more: Partial<Browsable> = {}): Browsable => ({
@@ -18,7 +21,7 @@ const porch = chore("4", "🧹 Sweep the porch", { performer: ADA, needed_by: at
 const all = [sweep, bins, weed, porch];
 
 test("search finds a chore by its title, its details, a person's name, or where it stands", () => {
-  const found = (q: string) => all.filter((t) => matches(t, q, name)).map((t) => t.task_id);
+  const found = (q: string) => all.filter((t) => matches(t, q, name, standing)).map((t) => t.task_id);
   assert.deepEqual(found("sweep"), ["1", "4"]);
   assert.deepEqual(found("supper"), ["1"]);
   assert.deepEqual(found("ada"), ["2", "4"]);

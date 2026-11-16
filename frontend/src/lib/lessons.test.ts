@@ -1,10 +1,16 @@
 import { existsSync } from "node:fs";
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { BITCOIN_EVER, bookHref, CHARACTER_LESSONS, lessonAt, LESSONS, MONEY_LESSONS, USE_LESSONS, VIRTUES_LESSON, SATS_PER_BITCOIN, SHELVES, WORDS } from "./lessons.ts";
+import { lessons as englishLessons } from "../content/en/lessons.ts";
+import { quotes as CHIPIN_QUOTES } from "../content/en/quotes.ts";
+import { BITCOIN_EVER, bookHref, libraryIn, SATS_PER_BITCOIN } from "./lessons.ts";
 import { PICTURE_SETS, pictureSetAt, pictureSetFrom } from "./pictures.ts";
-import { CHIPIN_QUOTES } from "./quotes.ts";
 
+// The lessons as English tells them: the structure here, the words from `src/content/en`.
+const library = libraryIn(englishLessons);
+const { lessons: LESSONS, money: MONEY_LESSONS, uses: USE_LESSONS, words: WORDS, shelves: SHELVES } = library;
+const lessonAt = library.at;
+const [VIRTUES_LESSON] = library.virtues;
 const lessons = [...LESSONS];
 
 test("a lesson is a few short sentences, one to a line", () => {

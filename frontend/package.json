@@ -7,7 +7,7 @@
     "dev": "vite",
     "build": "npm run test && tsc -b && vite build",
     "preview": "vite preview",
-    "test": "node --experimental-strip-types --test 'src/lib/*.test.ts'"
+    "test": "node --experimental-strip-types --test 'src/lib/*.test.ts' 'src/i18n/*.test.ts' 'src/content/**/*.test.ts'"
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.32.1",

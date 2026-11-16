@@ -1,6 +1,7 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { isFinished, laneOf, movesFor, type Role, type Standing } from "./moves.ts";
+import english from "../i18n/en.ts";
+import { isFinished, laneOf, movesFor, standingKey, type Role, type Standing } from "./moves.ts";
 
 const at = (standing: Standing, your_roles: Role[], final = false) => ({ standing, your_roles, final });
 
@@ -57,4 +58,10 @@ test("paid, rejected and withdrawn chores are finished and offer nothing", () =>
 test("a chore sits with you when you can move it, and waits otherwise", () => {
   assert.equal(laneOf(at("done", ["assessor"])), "yours");
   assert.equal(laneOf(at("done", ["performer"])), "waiting");
+});
+
+test("every standing has a word to say", () => {
+  const standings: Standing[] = ["posted", "expired", "claimed", "done", "assessed", "appealed", "owed", "paid", "rejected", "withdrawn"];
+  for (const s of standings) assert.ok(english[standingKey(s)], s);
+  assert.equal(english[standingKey("owed")], "To pay");
 });

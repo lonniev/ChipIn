@@ -6,6 +6,7 @@
 import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { formatSats } from "@tollbooth-dpyc/web";
+import { useT } from "../i18n/I18nContext";
 import { useLooking } from "../lib/LookContext";
 
 const COINS = 3;
@@ -15,6 +16,7 @@ export default function PiggyBank({ earned, coming }: { earned: number; coming: 
   const [open, setOpen] = useState(false);
   const before = useRef<number | null>(null);
   const looking = useLooking();
+  const t = useT();
 
   // A coin for the first look, and again each time more has arrived.
   useEffect(() => {
@@ -26,13 +28,13 @@ export default function PiggyBank({ earned, coming }: { earned: number; coming: 
     <div className="piglet-corner">
       {open && (
         <div className="piglet-says" role="status">
-          <span className="piglet-sats num">{formatSats(earned)}</span> sats saved
-          {coming > 0 && <span className="muted"> · <span className="num">{formatSats(coming)}</span> on the way</span>}
-          {" · "}<Link to={looking ? "/look/savings" : "/savings"} className="ent">Savings</Link>
+          {t.rich("piggy.saved", { sats: <span className="piglet-sats num">{formatSats(earned)}</span> })}
+          {coming > 0 && <span className="muted"> · {t.rich("piggy.onTheWay", { sats: <span className="num">{formatSats(coming)}</span> })}</span>}
+          {" · "}<Link to={looking ? "/look/savings" : "/savings"} className="ent">{t("nav.savings")}</Link>
         </div>
       )}
       <button type="button" className="piglet" onClick={() => { setOpen((v) => !v); setDrop((n) => n + 1); }}
-        aria-label={`Piggy bank: ${formatSats(earned)} sats`} aria-expanded={open}>
+        aria-label={t("piggy.aria", { sats: formatSats(earned) })} aria-expanded={open}>
         <span key={drop} className="piglet-coins" aria-hidden>
           {Array.from({ length: COINS }, (_, i) => <span key={i} className="piglet-coin" style={{ animationDelay: `${i * 0.28}s` }}>₿</span>)}
         </span>

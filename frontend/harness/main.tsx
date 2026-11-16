@@ -12,8 +12,9 @@
  */
 import { createRoot } from "react-dom/client";
 import { MemoryRouter } from "react-router-dom";
+import { useSamples, useT } from "../src/i18n/I18nContext";
 import { SampleFamilyProvider } from "../src/lib/FamilyContext";
-import { SAMPLE_MEMBERS, samplePayout, sampleTasks, viewerNpub, type Viewer } from "../src/lib/sampleFamily";
+import { sampleMembers, samplePayout, sampleTasks, viewerNpub, type Viewer } from "../src/lib/sampleFamily";
 import { Sheet } from "../src/views/Chore";
 import { Board } from "../src/views/Chores";
 import { SavingsSheet, WorthPanel } from "../src/views/Savings";
@@ -25,13 +26,15 @@ const view = asked.get("view");
 document.documentElement.dataset.theme = asked.get("theme") ?? "light";
 
 const viewer: Viewer = view === "mom" || view === "sheet" || view === "check" ? "mom" : "sam";
-const tasks = sampleTasks(viewer, now);
 const standing = { sheet: "owed", ask: "owed", check: "done" }[view ?? ""];
-const one = standing ? tasks.find((t) => t.standing === standing) : undefined;
 
-createRoot(document.getElementById("root")!).render(
-  <MemoryRouter>
-    <SampleFamilyProvider me={viewerNpub(viewer)} members={SAMPLE_MEMBERS}>
+/** The harness speaks English: with no language provider above, every page does. */
+function Pages() {
+  const t = useT();
+  const tasks = sampleTasks(viewer, now, useSamples());
+  const one = standing ? tasks.find((task) => task.standing === standing) : undefined;
+  return (
+    <SampleFamilyProvider me={viewerNpub(viewer)} members={sampleMembers(t)}>
       <div className="page grid gap-4">
         {one && <Sheet task={one} payout={view === "sheet" ? samplePayout(one, now) : null} now={now} onChanged={() => {}} onPay={() => {}} />}
         {view === "savings" && (
@@ -43,11 +46,13 @@ createRoot(document.getElementById("root")!).render(
         )}
         {!one && view !== "savings" && (
           <>
-            <h1 className="text-3xl font-bold">Chores</h1>
+            <h1 className="text-3xl font-bold">{t("chores.title")}</h1>
             <Board tasks={tasks} me={viewerNpub(viewer)} now={now} onChanged={() => {}} />
           </>
         )}
       </div>
     </SampleFamilyProvider>
-  </MemoryRouter>,
-);
+  );
+}
+
+createRoot(document.getElementById("root")!).render(<MemoryRouter><Pages /></MemoryRouter>);

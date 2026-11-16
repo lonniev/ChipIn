@@ -2,7 +2,13 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import { laneOf, movesFor } from "./moves.ts";
 import { earningsOf } from "./earnings.ts";
-import { MOM, SAM, samplePayout, sampleTasks } from "./sampleFamily.ts";
+import { samples as englishSamples } from "../content/en/samples.ts";
+import english from "../i18n/en.ts";
+import { translator } from "../i18n/translate.ts";
+import { MOM, SAM, sampleMembers, samplePayout, sampleTasks as tasksFrom, type Viewer } from "./sampleFamily.ts";
+import { samplesIn } from "./samples.ts";
+
+const sampleTasks = (viewer: Viewer, now: number) => tasksFrom(viewer, now, samplesIn(englishSamples));
 
 const NOW = 1_800_000_000;
 
@@ -40,4 +46,8 @@ test("each sample chore has its own id, and only the owed one has an invoice", (
 test("the sample's ids and invoice are plainly not real", () => {
   assert.match(SAM, /^npub1p+$/);
   assert.match(samplePayout(sampleTasks("mom", NOW).find((t) => t.standing === "owed")!, NOW)!.invoice, /^lnbc(sample)+$/);
+});
+
+test("the sample family is named in the language on screen", () => {
+  assert.deepEqual(sampleMembers(translator(english, english)).map((m) => m.name), ["Mom", "Sam", "Ada"]);
 });

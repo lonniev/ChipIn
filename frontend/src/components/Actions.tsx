@@ -8,24 +8,11 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { Check, Hand, MessageCircleQuestion, ThumbsUp, Undo2, X, Zap } from "lucide-react";
 import { formatSats } from "@tollbooth-dpyc/web";
+import { useT } from "../i18n/I18nContext";
 import { useLooking } from "../lib/LookContext";
 import { movesFor, type Move } from "../lib/moves";
 import { byReward } from "../lib/rubric";
 import { appeal, assess, decideAppeal, isPlain, move, reject, type Task } from "../lib/tasks";
-
-const LABEL: Record<Move, string> = {
-  claim: "I'll do it!",
-  mark_done: "I'm done!",
-  release: "Give it back",
-  withdraw: "Take it down",
-  grade: "Check the work",
-  reject: "Not done",
-  accept: "OK!",
-  appeal: "I disagree",
-  decide: "Decide",
-  pay: "Pay",
-  confirm_paid: "I got it!",
-};
 
 const ICON: Record<Move, typeof Zap> = {
   claim: Hand, mark_done: Check, release: Undo2, withdraw: Undo2, grade: ThumbsUp, reject: X,
@@ -51,6 +38,7 @@ export default function Actions({ task, onChanged, onPay, quick = false }: {
   const [sure, setSure] = useState<Move | null>(null);
   const [reasons, setReasons] = useState("");
   const looking = useLooking();
+  const t = useT();
   const [tried, setTried] = useState(false);
 
   const moves = movesFor(task).filter((m) => (quick ? isPlain(m) && !TAKES_BACK.includes(m) : true));
@@ -87,9 +75,9 @@ export default function Actions({ task, onChanged, onPay, quick = false }: {
           const tone = m === "pay" ? "btn btn-money"
             : TAKES_BACK.includes(m) || m === "reject" || m === "appeal" ? "btn btn-quiet"
             : "btn btn-go";
-          const label = sure === m ? "Tap again to be sure"
-            : m === "pay" && task.assessment ? `Pay ${formatSats(task.assessment.sats)} sats`
-            : LABEL[m];
+          const label = sure === m ? t("actions.sure")
+            : m === "pay" && task.assessment ? t("actions.paySats", { sats: formatSats(task.assessment.sats) })
+            : t(`actions.${m}`);
           return (
             <button key={m} type="button" className={tone} disabled={busy} onClick={() => press(m)} onBlur={() => sure === m && setSure(null)}>
               <Icon size={22} aria-hidden />
@@ -117,25 +105,25 @@ export default function Actions({ task, onChanged, onPay, quick = false }: {
           <textarea
             className="field w-full" rows={2} maxLength={4000} value={reasons}
             onChange={(e) => setReasons(e.target.value)}
-            placeholder={asking === "appeal" ? "What should they look at again?" : "Add a few words, if you like"}
-            aria-label="A few words"
+            placeholder={asking === "appeal" ? t("actions.appealPlaceholder") : t("actions.wordsPlaceholder")}
+            aria-label={t("actions.words")}
           />
           <div className="actions-row">
             {asking === "reject" && (
               <button type="button" className="btn btn-quiet" disabled={busy} onClick={() => void run(() => reject(task.task_id, reasons))}>
-                <X size={22} aria-hidden />It was not done
+                <X size={22} aria-hidden />{t("actions.notDone")}
               </button>
             )}
             {asking === "appeal" && (
               <button type="button" className="btn btn-go" disabled={busy} onClick={() => void run(() => appeal(task.task_id, reasons))}>
-                <MessageCircleQuestion size={22} aria-hidden />Ask them to look again
+                <MessageCircleQuestion size={22} aria-hidden />{t("actions.askAgain")}
               </button>
             )}
-            <button type="button" className="btn btn-quiet" disabled={busy} onClick={() => setAsking(null)}>Never mind</button>
+            <button type="button" className="btn btn-quiet" disabled={busy} onClick={() => setAsking(null)}>{t("actions.neverMind")}</button>
           </div>
         </div>
       )}
-      {tried && <p className="muted text-right">This is a sample. <Link to="/signin" className="ent">Sign in</Link> to do it for real.</p>}
+      {tried && <p className="muted text-right">{t.rich("sample.tried", { signIn: <Link to="/signin" className="ent">{t("nav.signIn")}</Link> })}</p>}
       {problem && <p className="error text-right">{problem}</p>}
     </div>
   );

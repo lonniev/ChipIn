@@ -7,10 +7,12 @@ import { useState } from "react";
 import { Check, Copy, Zap } from "lucide-react";
 import { formatSats } from "@tollbooth-dpyc/web";
 import { InvoiceQr } from "@tollbooth-dpyc/web/react";
+import { useT } from "../i18n/I18nContext";
 import type { Payout } from "../lib/tasks";
 
 export default function InvoicePanel({ payout, now }: { payout: Payout; now: number }) {
   const [copied, setCopied] = useState(false);
+  const t = useT();
   const minutes = Math.max(0, Math.floor((payout.expires_at - now) / 60));
 
   async function copy() {
@@ -21,17 +23,17 @@ export default function InvoicePanel({ payout, now }: { payout: Payout; now: num
 
   return (
     <div className="invoice">
-      <p className="invoice-sats num">{formatSats(payout.sats)} sats</p>
+      <p className="invoice-sats num">{t("sats.amount", { sats: formatSats(payout.sats) })}</p>
       <div className="flex flex-wrap justify-end gap-2">
-        <a href={payout.lightning_uri} className="btn btn-money"><Zap size={22} aria-hidden />Open in wallet</a>
+        <a href={payout.lightning_uri} className="btn btn-money"><Zap size={22} aria-hidden />{t("invoice.open")}</a>
         <button type="button" className="btn btn-quiet" onClick={() => void copy()}>
           {copied ? <Check size={22} aria-hidden /> : <Copy size={22} aria-hidden />}
-          {copied ? "Copied" : "Copy invoice"}
+          {copied ? t("actions.copied") : t("invoice.copy")}
         </button>
       </div>
       <InvoiceQr bolt11={payout.invoice} size={240} className="invoice-qr" />
       <p className="invoice-text">{payout.invoice}</p>
-      <p className="muted text-sm">{minutes > 0 ? `Good for ${minutes} more minutes.` : "This invoice has expired. Ask for a new one."}</p>
+      <p className="muted text-sm">{minutes > 0 ? t("invoice.goodFor", { minutes }) : t("invoice.expired")}</p>
     </div>
   );
 }
