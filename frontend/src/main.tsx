@@ -3,6 +3,7 @@ import { createRoot } from "react-dom/client";
 import { configureTollbooth } from "@tollbooth-dpyc/web";
 import { ErrorBoundary } from "@tollbooth-dpyc/web/react";
 import App from "./App";
+import { registerChipIn } from "./i18n";
 import "./index.css";
 
 configureTollbooth({
@@ -13,6 +14,9 @@ configureTollbooth({
   // Bitcoin's price is public: Task Booth's tool takes no npub, so none is sent.
   extraBootstrapTools: ["btc_price"],
 });
+
+// ChipIn's words and lessons, in whatever language the package starts in.
+void registerChipIn();
 
 const crash = {
   root: "flex min-h-dvh flex-col items-center justify-center gap-4 p-6 text-center",

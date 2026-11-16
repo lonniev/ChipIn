@@ -2,8 +2,8 @@
 
 import { Repeat } from "lucide-react";
 import { formatSats } from "@tollbooth-dpyc/web";
-import { useT } from "../i18n/I18nContext";
-import { say } from "../i18n/translate";
+import { useT } from "../i18n";
+import { say } from "../i18n";
 import type { SampleJob } from "../lib/samples";
 import { repeatText } from "../lib/when";
 

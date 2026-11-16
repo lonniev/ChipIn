@@ -2,7 +2,8 @@
 
 import { ArrowLeft, ArrowRight, ExternalLink } from "lucide-react";
 import { Link, Navigate, useParams } from "react-router-dom";
-import { useLessons, useT } from "../i18n/I18nContext";
+import { useT } from "../i18n";
+import { useLessons } from "../lib/content";
 import { useLessonArt } from "../lib/PicturesContext";
 
 export default function LessonPage() {

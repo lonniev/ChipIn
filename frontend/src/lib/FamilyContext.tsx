@@ -1,7 +1,7 @@
 /** The family's names, shared by every page and kept on this device. */
 
 import { createContext, useCallback, useContext, useEffect, useMemo, useState, type ReactNode } from "react";
-import { useT } from "../i18n/I18nContext.tsx";
+import { useT } from "../i18n/index.ts";
 import { loadFamily, nameOf, saveFamily, withMember, withoutMember, type Member } from "./family.ts";
 
 interface Family {

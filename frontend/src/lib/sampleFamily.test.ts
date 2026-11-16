@@ -3,11 +3,13 @@ import assert from "node:assert/strict";
 import { laneOf, movesFor } from "./moves.ts";
 import { earningsOf } from "./earnings.ts";
 import { samples as englishSamples } from "../content/en/samples.ts";
-import english from "../i18n/en.ts";
-import { translator } from "../i18n/translate.ts";
+import { translate } from "@tollbooth-dpyc/web";
+import { registerChipIn, WORDS, type Translate } from "../i18n/index.ts";
 import { MOM, SAM, sampleMembers, samplePayout, sampleTasks as tasksFrom, type Viewer } from "./sampleFamily.ts";
 import { samplesIn } from "./samples.ts";
 
+await registerChipIn();
+const t: Translate = (key, vars) => translate(key, vars, WORDS);
 const sampleTasks = (viewer: Viewer, now: number) => tasksFrom(viewer, now, samplesIn(englishSamples));
 
 const NOW = 1_800_000_000;
@@ -49,5 +51,5 @@ test("the sample's ids and invoice are plainly not real", () => {
 });
 
 test("the sample family is named in the language on screen", () => {
-  assert.deepEqual(sampleMembers(translator(english, english)).map((m) => m.name), ["Mom", "Sam", "Ada"]);
+  assert.deepEqual(sampleMembers(t).map((m) => m.name), ["Mom", "Sam", "Ada"]);
 });

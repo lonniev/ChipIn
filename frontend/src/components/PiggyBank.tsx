@@ -6,7 +6,8 @@
 import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { formatSats } from "@tollbooth-dpyc/web";
-import { useT } from "../i18n/I18nContext";
+import { Tx } from "@tollbooth-dpyc/web/react";
+import { useT, WORDS } from "../i18n";
 import { useLooking } from "../lib/LookContext";
 
 const COINS = 3;
@@ -28,8 +29,8 @@ export default function PiggyBank({ earned, coming }: { earned: number; coming: 
     <div className="piglet-corner">
       {open && (
         <div className="piglet-says" role="status">
-          {t.rich("piggy.saved", { sats: <span className="piglet-sats num">{formatSats(earned)}</span> })}
-          {coming > 0 && <span className="muted"> · {t.rich("piggy.onTheWay", { sats: <span className="num">{formatSats(coming)}</span> })}</span>}
+          <Tx ns={WORDS} k="piggy.saved" components={{ sats: <span className="piglet-sats num">{formatSats(earned)}</span> }} />
+          {coming > 0 && <span className="muted"> · <Tx ns={WORDS} k="piggy.onTheWay" components={{ sats: <span className="num">{formatSats(coming)}</span> }} /></span>}
           {" · "}<Link to={looking ? "/look/savings" : "/savings"} className="ent">{t("nav.savings")}</Link>
         </div>
       )}

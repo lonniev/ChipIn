@@ -1,17 +1,16 @@
 /**
- * English, whole: the UI catalog and the content.
+ * One language's lessons, sample jobs and quotations. The words on ChipIn's
+ * pages are in `src/i18n/<code>.ts`.
  *
- * A new language is this folder copied, with every string translated, plus its
- * UI catalog at `src/i18n/<code>.ts`. In the copy, change the one import below
- * from `en.ts` to that catalog.
+ * A new language is this folder copied with every string translated, plus its
+ * words file, both added to `registerChipIn` in `src/i18n/index.ts`.
  */
 
-import messages from "../../i18n/ja.ts";
-import type { LanguagePack } from "../../i18n/pack.ts";
+import type { LanguageContent } from "../../lib/content.ts";
 import { lessons } from "./lessons.ts";
 import { quotes } from "./quotes.ts";
 import { samples } from "./samples.ts";
 
-const pack: LanguagePack = { messages, lessons, samples, quotes };
+const content: LanguageContent = { lessons, samples, quotes };
 
-export default pack;
+export default content;

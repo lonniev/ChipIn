@@ -6,7 +6,8 @@
 import { useState } from "react";
 import { ClipboardPaste, Send } from "lucide-react";
 import { formatSats } from "@tollbooth-dpyc/web";
-import { useT } from "../i18n/I18nContext";
+import { Tx } from "@tollbooth-dpyc/web/react";
+import { useT, WORDS } from "../i18n";
 import { useLooking } from "../lib/LookContext";
 import { looksLikeInvoice } from "../lib/problems";
 import { handInInvoice, type Payout } from "../lib/tasks";
@@ -52,7 +53,7 @@ export default function RequestPanel({ taskId, sats, onTaken }: { taskId: string
       <ol className="how-steps">
         <li><span aria-hidden>📱</span>{t("request.step.open")}</li>
         <li><span aria-hidden>⬇️</span>{t("request.step.receive")}</li>
-        <li><span aria-hidden>🪙</span>{t.rich("request.step.ask", { sats: <strong className="num">{formatSats(sats)}</strong> })}</li>
+        <li><span aria-hidden>🪙</span><Tx ns={WORDS} k="request.step.ask" components={{ sats: <strong className="num">{formatSats(sats)}</strong> }} /></li>
         <li><span aria-hidden>📋</span>{t("request.step.copy")}</li>
       </ol>
       <button type="button" className="btn btn-money" disabled={busy} onClick={() => void paste()}>

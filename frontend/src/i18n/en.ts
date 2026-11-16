@@ -1,8 +1,9 @@
 /**
  * Every word ChipIn's own pages say, in English. The other languages translate this file.
  *
- * A `{name}` is a place something is put in: a number, a person, a link. A translation keeps
- * every `{name}` exactly as written and may move it within the sentence.
+ * A `{{name}}` is filled with a word or number; a `<name/>` is drawn as an element (a link, a
+ * person, a styled number). A translation keeps every one exactly as written and may move it
+ * within the sentence.
  * "ChipIn", "Task Booth", "Tollbooth DPYC™", "npub", "nsec" and emoji stay as they are.
  */
 
@@ -31,18 +32,18 @@ export const en = {
   "waiting.counting": "Counting your sats…",
 
   // Words used on many pages.
-  "quote.marks": "“{text}”",
-  "sats.amount": "{sats} sats",
+  "quote.marks": "“{{text}}”",
+  "sats.amount": "{{sats}} sats",
   "actions.lookAgain": "Look again",
   "actions.cancel": "Cancel",
   "actions.copied": "Copied",
   "chart.today": "Today",
 
-  // The Tollbooth wallet page. {savings} is a link that reads "Savings".
+  // The Tollbooth wallet page. <savings/> is a link that reads "Savings".
   "wallet.title": "Tollbooth DPYC™ wallet",
   "wallet.holds": "This wallet holds api_sats, which pay for using ChipIn.",
   "wallet.topUp": "A parent tops it up here.",
-  "wallet.earned": "The sats you earn from jobs go to your own Lightning wallet; see {savings}.",
+  "wallet.earned": "The sats you earn from jobs go to your own Lightning wallet; see <savings/>.",
 
   // The home page.
   "home.sceneAlt": "A mother hands her daughter a coin for sweeping the kitchen floor.",
@@ -68,8 +69,8 @@ export const en = {
   "sample.member.mom": "Mom",
   "sample.member.sam": "Sam",
   "sample.member.ada": "Ada",
-  // {signIn} is a link that reads "Sign in".
-  "sample.tried": "This is a sample. {signIn} to do it for real.",
+  // <signIn/> is a link that reads "Sign in".
+  "sample.tried": "This is a sample. <signIn/> to do it for real.",
 
   // The jobs list.
   "jobs.title": "Jobs",
@@ -88,12 +89,12 @@ export const en = {
   "browse.clear": "Clear",
   "browse.list": "List",
   "browse.month": "Month",
-  "browse.noMatch": "No job matches “{query}”.",
+  "browse.noMatch": "No job matches “{{query}}”.",
   "piggy.earned": "You earned",
   "piggy.coming": "On its way",
-  "piggy.saved": "{sats} sats saved",
-  "piggy.onTheWay": "{sats} on the way",
-  "piggy.aria": "Piggy bank: {sats} sats",
+  "piggy.saved": "<sats/> sats saved",
+  "piggy.onTheWay": "<sats/> on the way",
+  "piggy.aria": "Piggy bank: {{sats}} sats",
 
   // The month view.
   "month.before": "Month before",
@@ -112,16 +113,16 @@ export const en = {
   "standing.rejected": "Rejected",
   "standing.withdrawn": "Withdrawn",
 
-  // When a job is due, and how often it comes round. {days} is 2 or more.
+  // When a job is due, and how often it comes round. {{days}} is 2 or more.
   "due.today": "today",
   "due.tomorrow": "tomorrow",
   "due.yesterday": "yesterday",
-  "due.inDays": "in {days} days",
-  "due.daysAgo": "{days} days ago",
+  "due.inDays": "in {{days}} days",
+  "due.daysAgo": "{{days}} days ago",
   "repeat.once": "Once",
   "repeat.daily": "Every day",
   "repeat.weekly": "Every week",
-  "repeat.everyDays": "Every {days} days",
+  "repeat.everyDays": "Every {{days}} days",
 
   // The buttons a job offers.
   "actions.claim": "I'll do it!",
@@ -135,7 +136,7 @@ export const en = {
   "actions.decide": "Decide",
   "actions.pay": "Pay",
   "actions.confirm_paid": "I got it!",
-  "actions.paySats": "Pay {sats} sats",
+  "actions.paySats": "Pay {{sats}} sats",
   "actions.sure": "Tap again to be sure",
   "actions.appealPlaceholder": "What should they look at again?",
   "actions.wordsPlaceholder": "Add a few words, if you like",
@@ -144,21 +145,21 @@ export const en = {
   "actions.askAgain": "Ask them to look again",
   "actions.neverMind": "Never mind",
 
-  // One job's page. {person} is a family member's name.
+  // One job's page. <person/> is a family member's name.
   "job.due": "Due",
   "job.postedBy": "Posted by",
   "job.doingIt": "Doing it",
   "job.whoMay": "Who may do it",
   "job.grade": "Grade",
   "job.waitingAccepted": "waiting to be accepted",
-  "job.appealQuote": "Appeal: “{reasons}”",
-  "job.paidBanner": "Paid {sats} sats",
+  "job.appealQuote": "Appeal: “{{reasons}}”",
+  "job.paidBanner": "Paid <sats/> sats",
   "job.askingInvoice": "Asking for the invoice…",
-  "job.asksFirst": "{person} asks for their sats first.",
+  "job.asksFirst": "<person/> asks for their sats first.",
   "job.getYourSats": "Get your sats",
   "job.payFromWallet": "Pay from your wallet",
   "job.theInvoice": "The invoice",
-  "job.satsGoStraight": "The sats go straight to {person}, who taps “I got it!” when they arrive.",
+  "job.satsGoStraight": "The sats go straight to <person/>, who taps “I got it!” when they arrive.",
   "job.rewards": "Rewards",
   "history.title": "History",
   "history.fetching": "Fetching…",
@@ -166,7 +167,7 @@ export const en = {
   // The invoice that pays a job.
   "invoice.open": "Open in wallet",
   "invoice.copy": "Copy invoice",
-  "invoice.goodFor": "Good for {minutes} more minutes.",
+  "invoice.goodFor": "Good for {{minutes}} more minutes.",
   "invoice.expired": "This invoice has expired. Ask for a new one.",
 
   // Asking your own wallet for the sats a job earned.
@@ -175,7 +176,7 @@ export const en = {
   "request.pasteBelow": "Paste it into the box below.",
   "request.step.open": "Open your wallet.",
   "request.step.receive": "Tap Receive.",
-  "request.step.ask": "Ask for {sats} sats.",
+  "request.step.ask": "Ask for <sats/> sats.",
   "request.step.copy": "Copy it, then come back.",
   "request.paste": "Paste it here",
   "request.fromWallet": "Request from your wallet",
@@ -208,17 +209,17 @@ export const en = {
   "newJob.posting": "Posting…",
   "newJob.post": "Post the job",
 
-  // A job's grades. {name} is a grade's name as it was typed.
+  // A job's grades. {{name}} is a grade's name as it was typed.
   "rubric.starter.great": "Great job",
   "rubric.starter.good": "Good enough",
   "rubric.starter.none": "Not done",
   "rubric.needOne": "Add at least one grade.",
-  "rubric.tooMany": "A job has at most {max} grades.",
+  "rubric.tooMany": "A job has at most {{max}} grades.",
   "rubric.needName": "Every grade needs a name.",
-  "rubric.nameLong": "\"{name}…\" is longer than 60 characters.",
-  "rubric.twoNamed": "Two grades are named \"{name}\".",
-  "rubric.wholeNumber": "\"{name}\" needs a whole number of sats.",
-  "rubric.tooMuch": "\"{name}\" earns more than {max} sats.",
+  "rubric.nameLong": "\"{{name}}…\" is longer than 60 characters.",
+  "rubric.twoNamed": "Two grades are named \"{{name}}\".",
+  "rubric.wholeNumber": "\"{{name}}\" needs a whole number of sats.",
+  "rubric.tooMuch": "\"{{name}}\" earns more than {{max}} sats.",
 
   // The family page.
   "family.title": "Family",
@@ -227,7 +228,7 @@ export const en = {
   "family.needsNpub": "Whoever posts jobs for you needs this npub.",
   "family.people": "People",
   "family.nobody": "Nobody yet. Add each person by their npub.",
-  "family.remove": "Remove {name}",
+  "family.remove": "Remove {{name}}",
   "family.tapAgainRemove": "Tap again to remove",
   "family.name": "Name",
   "family.theirNpubPlaceholder": "Their npub (npub1…)",
@@ -266,20 +267,20 @@ export const en = {
   "guide.wallet.youngChild": "A young child's wallet can live on a parent's phone until they have their own.",
   "guide.wallet.backup": "Write down the wallet's backup words on paper and keep them with the family's important things.",
   "guide.wallet.toBePaid": "To be paid, a child taps Receive in the wallet, asks for the sats the job earned, and pastes the request into ChipIn.",
-  // {lesson} is a link that reads the lesson's title.
-  "guide.wallet.more": "More on keeping it safe: {lesson}",
+  // <lesson/> is a link that reads the lesson's title.
+  "guide.wallet.more": "More on keeping it safe: <lesson/>",
   "guide.samples.title": "What a well-posted job says",
   "guide.samples.says": "Where, when, and what “done” looks like.",
   "guide.know.title": "Good to know",
   "guide.know.npub": "Everyone signs in with their own npub.",
-  // {profile} is a link that reads "Profile".
-  "guide.know.wallet": "Any Lightning wallet works. When a job is owed, the person who did it asks their wallet for the sats and pastes the request in. A Lightning address on their {profile} skips that step.",
+  // <profile/> is a link that reads "Profile".
+  "guide.know.wallet": "Any Lightning wallet works. When a job is owed, the person who did it asks their wallet for the sats and pastes the request in. A Lightning address on their <profile/> skips that step.",
   "guide.know.profile": "Profile",
   "guide.know.straight": "The sats go from the parent's wallet straight to the child's.",
   "guide.know.disagree": "A child who disagrees with a grade may ask for one more look.",
   "guide.know.yourself": "You can post a job to yourself to try it.",
-  // {learn} is a link that reads "Learn about sats".
-  "guide.know.newToBitcoin": "New to Bitcoin? {learn}.",
+  // <learn/> is a link that reads "Learn about sats".
+  "guide.know.newToBitcoin": "New to Bitcoin? <learn/>.",
 
   // The lessons.
   "learn.title": "Learn about sats",
@@ -297,8 +298,8 @@ export const en = {
   "learn.keep.says": "For parents, and for children ready for more.",
   "learn.moreBooks": "More books at Good Brew",
   "learn.orangeBible.says": "A Bible app that rewards daily reading with sats.",
-  // {jobs} is a link that reads "Go to your jobs".
-  "learn.ready": "Ready to earn some? {jobs}",
+  // <jobs/> is a link that reads "Go to your jobs".
+  "learn.ready": "Ready to earn some? <jobs/>",
   "lesson.places": "Places to look",
   "lesson.try": "Try this",
   "lesson.ask": "Ask at supper",
@@ -309,18 +310,18 @@ export const en = {
   "savings.firstPaid": "Your first paid job starts the line.",
   "savings.yearFromNow": "A year from now",
   "savings.pace": "Your pace",
-  "savings.paceValue": "{sats} sats a week",
+  "savings.paceValue": "<sats/> sats a week",
   "savings.inAYear": "In a year, at that pace",
   "savings.lines": "The solid line is what you were paid. The dashed line is the same pace kept up.",
   "savings.where.title": "Where these sats are",
   "savings.where.saw": "These are the sats ChipIn saw you paid for jobs.",
   "savings.where.wallet": "They sit in your own Lightning wallet, and only your wallet app knows its balance.",
   "savings.where.open": "Open your wallet to see what you hold today.",
-  // {saveSome} and {whyScarce} are links that read two lessons' titles.
-  "savings.whySave": "Why save? {saveSome} · {whyScarce}",
-  "growth.aria": "You hold {held} sats. At the same pace you would hold {ahead} sats by {when}.",
+  // <saveSome/> and <whyScarce/> are links that read two lessons' titles.
+  "savings.whySave": "Why save? <saveSome/> · <whyScarce/>",
+  "growth.aria": "You hold {{held}} sats. At the same pace you would hold {{ahead}} sats by {{when}}.",
 
-  // What the sats are worth in a family's own money. {fiat} is a currency code such as USD.
+  // What the sats are worth in a family's own money. {{fiat}} is a currency code such as USD.
   "worth.title": "In your money",
   "worth.currency": "Currency",
   "worth.asking": "Asking what a bitcoin costs…",
@@ -328,12 +329,12 @@ export const en = {
   "worth.oneBitcoin": "One bitcoin",
   "worth.yearSteady": "In a year, at today's price",
   "worth.yearGrown": "In a year, if bitcoin keeps its pace",
-  "worth.grew": "Over the last {years} years a bitcoin's price grew about {percent} a year in {fiat}.",
-  "worth.fell": "Over the last {years} years a bitcoin's price fell about {percent} a year in {fiat}.",
+  "worth.grew": "Over the last {{years}} years a bitcoin's price grew about <percent/> a year in {{fiat}}.",
+  "worth.fell": "Over the last {{years}} years a bitcoin's price fell about <percent/> a year in {{fiat}}.",
   "worth.nobodyKnows": "Nobody knows what it will do next. The price can fall as well as rise.",
-  "worth.priceFrom": "Price from {source}, seen {when}.",
-  "worth.aria": "By {when}: {steady} at today's price.",
-  "worth.ariaGrows": "By {when}: {steady} at today's price, {grown} if bitcoin keeps its pace.",
+  "worth.priceFrom": "Price from <source/>, seen {{when}}.",
+  "worth.aria": "By {{when}}: {{steady}} at today's price.",
+  "worth.ariaGrows": "By {{when}}: {{steady}} at today's price, {{grown}} if bitcoin keeps its pace.",
 
   // The profile page.
   "profile.payout.title": "Where you get paid",
@@ -346,7 +347,7 @@ export const en = {
   "profile.payout.tour": "A Lightning address, if your wallet gives you one. Without it, you ask your wallet for the sats each time.",
   "language.title": "Language",
 
-  // Jobs in the phone's calendar. {count} is how many times the link was read, as "(12)".
+  // Jobs in the phone's calendar. <count/> is how many times the link was read, as "(12)".
   "calendar.feedName": "ChipIn jobs",
   "calendar.title": "Jobs in your calendar",
   "calendar.says": "Your phone's calendar can show each job on the day it is due.",
@@ -354,7 +355,7 @@ export const en = {
   "calendar.copy": "Copy link",
   "calendar.yesRemove": "Yes, remove it",
   "calendar.remove": "Remove this link",
-  "calendar.read": "read {count}",
+  "calendar.read": "read <count/>",
   "calendar.add": "Add to my calendar",
   "calendar.care": "Anyone who has the link can see your jobs and when they are due. It carries no names. Keep it to your family.",
 } as const;

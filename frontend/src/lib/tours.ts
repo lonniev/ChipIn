@@ -1,7 +1,7 @@
 /** The tours: the package's shared ones for sign-in, the wallet and the profile. */
 
 import { accountTour, signInTour, walletTour, type Tour } from "@tollbooth-dpyc/web";
-import type { Translate } from "../i18n/translate.ts";
+import type { Translate } from "../i18n/index.ts";
 
 /** The tours, with ChipIn's own step said in the language on screen. */
 export function toursIn(t: Translate): Record<string, Tour> {

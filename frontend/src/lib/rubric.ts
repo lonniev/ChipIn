@@ -1,7 +1,7 @@
 /** A job's rewards: the grades, and the sats each one earns. */
 
 import type { MessageKey } from "../i18n/en.ts";
-import type { Said } from "../i18n/translate.ts";
+import type { Said } from "../i18n/index.ts";
 
 export interface Grade {
   name: string;

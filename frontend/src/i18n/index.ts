@@ -1,0 +1,50 @@
+/**
+ * ChipIn's words and content, handed to the shared web package. The package
+ * does all the translating (i18next): which language to start in, fetching a
+ * language when chosen, falling back to English, the chooser. ChipIn supplies
+ * only the English and its translations.
+ */
+
+import { registerNamespace, type Vars } from "@tollbooth-dpyc/web";
+import { useT as useWords } from "@tollbooth-dpyc/web/react";
+import englishContent from "../content/en/index.ts";
+import en, { type MessageKey } from "./en.ts";
+
+/** ChipIn's words, for `useT` and `<Tx ns={WORDS} …/>`. */
+export const WORDS = "chipin";
+/** ChipIn's lessons, samples and quotations, for `useContent`. */
+export const CONTENT = "chipin-content";
+
+/** Hand ChipIn's English to the package, and say where each translation is fetched from. Once, before render. */
+export function registerChipIn(): Promise<unknown> {
+  return Promise.all([
+    registerNamespace(WORDS, en, {
+      fr: () => import("./fr.ts"),
+      es: () => import("./es.ts"),
+      ja: () => import("./ja.ts"),
+      zh: () => import("./zh.ts"),
+      hi: () => import("./hi.ts"),
+    }),
+    registerNamespace(CONTENT, englishContent, {
+      fr: () => import("../content/fr/index.ts"),
+      es: () => import("../content/es/index.ts"),
+      ja: () => import("../content/ja/index.ts"),
+      zh: () => import("../content/zh/index.ts"),
+      hi: () => import("../content/hi/index.ts"),
+    }),
+  ]);
+}
+
+export type Translate = (key: MessageKey, vars?: Vars) => string;
+
+/** `t(key, vars?)` for ChipIn's words, in the reader's language. */
+export const useT = (): Translate => useWords<MessageKey>(WORDS);
+
+/** Something a pure function wants said: the message, and what fills its `{{places}}`. */
+export interface Said {
+  key: MessageKey;
+  vars?: Vars;
+}
+
+/** What a pure function asked to have said, or nothing when it asked for nothing. */
+export const say = (t: Translate, said: Said | null): string => (said ? t(said.key, said.vars) : "");

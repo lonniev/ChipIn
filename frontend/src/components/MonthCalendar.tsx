@@ -3,7 +3,8 @@
 import { useState, type ReactNode } from "react";
 import { CalendarPlus, ChevronLeft, ChevronRight } from "lucide-react";
 import { Link } from "react-router-dom";
-import { useLocale, useT } from "../i18n/I18nContext";
+import { useT } from "../i18n";
+import { useLanguageLocale } from "@tollbooth-dpyc/web/react";
 import { useLooking } from "../lib/LookContext";
 import { byDay, dayKey, kindOf, monthWeeks, shiftMonth, type Browsable } from "../lib/browse";
 
@@ -16,7 +17,7 @@ export default function MonthCalendar<T extends Browsable>({ tasks, now, renderD
 }) {
   const looking = useLooking();
   const t = useT();
-  const locale = useLocale();
+  const locale = useLanguageLocale();
   const weekdays = Array.from({ length: 7 }, (_, i) => new Date(A_SUNDAY.getFullYear(), A_SUNDAY.getMonth(), A_SUNDAY.getDate() + i).toLocaleDateString(locale, { weekday: "narrow" }));
   const today = dayKey(now);
   const start = new Date(now * 1000);

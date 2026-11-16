@@ -1,6 +1,6 @@
 /** Choose the family the lesson paintings show. Each choice is a painting, so nobody has to read to pick. */
 
-import { useT } from "../i18n/I18nContext";
+import { useT } from "../i18n";
 import { artFor } from "../lib/lessonArt";
 import { PICTURE_SETS } from "../lib/pictures";
 import { usePictures } from "../lib/PicturesContext";

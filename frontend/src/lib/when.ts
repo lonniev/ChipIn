@@ -1,6 +1,6 @@
 /** Times as a household says them. Task Booth speaks Unix seconds. */
 
-import type { Said } from "../i18n/translate.ts";
+import type { Said } from "../i18n/index.ts";
 
 const DAY = 86_400;
 

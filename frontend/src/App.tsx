@@ -2,9 +2,9 @@ import { lazy, Suspense, useMemo, type ReactNode } from "react";
 import { BrowserRouter, Link, Navigate, Route, Routes, useLocation } from "react-router-dom";
 import { BookOpen, DoorOpen, GraduationCap, HandCoins, ListChecks, PiggyBank, Users, Wallet as WalletIcon } from "lucide-react";
 import farm from "./assets/farm.webp";
-import { AppShell, SiteNav, TourProvider, Wallet, matchesPath, useAppShell, useTour } from "@tollbooth-dpyc/web/react";
+import { AppShell, SiteNav, TourProvider, Tx, Wallet, matchesPath, useAppShell, useTour } from "@tollbooth-dpyc/web/react";
 import Waiting from "./components/Waiting";
-import { I18nProvider, useT } from "./i18n/I18nContext";
+import { useT, WORDS } from "./i18n";
 import { FamilyProvider } from "./lib/FamilyContext";
 import { PicturesProvider } from "./lib/PicturesContext";
 import { toursIn } from "./lib/tours";
@@ -129,7 +129,7 @@ function WalletPage() {
         <h1 className="text-2xl font-bold">{t("wallet.title")}</h1>
         <p>{t("wallet.holds")}</p>
         <p>{t("wallet.topUp")}</p>
-        <p>{t.rich("wallet.earned", { savings: <Link to="/savings" className="ent">{t("nav.savings")}</Link> })}</p>
+        <p><Tx ns={WORDS} k="wallet.earned" components={{ savings: <Link to="/savings" className="ent">{t("nav.savings")}</Link> }} /></p>
       </section>
       <Wallet />
     </div>
@@ -177,7 +177,7 @@ function Site() {
   );
 }
 
-function Shell() {
+export default function App() {
   const t = useT();
   return (
     <AppShell theme="system" gateOptions={{ welcome: t("app.tagline") }} signedOut={() => <Site />}>
@@ -186,11 +186,3 @@ function Shell() {
   );
 }
 
-/** The language sits above everything, so a guest reads the site in their browser's language. */
-export default function App() {
-  return (
-    <I18nProvider>
-      <Shell />
-    </I18nProvider>
-  );
-}

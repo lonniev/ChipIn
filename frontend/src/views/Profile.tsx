@@ -1,12 +1,11 @@
 /** Your account: where you get paid, then the package's panels in their one order. */
 
 import CalendarFeed from "../components/CalendarFeed";
-import { useLanguage, useT } from "../i18n/I18nContext";
-import { LANGUAGES } from "../i18n/languages";
+import { useT } from "../i18n";
 import { useEffect, useState } from "react";
 import { Check } from "lucide-react";
 import { getMyProperties, setMyProperty } from "@tollbooth-dpyc/web";
-import { AccountPage, tourTarget, useAppShell, useTour } from "@tollbooth-dpyc/web/react";
+import { AccountPage, LanguageChooser, tourTarget, useAppShell, useTour } from "@tollbooth-dpyc/web/react";
 
 const BUILD = {
   root: "card panel",
@@ -86,18 +85,11 @@ function PayoutAddress() {
 
 /** The language the site is shown in. Each button reads in its own language, so anyone can find theirs. */
 function LanguageChoice() {
-  const { language, choose } = useLanguage();
   const t = useT();
   return (
     <section className="card panel grid gap-2" id="language">
       <h2 className="panel-title">{t("language.title")}</h2>
-      <div className="flex flex-wrap gap-2" role="group" aria-label={t("language.title")}>
-        {LANGUAGES.map((l) => (
-          <button key={l.code} type="button" lang={l.code} className={l.code === language ? "pick pick-on" : "pick"} aria-pressed={l.code === language} onClick={() => choose(l.code)}>
-            {l.name}
-          </button>
-        ))}
-      </div>
+      <LanguageChooser classNames={{ root: "flex flex-wrap gap-2", chip: "pick", active: "pick-on" }} />
     </section>
   );
 }

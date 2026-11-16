@@ -1,6 +1,7 @@
 /** What the sats ahead could be worth: at today's price, and if bitcoin keeps its measured pace. */
 
-import { useLocale, useT } from "../i18n/I18nContext";
+import { useT } from "../i18n";
+import { useLanguageLocale } from "@tollbooth-dpyc/web/react";
 import type { WorthPoint } from "../lib/worth";
 import { asMoney } from "../lib/worth";
 
@@ -8,7 +9,7 @@ const W = 320, H = 170, LEFT = 8, RIGHT = 8, TOP = 24, BOTTOM = 26;
 
 export default function WorthChart({ points, fiat, grows }: { points: WorthPoint[]; fiat: string; grows: boolean }) {
   const t = useT();
-  const locale = useLocale();
+  const locale = useLanguageLocale();
   const from = points[0].at, to = points[points.length - 1].at;
   const top = Math.max(0.01, ...points.map((p) => Math.max(p.steady, p.grown)));
   const x = (at: number) => LEFT + ((at - from) / Math.max(1, to - from)) * (W - LEFT - RIGHT);
