@@ -10,10 +10,9 @@ const fr: Translation = {
 
   "nav.welcome": "Bienvenue",
   "nav.jobs": "Petits boulots",
-  "nav.calendar": "Calendrier",
   "nav.savings": "Épargne",
   "nav.family": "Famille",
-  "nav.wallet": "Portefeuille Tollbooth",
+  "nav.wallet": "Tollbooth",
   "nav.learn": "Apprendre",
   "nav.guide": "Guide",
   "nav.signIn": "Se connecter",
@@ -50,6 +49,11 @@ const fr: Translation = {
   "home.samples.title": "Des petits boulots qu'une famille pourrait proposer",
   "home.seeAll": "Tout voir",
 
+  "look.mission.title": "La vertu grandit à la maison",
+  "look.mission.virtues": "ChipIn aide une famille à pratiquer les vertus par un travail bien fait.",
+  "look.mission.money": "En chemin, les enfants apprennent ce que vaut l'argent et pourquoi une monnaie saine compte.",
+  "look.mission.more": "Découvrir les sept vertus",
+  "look.mission.picture": "Une famille au travail dans la cour de la ferme, avec sept colombes sur le toit de la grange",
   "look.title": "Bienvenue",
   "look.intro": "Voici une famille d'exemple à explorer. Rien ici n'est réel, et rien de ce qui est touché n'est envoyé.",
   "look.seeAs": "Voir comme",

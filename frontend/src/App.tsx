@@ -1,6 +1,6 @@
 import { lazy, Suspense, useMemo, type ReactNode } from "react";
 import { BrowserRouter, Link, Navigate, Route, Routes, useLocation } from "react-router-dom";
-import { BookOpen, CalendarDays, DoorOpen, GraduationCap, HandCoins, ListChecks, PiggyBank, Users, Wallet as WalletIcon } from "lucide-react";
+import { BookOpen, DoorOpen, GraduationCap, HandCoins, ListChecks, PiggyBank, Users, Wallet as WalletIcon } from "lucide-react";
 import farm from "./assets/farm.webp";
 import { AppShell, SiteNav, TourProvider, Tx, Wallet, matchesPath, useAppShell, useTour } from "@tollbooth-dpyc/web/react";
 import Waiting from "./components/Waiting";
@@ -26,13 +26,12 @@ const Savings = lazy(() => import("./views/Savings"));
 
 const PAGES = [
   { href: "/look", label: "nav.welcome", icon: <DoorOpen size={18} aria-hidden /> },
-  { href: "/jobs", label: "nav.jobs", icon: <ListChecks size={18} aria-hidden /> },
-  { href: "/calendar", label: "nav.calendar", icon: <CalendarDays size={18} aria-hidden /> },
-  { href: "/savings", label: "nav.savings", icon: <PiggyBank size={18} aria-hidden /> },
-  { href: "/family", label: "nav.family", icon: <Users size={18} aria-hidden /> },
-  { href: "/wallet", label: "nav.wallet", icon: <WalletIcon size={18} aria-hidden /> },
-  { href: "/learn", label: "nav.learn", icon: <GraduationCap size={18} aria-hidden /> },
   { href: "/guide", label: "nav.guide", icon: <BookOpen size={18} aria-hidden /> },
+  { href: "/family", label: "nav.family", icon: <Users size={18} aria-hidden /> },
+  { href: "/jobs", label: "nav.jobs", icon: <ListChecks size={18} aria-hidden /> },
+  { href: "/savings", label: "nav.savings", icon: <PiggyBank size={18} aria-hidden /> },
+  { href: "/learn", label: "nav.learn", icon: <GraduationCap size={18} aria-hidden /> },
+  { href: "/wallet", label: "nav.wallet", icon: <WalletIcon size={18} aria-hidden /> },
 ] as const;
 
 const NAV_CLASSES = {
@@ -74,8 +73,8 @@ function Nav() {
       <header className="site-bar flex flex-wrap items-center gap-2 px-4 py-2.5">
         <Brand />
         <Link to="/look" className="chip ml-auto">{t("nav.welcome")}</Link>
-        <Link to="/learn" className="chip">{t("nav.learn")}</Link>
         <Link to="/guide" className="chip">{t("nav.guide")}</Link>
+        <Link to="/learn" className="chip">{t("nav.learn")}</Link>
         <Link to="/signin" className="chip chip-accent">{t("nav.signIn")}</Link>
       </header>
     );

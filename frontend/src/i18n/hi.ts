@@ -9,10 +9,9 @@ const hi: Translation = {
 
   "nav.welcome": "स्वागत",
   "nav.jobs": "काम",
-  "nav.calendar": "कैलेंडर",
   "nav.savings": "बचत",
   "nav.family": "परिवार",
-  "nav.wallet": "Tollbooth वॉलेट",
+  "nav.wallet": "Tollbooth",
   "nav.learn": "सीखें",
   "nav.guide": "गाइड",
   "nav.signIn": "साइन इन",
@@ -49,6 +48,11 @@ const hi: Translation = {
   "home.samples.title": "ऐसे काम जो परिवार डाल सकता है",
   "home.seeAll": "सब देखें",
 
+  "look.mission.title": "सद्गुण घर में पनपते हैं",
+  "look.mission.virtues": "ChipIn परिवार को अच्छे से किए गए काम के ज़रिए सद्गुणों का अभ्यास करने में मदद करता है।",
+  "look.mission.money": "इसी राह में बच्चे सीखते हैं कि पैसे का मोल क्या है और पक्का पैसा क्यों ज़रूरी है।",
+  "look.mission.more": "सात सद्गुणों के बारे में पढ़ें",
+  "look.mission.picture": "खेत के आँगन में काम करता एक परिवार, खलिहान की छत पर सात कबूतर",
   "look.title": "स्वागत",
   "look.intro": "एक नमूना परिवार में घूमकर देखें। यहाँ सब कुछ दिखाने भर के लिए है, और आप जो भी दबाएँ वह यहीं रहता है।",
   "look.seeAs": "इनकी नज़र से देखें",

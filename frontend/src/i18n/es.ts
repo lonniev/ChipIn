@@ -10,10 +10,9 @@ const es: Translation = {
 
   "nav.welcome": "Bienvenida",
   "nav.jobs": "Trabajos",
-  "nav.calendar": "Calendario",
   "nav.savings": "Ahorros",
   "nav.family": "Familia",
-  "nav.wallet": "Billetera Tollbooth",
+  "nav.wallet": "Tollbooth",
   "nav.learn": "Aprende",
   "nav.guide": "Guía",
   "nav.signIn": "Inicia sesión",
@@ -50,6 +49,11 @@ const es: Translation = {
   "home.samples.title": "Trabajos que una familia podría publicar",
   "home.seeAll": "Ver todos",
 
+  "look.mission.title": "La virtud crece en casa",
+  "look.mission.virtues": "ChipIn ayuda a una familia a practicar las virtudes con el trabajo bien hecho.",
+  "look.mission.money": "Por el camino, los niños aprenden lo que vale el dinero y por qué importa el dinero sano.",
+  "look.mission.more": "Lee sobre las siete virtudes",
+  "look.mission.picture": "Una familia trabajando en el corral, con siete palomas en el techo del granero",
   "look.title": "Bienvenida",
   "look.intro": "Echa un vistazo a una familia de muestra. Aquí nada es real, y nada de lo que toques se envía.",
   "look.seeAs": "Verlo como",

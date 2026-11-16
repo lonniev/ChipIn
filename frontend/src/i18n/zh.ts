@@ -9,10 +9,9 @@ const zh: Translation = {
 
   "nav.welcome": "欢迎",
   "nav.jobs": "活儿",
-  "nav.calendar": "日历",
   "nav.savings": "储蓄",
   "nav.family": "家人",
-  "nav.wallet": "Tollbooth 钱包",
+  "nav.wallet": "Tollbooth",
   "nav.learn": "学习",
   "nav.guide": "指南",
   "nav.signIn": "登录",
@@ -49,6 +48,11 @@ const zh: Translation = {
   "home.samples.title": "家里可以发布的活儿",
   "home.seeAll": "看全部",
 
+  "look.mission.title": "美德在家中成长",
+  "look.mission.virtues": "ChipIn 帮助一家人通过把活儿干好来践行美德。",
+  "look.mission.money": "一路上，孩子们会明白钱的价值，也会明白为什么稳健的货币很重要。",
+  "look.mission.more": "了解七种美德",
+  "look.mission.picture": "一家人在农场院子里干活，谷仓屋顶上停着七只鸽子",
   "look.title": "欢迎",
   "look.intro": "来看看一个示范家庭。这里的内容都是示范，你点的任何东西都不会发出去。",
   "look.seeAs": "换个身份看",
