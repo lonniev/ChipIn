@@ -1,0 +1,1 @@
+- A job's details and the big editor now come from `@tollbooth-dpyc/web/markdown` (3.11.0), shared with every site; they look and work as before.
