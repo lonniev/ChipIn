@@ -1,0 +1,1 @@
+- ChipIn names itself to Task Booth when it posts, lists and publishes a calendar, so commissions posted on CommissionMarket stay out of a family's jobs. Nothing on ChipIn's pages changes.
