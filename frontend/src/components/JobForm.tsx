@@ -12,7 +12,7 @@ import { jobHref, Face } from "./Links";
 import GrowText from "./GrowText";
 
 // The big editor and its Markdown preview load only when opened.
-const SpecEditor = lazy(() => import("./SpecEditor"));
+const MarkdownEditor = lazy(() => import("@tollbooth-dpyc/web/markdown").then((m) => ({ default: m.MarkdownEditor })));
 import { useT } from "../i18n";
 import { useSamples } from "../lib/content";
 import type { MessageKey } from "../i18n/en";
@@ -141,7 +141,8 @@ export default function JobForm({ editing }: { editing?: Task }) {
           {left <= COUNT_FROM && <span className="muted text-right text-sm num">{t("newJob.charsLeft", { count: left })}</span>}
           {big && (
             <Suspense fallback={null}>
-              <SpecEditor value={description} maxLength={DETAILS_MAX} onDone={(text) => { setDescription(text); setBig(false); }} />
+              <MarkdownEditor value={description} maxLength={DETAILS_MAX} title={t("spec.title")} label={t("newJob.where")}
+                placeholder={t("newJob.wherePlaceholder")} onDone={(text) => { setDescription(text); setBig(false); }} />
             </Suspense>
           )}
         </div>

@@ -24,7 +24,7 @@ import { getTask, requestPayout, taskHistory, type Payout, type Task, type TaskE
 import { dueText, lateRuleText, lateText, repeatText } from "../lib/when";
 
 // The details are Markdown; the renderer loads with the first job opened, plain text meanwhile.
-const MarkdownText = lazy(() => import("../components/MarkdownText"));
+const MarkdownText = lazy(() => import("@tollbooth-dpyc/web/markdown").then((m) => ({ default: m.MarkdownText })));
 
 function History({ taskId }: { taskId: string }) {
   const { name } = useFamily();
