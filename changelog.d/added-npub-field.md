@@ -1,0 +1,1 @@
+- Adding a family member takes an npub field: checked as typed, shown as a chiclet with their Nostr name and picture, with Remove.
