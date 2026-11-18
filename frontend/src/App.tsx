@@ -119,7 +119,7 @@ function SignedIn({ children }: { children: ReactNode }) {
 
 function SignIn({ gate }: { gate: ReactNode }) {
   useTour("signin");
-  return <div className="page"><div className="card mx-auto max-w-3xl p-6">{gate}</div></div>;
+  return <div className="page"><div className="card p-6">{gate}</div></div>;
 }
 
 function WalletPage() {
