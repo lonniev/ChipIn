@@ -103,7 +103,7 @@ export default function JobForm({ editing }: { editing?: Task }) {
 
   return (
     <div className="page">
-      <form className="card panel mx-auto grid max-w-2xl gap-5" onSubmit={(e) => { e.preventDefault(); void save(); }}>
+      <form className="card panel grid gap-5" onSubmit={(e) => { e.preventDefault(); void save(); }}>
         <h1 className="text-3xl font-bold">{editing ? t("editJob.title") : t("jobs.new")}</h1>
 
         {!editing && (
