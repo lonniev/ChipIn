@@ -1,1 +1,0 @@
-- A long refusal no longer pushes the job page wider than the phone.

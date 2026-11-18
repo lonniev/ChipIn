@@ -1,1 +1,0 @@
-- The site can be shown in six languages, chosen on Profile: English, Français, Español, 日本語, 中文 and हिन्दी. A guest sees their browser's language.

@@ -1,3 +1,0 @@
-- Seven sample jobs that say where, when and what "done" looks like, on the home page, in the Guide, and as starting points on New job.
-- A Learn page for someone new to Bitcoin: what a sat is, where it lives, how it moves, why the supply is fixed, and what to do with what you earn.
-- Books at Good Brew and the Orange Bible app, under Keep learning.

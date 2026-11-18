@@ -1,1 +1,0 @@
-- The home page says "the goodness of a clean home".

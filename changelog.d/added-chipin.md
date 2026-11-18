@@ -1,1 +1,0 @@
-- ChipIn: post a job with what each grade earns, claim it, mark it done, grade it, and pay it by Lightning invoice.

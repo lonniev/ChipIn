@@ -1,1 +1,0 @@
-- The picture and words shown when a ChipIn link is shared now set the scene: a mother rewarding her daughter for sweeping, and "A family learns the worth of work."

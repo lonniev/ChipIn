@@ -1,1 +1,0 @@
-- ChipIn reaches Task Booth at its new address, `taskbooth-mcp.fastmcp.app`.

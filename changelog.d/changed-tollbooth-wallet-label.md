@@ -1,1 +1,0 @@
-- The Wallet page is named the Tollbooth DPYC™ wallet and says it holds api_sats, apart from the Lightning wallet your jobs are paid to.

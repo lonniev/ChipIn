@@ -1,1 +1,0 @@
-- The Operator behind ChipIn is now named Task Booth; ChipIn calls its tools by their new `taskbooth_` names.

@@ -1,2 +1,0 @@
-- One language choice now changes every word on screen, sign-in and the wallet included. ChipIn hands its words, lessons, sample jobs and quotations to the shared web package, which does all the translating; ChipIn's own language code is gone.
-- A guest's first visit is in the language of the country they are in (the browser choosing where a country speaks several), else English. A choice made before this change is not carried over; choose again once on Profile.

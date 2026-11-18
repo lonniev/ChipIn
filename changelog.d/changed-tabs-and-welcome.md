@@ -1,2 +1,0 @@
-- The tabs read Welcome, Guide, Family, Jobs, Savings, Learn, Tollbooth, then your picture. The calendar opens from a button on the Jobs page.
-- The Welcome page opens with the seven-doves painting and what ChipIn is for: practicing the virtues through work done well, and learning what money is worth. The sample family follows.

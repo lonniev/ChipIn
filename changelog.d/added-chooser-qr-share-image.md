@@ -1,3 +1,0 @@
-- The Guide holds the wallet chooser itself, so a guest can pick a wallet before signing in.
-- The pay panel shows the invoice as a QR code to scan from another phone.
-- Links to ChipIn shared in messages and on social sites show a picture and title.

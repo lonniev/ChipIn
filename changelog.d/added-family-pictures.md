@@ -1,1 +1,0 @@
-- Pictures that look like your family: on Family and on Learn, choose which family the lesson paintings show, from four sets. The choice stays on the device.
