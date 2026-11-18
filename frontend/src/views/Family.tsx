@@ -4,7 +4,7 @@ import PictureChoice from "../components/PictureChoice";
 import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { Check, Copy, Trash2, UserPlus } from "lucide-react";
-import { useAppShell } from "@tollbooth-dpyc/web/react";
+import { NpubField, useAppShell } from "@tollbooth-dpyc/web/react";
 import { useT } from "../i18n";
 import { useFamily } from "../lib/FamilyContext";
 import { Face } from "../components/Links";
@@ -31,7 +31,7 @@ export default function Family() {
 
   function save() {
     if (!name.trim()) return setProblem(t("family.giveName"));
-    if (!isNpub(npub)) return setProblem(t("family.notNpub"));
+    if (!npub) return setProblem(t("family.notNpub"));
     add(npub, name);
     setName("");
     setNpub("");
@@ -79,7 +79,10 @@ export default function Family() {
         </ul>
         <form className="add-form" onSubmit={(e) => { e.preventDefault(); save(); }}>
           <input className="field" value={name} maxLength={40} onChange={(e) => setName(e.target.value)} placeholder={t("family.name")} aria-label={t("family.name")} />
-          <input className="field flex-1" value={npub} onChange={(e) => setNpub(e.target.value)} placeholder={t("family.theirNpubPlaceholder")} aria-label={t("family.theirNpub")} autoCapitalize="none" spellCheck={false} />
+          <span className="flex-1 min-w-0">
+            <NpubField value={npub} onChange={setNpub} label={t("family.theirNpub")} placeholder={t("family.theirNpubPlaceholder")}
+              look={{ inputClassName: "field", buttonClassName: "chip" }} />
+          </span>
           <button type="submit" className="btn btn-go"><UserPlus size={22} aria-hidden />{t("family.add")}</button>
         </form>
         {problem && <p className="error text-right">{problem}</p>}
