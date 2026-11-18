@@ -83,13 +83,16 @@ interface Answer {
 }
 
 /** A Task Booth answer, or its refusal raised as the sentence Task Booth gave. */
+/** This site's name on the tasks it posts. Task Booth serves several sites; each lists its own tasks and every unstamped one. */
+const SITE = "chipin";
+
 async function ask<T>(tool: string, args: Record<string, unknown> = {}): Promise<T> {
   const r = await callTool<T & Answer>(tool, args);
   if (r.ok !== true) throw new Error(r.error ?? `${tool} did not answer.`);
   return r;
 }
 
-export const listTasks = async () => (await ask<{ tasks: Task[] }>("list_tasks")).tasks;
+export const listTasks = async () => (await ask<{ tasks: Task[] }>("list_tasks", { site: SITE })).tasks;
 
 export const getTask = (taskId: string) => ask<{ task: Task; payout?: Payout }>("get_task", { task_id: taskId });
 
@@ -106,7 +109,7 @@ export interface NewJob {
   late: LateRule;
 }
 
-export const postTask = async (job: NewJob) => (await ask<{ task: Task }>("post_task", { ...job })).task;
+export const postTask = async (job: NewJob) => (await ask<{ task: Task }>("post_task", { ...job, site: SITE })).task;
 
 /** Change an open job's terms. Give only what changes. */
 export const editTask = async (taskId: string, changes: Partial<NewJob>) =>
@@ -164,7 +167,7 @@ export interface Feed {
 export const listFeeds = async () => (await ask<{ feeds: Feed[] }>("calendar_list")).feeds;
 
 export const publishFeed = async (name: string, timeZone: string) =>
-  (await ask<{ feed: Feed }>("calendar_publish", { name, time_zone: timeZone })).feed;
+  (await ask<{ feed: Feed }>("calendar_publish", { name, time_zone: timeZone, site: SITE })).feed;
 
 export const revokeFeed = async (token: string) => { await ask("calendar_revoke", { token }); };
 
