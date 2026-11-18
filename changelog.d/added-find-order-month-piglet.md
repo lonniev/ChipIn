@@ -1,3 +1,0 @@
-- Jobs can be searched by title, details, person or standing, and ordered by due date, person or kind.
-- A month view shows what is due each day.
-- A piglet in the lower-left corner takes a coin when the page opens and whenever your earnings rise. Tap it to see what you have saved.

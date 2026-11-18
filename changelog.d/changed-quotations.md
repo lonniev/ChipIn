@@ -1,1 +1,0 @@
-- The quotations shown during a wait draw on Proverbs and the Gospels, and on Hazlitt and Mises.

@@ -1,1 +1,0 @@
-- The four paintings in "Pictures that look like your family" load at once.

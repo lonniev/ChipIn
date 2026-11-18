@@ -1,1 +1,0 @@
-- Look around is now the Welcome tab, first in the menu for guests and for people signed in.

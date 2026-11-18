@@ -1,1 +1,0 @@
-- The site reads in American English: curb, trash cans, neighbor, pajamas, leash, Mom.

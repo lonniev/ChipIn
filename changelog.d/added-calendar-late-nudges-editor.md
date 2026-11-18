@@ -1,5 +1,0 @@
-- A family Calendar: each day shows when jobs were posted, taken on, done, graded and paid, and when they are due, late or missed; choose everyone or one person. It replaces the Jobs page's month view, and the sample family has one too.
-- Late jobs: a parent chooses what lateness costs (pay in full, a percent off each day, or cancel if missed). Cards and job pages say how many days late; a graded job says what came off and why.
-- Reminders: a child asks to be paid for an owed job; a parent says a job is due, from two days before. The other side sees a bell.
-- A parent can change a job until someone takes it on.
-- The job editor's text boxes grow as you write; each grade is its own card with a sats stepper and room to say what earns it.
