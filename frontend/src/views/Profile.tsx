@@ -1,4 +1,4 @@
-/** Your account: where you get paid, then the package's panels in their one order. */
+/** Your account, in the package's groups: You (and your language), Money (where you get paid), This site (your calendar). */
 
 import CalendarFeed from "../components/CalendarFeed";
 import { useT } from "../i18n";
@@ -102,7 +102,7 @@ export default function Profile() {
       <AccountPage
         npub={session.npub}
         heading={null}
-        before={<><PayoutAddress /><CalendarFeed /><LanguageChoice /></>}
+        panels={{ you: <LanguageChoice />, money: <PayoutAddress />, site: <CalendarFeed /> }}
         usage={{ classNames: USAGE }}
         theme={{ classNames: { chip: "chip", active: "chip chip-on" } }}
         timezone={{ classNames: { select: "field" } }}
@@ -113,7 +113,9 @@ export default function Profile() {
         }}
         onSignOut={session.signOut}
         classNames={{
-          root: "account-grid",
+          root: "account-groups",
+          groupSummary: "account-group-title",
+          groupBody: "account-grid",
           section: "card panel",
           sectionHeading: "panel-title mb-1",
           sectionIntro: "muted mb-2 text-sm",
