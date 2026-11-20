@@ -5,6 +5,15 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 Changes not yet released live in `changelog.d/`, one file per change — see the README there for why, and `scripts/changelog.py` for what folds them in at release time.
 
+## [0.2.0] — 2026-11-20
+
+### Changed
+
+- Hindi addresses the reader informally (तुम), like French, Spanish and Chinese; quotations keep their own words.
+
+- The Profile page now sits in folding groups: You, Money, This site and About, with Operator for the operator.
+- Each group's panels sit side by side in a grid.
+
 ## [0.1.0] — 2026-11-18
 
 ### Added
