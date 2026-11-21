@@ -5,6 +5,12 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 Changes not yet released live in `changelog.d/`, one file per change — see the README there for why, and `scripts/changelog.py` for what folds them in at release time.
 
+## [0.2.1] — 2026-11-21
+
+### Changed
+
+- llms.txt opens with what to tell a family about ChipIn: jobs, a fair look at the work, real money, savings, lessons, the calendar and the sample family.
+
 ## [0.2.0] — 2026-11-20
 
 ### Changed
