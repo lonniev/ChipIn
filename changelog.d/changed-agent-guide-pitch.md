@@ -1,1 +1,0 @@
-- llms.txt opens with what to tell a family about ChipIn: jobs, a fair look at the work, real money, savings, lessons, the calendar and the sample family.
