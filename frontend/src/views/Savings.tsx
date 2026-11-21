@@ -14,19 +14,7 @@ import { useLanguageLocale } from "@tollbooth-dpyc/web/react";
 import { earningsOf } from "../lib/earnings";
 import { asBitcoin, carriedForward, perWeek, runningTotal } from "../lib/savings";
 import { btcPrice, listTasks, type PriceReading, type Task } from "../lib/tasks";
-import { asMoney, FIATS, isFiat, worth, worthAhead, yearlyGrowth, type Fiat } from "../lib/worth";
-
-const FIAT_KEY = "chipin:fiat";
-
-/** The currency this device last chose, remembered here only as a convenience. */
-function rememberedFiat(): Fiat {
-  try {
-    const kept = localStorage.getItem(FIAT_KEY);
-    return isFiat(kept) ? kept : "USD";
-  } catch {
-    return "USD";
-  }
-}
+import { asMoney, FIAT_KEY, FIATS, rememberedFiat, worth, worthAhead, yearlyGrowth, type Fiat } from "../lib/worth";
 
 /** What the sats are worth in a chosen currency, today and a year on. */
 export function WorthPanel({ earned, ahead, now, fiat, onFiat, reading, problem }: {

@@ -13,6 +13,18 @@ export type Fiat = (typeof FIATS)[number];
 
 export const isFiat = (value: unknown): value is Fiat => FIATS.includes(value as Fiat);
 
+export const FIAT_KEY = "chipin:fiat";
+
+/** The currency this device last chose, remembered here only as a convenience. */
+export function rememberedFiat(): Fiat {
+  try {
+    const kept = localStorage.getItem(FIAT_KEY);
+    return isFiat(kept) ? kept : "USD";
+  } catch {
+    return "USD";
+  }
+}
+
 /** Sats in a currency at a price per bitcoin. */
 export function worth(sats: number, price: number): number {
   return (sats / SATS) * price;

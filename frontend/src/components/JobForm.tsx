@@ -12,6 +12,7 @@ import { jobHref, Face } from "./Links";
 import GrowText from "./GrowText";
 
 // The big editor and its Markdown preview load only when opened.
+const DraftAssist = lazy(() => import("./DraftAssist"));
 const MarkdownEditor = lazy(() => import("@tollbooth-dpyc/web/markdown").then((m) => ({ default: m.MarkdownEditor })));
 import { useT } from "../i18n";
 import { useSamples } from "../lib/content";
@@ -22,6 +23,7 @@ import { lateFrom, MAX_GRADES, MAX_GRADE_SATS, rubricFrom, starterRows, type Gra
 import type { SampleJob } from "../lib/samples";
 import { editTask, postTask, type Task } from "../lib/tasks";
 import { dayFrom, dayKeyOf, endOfDay } from "../lib/when";
+import { gradeRowsOf, repeatOf, type ChoreDraft } from "../lib/draft";
 
 const REPEATS: { days: number; label: MessageKey }[] = [
   { days: 0, label: "repeat.once" },
@@ -62,6 +64,8 @@ export default function JobForm({ editing }: { editing?: Task }) {
   const [problem, setProblem] = useState("");
   const [busy, setBusy] = useState(false);
   const [big, setBig] = useState(false);
+  // Points a draft left to settle; Post stays shut while any are.
+  const [openPoints, setOpenPoints] = useState(0);
 
   const people = [{ npub: session.npub, name: t("newJob.me") }, ...members.filter((m) => m.npub !== session.npub)];
   const toggle = (npub: string) => setWho((list) => (list.includes(npub) ? list.filter((n) => n !== npub) : [...list, npub]));
@@ -72,12 +76,20 @@ export default function JobForm({ editing }: { editing?: Task }) {
     setEvery(s.everyDays);
     setRows(s.rows.map((r) => ({ ...r })));
   }
+  /** Fill the form from what the parent said; the rewards wait for a tap. */
+  function fromSaid(said: ChoreDraft["said"]) {
+    if (said.title) setTitle(said.title);
+    if (said.brief) setDescription(said.brief);
+    if (said.needed_by) setDue(said.needed_by);
+    setEvery(repeatOf(said.repeat_days));
+  }
   const setRow = (i: number, change: Partial<GradeRow>) => setRows((list) => list.map((r, j) => (j === i ? { ...r, ...change } : r)));
   const stepSats = (i: number, by: number) => setRow(i, { sats: String(Math.min(MAX_GRADE_SATS, Math.max(0, satsOf(rows[i].sats) + by))) });
   const left = DETAILS_MAX - description.length;
 
   async function save() {
     setProblem("");
+    if (openPoints > 0) return setProblem(t("draft.gate", { count: openPoints }));
     if (!title.trim()) return setProblem(t("newJob.needName"));
     if (!who.length) return setProblem(t("newJob.needWho"));
     const neededBy = endOfDay(due);
@@ -117,6 +129,12 @@ export default function JobForm({ editing }: { editing?: Task }) {
               ))}
             </div>
           </fieldset>
+        )}
+
+        {!editing && (
+          <Suspense fallback={null}>
+            <DraftAssist onSaid={fromSaid} onRewards={(g) => setRows(gradeRowsOf(g))} onOpenPoints={setOpenPoints} />
+          </Suspense>
         )}
 
         <div className="pictures" role="group" aria-label={t("newJob.picture")}>
@@ -228,9 +246,10 @@ export default function JobForm({ editing }: { editing?: Task }) {
         </fieldset>
 
         {problem && <p className="error text-right">{problem}</p>}
+        {openPoints > 0 && <p className="muted text-right">{t("draft.gate", { count: openPoints })}</p>}
         <div className="flex flex-wrap justify-end gap-2">
           <Link to={editing ? jobHref(editing.task_id) : "/jobs"} className="btn btn-quiet">{t("actions.cancel")}</Link>
-          <button type="submit" className="btn btn-go" disabled={busy}>
+          <button type="submit" className="btn btn-go" disabled={busy || openPoints > 0}>
             {editing ? (busy ? t("editJob.saving") : t("editJob.save")) : (busy ? t("newJob.posting") : t("newJob.post"))}
           </button>
         </div>
