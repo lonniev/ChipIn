@@ -4,15 +4,17 @@
  * What the parent said fills the form at once. The suggested rewards wait for a tap.
  * Each of the AI's questions and assumptions is settled in place, by an answer typed
  * under it or a tick that it is fine as it is, before the job can be posted, so a
- * child is never held to something the parent did not choose. Answers go into the
- * job's details.
+ * child is never held to something the parent did not choose. "When …?" is answered
+ * with a day, which becomes the due date. Answers go into the job's details, and the
+ * page stays where the parent is.
  */
 
 import { useEffect, useMemo, useState } from "react";
 import { Check, Sparkles } from "lucide-react";
 import { formatSats } from "@tollbooth-dpyc/web";
 import { useT } from "../i18n";
-import { draftChore, draftFare, IDEA_MAX, openPointsOf, type Answered, type ChoreDraft } from "../lib/draft";
+import { asksWhen, draftChore, draftFare, IDEA_MAX, openPointsOf, sayDay, type Answered, type ChoreDraft } from "../lib/draft";
+import { dayFrom } from "../lib/when";
 import { rememberedFiat } from "../lib/worth";
 
 export interface DraftAssistProps {
@@ -20,11 +22,13 @@ export interface DraftAssistProps {
   onRewards: (grades: ChoreDraft["proposed"]["grades"]) => void;
   onOpenPoints: (count: number) => void;
   onAnswers: (answered: Answered[]) => void;
+  /** The day a "When …?" question was answered with. */
+  onDue: (day: string) => void;
 }
 
 const ANSWER_MAX = 200;
 
-export default function DraftAssist({ onSaid, onRewards, onOpenPoints, onAnswers }: DraftAssistProps) {
+export default function DraftAssist({ onSaid, onRewards, onOpenPoints, onAnswers, onDue }: DraftAssistProps) {
   const t = useT();
   const [idea, setIdea] = useState("");
   const [fare, setFare] = useState<number | null>(null);
@@ -64,10 +68,13 @@ export default function DraftAssist({ onSaid, onRewards, onOpenPoints, onAnswers
     return next;
   });
 
+  const isWhen = (i: number) => !!draft && i < draft.questions.length && asksWhen(points[i]);
+
   function answer(i: number, text: string) {
     const next = points.map((_, j) => (j === i ? text : answers[j] ?? ""));
     setAnswers(next);
-    onAnswers(points.map((p, j) => ({ point: p, answer: next[j] })));
+    if (isWhen(i) && text) onDue(text);
+    onAnswers(points.map((p, j) => ({ point: p, answer: isWhen(j) && next[j] ? sayDay(next[j]) : next[j] })));
   }
 
   return (
@@ -108,8 +115,13 @@ export default function DraftAssist({ onSaid, onRewards, onOpenPoints, onAnswers
                   return (
                     <li key={i} className={said || ticked.has(i) ? "draft-point draft-point-done" : "draft-point"}>
                       <p>{p}</p>
-                      <input className="field" maxLength={ANSWER_MAX} value={answers[i] ?? ""} onChange={(e) => answer(i, e.target.value)}
-                        placeholder={t("draft.answerPlaceholder")} aria-label={p} />
+                      {isWhen(i) ? (
+                        <input type="date" className="field" value={answers[i] ?? ""} min={dayFrom(Math.floor(Date.now() / 1000), 0)}
+                          onChange={(e) => answer(i, e.target.value)} aria-label={p} />
+                      ) : (
+                        <input className="field" maxLength={ANSWER_MAX} value={answers[i] ?? ""} onChange={(e) => answer(i, e.target.value)}
+                          placeholder={t("draft.answerPlaceholder")} aria-label={p} />
+                      )}
                       <label className="draft-tick">
                         <input type="checkbox" checked={ticked.has(i)} disabled={!!said} onChange={() => toggle(i)} />
                         <span>{t("draft.fine")}</span>

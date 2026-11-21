@@ -1,6 +1,6 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { gradeRowsOf, openPointsOf, repeatOf, type ChoreDraft, withAnswers } from "./draft.ts";
+import { asksWhen, gradeRowsOf, openPointsOf, repeatOf, type ChoreDraft, withAnswers } from "./draft.ts";
 import { MAX_GRADE_SATS } from "./rubric.ts";
 
 const draft: ChoreDraft = {
@@ -37,4 +37,11 @@ test("answers become the job's last section, rewritten whole", () => {
   const once = withAnswers("Tidy your room.", [{ point: "Which day?", answer: "Saturday" }], "Details");
   assert.equal(once, "Tidy your room.\n\n### Details\n\n- Which day? **Saturday**\n");
   assert.equal(withAnswers(once, [], "Details"), "Tidy your room.");
+});
+
+test("only a question that begins with When asks for the due date", () => {
+  assert.ok(asksWhen("When do you need it?"));
+  assert.ok(asksWhen("when should it be done?"));
+  assert.ok(!asksWhen("Whenever is fine?"));
+  assert.ok(!asksWhen("Do you need it delivered, and when?"));
 });

@@ -20,8 +20,11 @@ export default function GrowText({ value, onText, minRows = 1, oneLine = false, 
   useLayoutEffect(() => {
     const el = box.current;
     if (!el || SIZES_ITSELF) return;
+    // Shrinking to "auto" for a moment can shorten the page and pull it up; hold it where it is.
+    const { scrollX, scrollY } = window;
     el.style.height = "auto";
     el.style.height = `${el.scrollHeight}px`;
+    if (window.scrollX !== scrollX || window.scrollY !== scrollY) window.scrollTo(scrollX, scrollY);
   }, [value]);
   return (
     <textarea

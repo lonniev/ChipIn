@@ -1,0 +1,2 @@
+- A draft's "When should it be done?" is answered with a day, and that day becomes the job's due date.
+- Answering a question or using the suggested rewards no longer moves the page.

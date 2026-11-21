@@ -40,6 +40,13 @@ export const gradeRowsOf = (grades: ChoreDraft["proposed"]["grades"]): GradeRow[
   grades.map((g) => ({ name: g.name, sats: String(Math.min(MAX_GRADE_SATS, Math.max(0, g.sats))), criteria: g.criteria }));
 
 /** Every question, then every assumption: the points to settle before posting. */
+/** The question that asks for a day: Task Booth words it "When …?". Its answer is the due date. */
+export const asksWhen = (question: string): boolean => /^\s*when\b/i.test(question);
+
+/** A day ("YYYY-MM-DD") as the brief says it. */
+export const sayDay = (day: string): string =>
+  new Date(`${day}T12:00:00`).toLocaleDateString(undefined, { day: "numeric", month: "long", year: "numeric" });
+
 export const openPointsOf = (d: ChoreDraft): string[] => [...d.questions, ...d.assumptions];
 
 /** How often a drafted job repeats, as one of the form's choices. */
