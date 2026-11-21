@@ -1,6 +1,6 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { gradeRowsOf, openPointsOf, repeatOf, type ChoreDraft } from "./draft.ts";
+import { gradeRowsOf, openPointsOf, repeatOf, type ChoreDraft, withAnswers } from "./draft.ts";
 import { MAX_GRADE_SATS } from "./rubric.ts";
 
 const draft: ChoreDraft = {
@@ -31,4 +31,10 @@ test("a repeat is once, daily or weekly", () => {
   assert.equal(repeatOf(7), 7);
   assert.equal(repeatOf(1), 1);
   assert.equal(repeatOf(3), 0);
+});
+
+test("answers become the job's last section, rewritten whole", () => {
+  const once = withAnswers("Tidy your room.", [{ point: "Which day?", answer: "Saturday" }], "Details");
+  assert.equal(once, "Tidy your room.\n\n### Details\n\n- Which day? **Saturday**\n");
+  assert.equal(withAnswers(once, [], "Details"), "Tidy your room.");
 });

@@ -2,24 +2,29 @@
  * Write a job from a parent's few words, with Task Booth's `draft_task`.
  *
  * What the parent said fills the form at once. The suggested rewards wait for a tap.
- * The AI's questions and assumptions are ticked off before the job can be posted, so
- * a child is never held to something the parent did not choose.
+ * Each of the AI's questions and assumptions is settled in place, by an answer typed
+ * under it or a tick that it is fine as it is, before the job can be posted, so a
+ * child is never held to something the parent did not choose. Answers go into the
+ * job's details.
  */
 
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { Check, Sparkles } from "lucide-react";
 import { formatSats } from "@tollbooth-dpyc/web";
 import { useT } from "../i18n";
-import { draftChore, draftFare, IDEA_MAX, openPointsOf, type ChoreDraft } from "../lib/draft";
+import { draftChore, draftFare, IDEA_MAX, openPointsOf, type Answered, type ChoreDraft } from "../lib/draft";
 import { rememberedFiat } from "../lib/worth";
 
 export interface DraftAssistProps {
   onSaid: (said: ChoreDraft["said"]) => void;
   onRewards: (grades: ChoreDraft["proposed"]["grades"]) => void;
   onOpenPoints: (count: number) => void;
+  onAnswers: (answered: Answered[]) => void;
 }
 
-export default function DraftAssist({ onSaid, onRewards, onOpenPoints }: DraftAssistProps) {
+const ANSWER_MAX = 200;
+
+export default function DraftAssist({ onSaid, onRewards, onOpenPoints, onAnswers }: DraftAssistProps) {
   const t = useT();
   const [idea, setIdea] = useState("");
   const [fare, setFare] = useState<number | null>(null);
@@ -27,11 +32,13 @@ export default function DraftAssist({ onSaid, onRewards, onOpenPoints }: DraftAs
   const [problem, setProblem] = useState("");
   const [draft, setDraft] = useState<ChoreDraft | null>(null);
   const [used, setUsed] = useState(false);
-  const [settled, setSettled] = useState<Set<number>>(new Set());
+  const [ticked, setTicked] = useState<Set<number>>(new Set());
+  const [answers, setAnswers] = useState<string[]>([]);
 
   useEffect(() => { void draftFare().then(setFare); }, []);
-  const points = draft ? openPointsOf(draft) : [];
-  useEffect(() => { onOpenPoints(points.length - settled.size); }, [points.length, settled, onOpenPoints]);
+  const points = useMemo(() => (draft ? openPointsOf(draft) : []), [draft]);
+  const open = points.filter((_, i) => !ticked.has(i) && !answers[i]?.trim()).length;
+  useEffect(() => { onOpenPoints(open); }, [open, onOpenPoints]);
 
   async function go() {
     setProblem("");
@@ -40,7 +47,8 @@ export default function DraftAssist({ onSaid, onRewards, onOpenPoints }: DraftAs
       const d = await draftChore(idea.trim(), rememberedFiat());
       setDraft(d);
       setUsed(false);
-      setSettled(new Set());
+      setTicked(new Set());
+      setAnswers([]);
       onSaid(d.said);
     } catch (e) {
       setProblem((e as Error).message);
@@ -49,12 +57,18 @@ export default function DraftAssist({ onSaid, onRewards, onOpenPoints }: DraftAs
     }
   }
 
-  const toggle = (i: number) => setSettled((s) => {
+  const toggle = (i: number) => setTicked((s) => {
     const next = new Set(s);
     if (next.has(i)) next.delete(i);
     else next.add(i);
     return next;
   });
+
+  function answer(i: number, text: string) {
+    const next = points.map((_, j) => (j === i ? text : answers[j] ?? ""));
+    setAnswers(next);
+    onAnswers(points.map((p, j) => ({ point: p, answer: next[j] })));
+  }
 
   return (
     <section className="draft-assist grid gap-3">
@@ -87,15 +101,22 @@ export default function DraftAssist({ onSaid, onRewards, onOpenPoints }: DraftAs
           {points.length > 0 && (
             <div className="grid gap-2">
               <h3 className="label">{t("draft.pointsTitle")}</h3>
-              <ul className="grid gap-2">
-                {points.map((p, i) => (
-                  <li key={i}>
-                    <label className="draft-point">
-                      <input type="checkbox" checked={settled.has(i)} onChange={() => toggle(i)} />
-                      <span>{p}</span>
-                    </label>
-                  </li>
-                ))}
+              <p className="muted">{t("draft.pointsSays")}</p>
+              <ul className="grid gap-4">
+                {points.map((p, i) => {
+                  const said = answers[i]?.trim() ?? "";
+                  return (
+                    <li key={i} className={said || ticked.has(i) ? "draft-point draft-point-done" : "draft-point"}>
+                      <p>{p}</p>
+                      <input className="field" maxLength={ANSWER_MAX} value={answers[i] ?? ""} onChange={(e) => answer(i, e.target.value)}
+                        placeholder={t("draft.answerPlaceholder")} aria-label={p} />
+                      <label className="draft-tick">
+                        <input type="checkbox" checked={ticked.has(i)} disabled={!!said} onChange={() => toggle(i)} />
+                        <span>{t("draft.fine")}</span>
+                      </label>
+                    </li>
+                  );
+                })}
               </ul>
             </div>
           )}
