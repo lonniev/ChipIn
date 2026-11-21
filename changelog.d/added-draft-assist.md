@@ -1,0 +1,1 @@
+- Write it for me: say a job in a few words, and it fills in what you said and suggests a reward. Its questions are ticked off before the job can be posted.
