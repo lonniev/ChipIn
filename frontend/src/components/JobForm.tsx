@@ -134,7 +134,7 @@ export default function JobForm({ editing }: { editing?: Task }) {
         {!editing && (
           <Suspense fallback={null}>
             <DraftAssist onSaid={fromSaid} onRewards={(g) => setRows(gradeRowsOf(g))} onOpenPoints={setOpenPoints}
-              onAnswers={(answered) => setDescription((d) => withAnswers(d, answered, t("draft.details")))} />
+              onAnswers={(answered) => setDescription((d) => withAnswers(d, answered, t("draft.details")))} onDue={setDue} />
           </Suspense>
         )}
 
