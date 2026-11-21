@@ -23,7 +23,7 @@ import { lateFrom, MAX_GRADES, MAX_GRADE_SATS, rubricFrom, starterRows, type Gra
 import type { SampleJob } from "../lib/samples";
 import { editTask, postTask, type Task } from "../lib/tasks";
 import { dayFrom, dayKeyOf, endOfDay } from "../lib/when";
-import { gradeRowsOf, repeatOf, type ChoreDraft } from "../lib/draft";
+import { gradeRowsOf, repeatOf, withAnswers, type ChoreDraft } from "../lib/draft";
 
 const REPEATS: { days: number; label: MessageKey }[] = [
   { days: 0, label: "repeat.once" },
@@ -133,7 +133,8 @@ export default function JobForm({ editing }: { editing?: Task }) {
 
         {!editing && (
           <Suspense fallback={null}>
-            <DraftAssist onSaid={fromSaid} onRewards={(g) => setRows(gradeRowsOf(g))} onOpenPoints={setOpenPoints} />
+            <DraftAssist onSaid={fromSaid} onRewards={(g) => setRows(gradeRowsOf(g))} onOpenPoints={setOpenPoints}
+              onAnswers={(answered) => setDescription((d) => withAnswers(d, answered, t("draft.details")))} />
           </Suspense>
         )}
 
