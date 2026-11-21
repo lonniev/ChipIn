@@ -5,6 +5,13 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 Changes not yet released live in `changelog.d/`, one file per change — see the README there for why, and `scripts/changelog.py` for what folds them in at release time.
 
+## [0.3.2] — 2026-11-21
+
+### Changed
+
+- A draft's "When should it be done?" is answered with a day, and that day becomes the job's due date.
+- Answering a question or using the suggested rewards no longer moves the page.
+
 ## [0.3.1] — 2026-11-21
 
 ### Changed
