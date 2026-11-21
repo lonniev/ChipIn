@@ -5,6 +5,12 @@ Format: [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 
 Changes not yet released live in `changelog.d/`, one file per change — see the README there for why, and `scripts/changelog.py` for what folds them in at release time.
 
+## [0.3.0] — 2026-11-21
+
+### Added
+
+- Write it for me: say a job in a few words, and it fills in what you said and suggests a reward. Its questions are ticked off before the job can be posted.
+
 ## [0.2.1] — 2026-11-21
 
 ### Changed
