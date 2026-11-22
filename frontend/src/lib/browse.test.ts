@@ -2,7 +2,8 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import english from "../i18n/en.ts";
 import { standingKey, type Standing } from "./moves.ts";
-import { byDay, dayKey, grouped, kindOf, matches, monthWeeks, personOf, shiftMonth, type Browsable } from "./browse.ts";
+import { dayKey } from "@tollbooth-dpyc/web";
+import { byDay, grouped, kindOf, matches, personOf, type Browsable } from "./browse.ts";
 
 const MOM = "npub1mum", SAM = "npub1sam", ADA = "npub1ada";
 const names: Record<string, string> = { [MOM]: "Mom", [SAM]: "Sam", [ADA]: "Ada" };
@@ -57,26 +58,8 @@ test("by kind is a section per picture", () => {
   assert.equal(g.length, 3);
 });
 
-test("a month is whole weeks, Sunday first, holding every one of its days once", () => {
-  const nov = monthWeeks(2026, 10);
-  assert.ok(nov.every((w) => w.length === 7));
-  assert.equal(nov[0][0].key, "2026-11-01");
-  assert.equal(nov.flat().filter((d) => d.inMonth).length, 30);
-  const feb = monthWeeks(2026, 1);
-  assert.equal(feb.length, 4);
-  assert.equal(feb.flat().filter((d) => d.inMonth).length, 28);
-  const aug = monthWeeks(2026, 7);
-  assert.equal(aug.length, 6);
-  assert.equal(aug[0][0].inMonth, false);
-});
-
 test("jobs land on the local day they are due", () => {
   const days = byDay(all);
   assert.deepEqual(days.get("2026-11-18")?.map((t) => t.task_id), ["1"]);
   assert.equal(dayKey(at(2026, 1, 5)), "2026-01-05");
-});
-
-test("the month before January is December of the year before", () => {
-  assert.deepEqual(shiftMonth(2026, 0, -1), { year: 2025, month: 11 });
-  assert.deepEqual(shiftMonth(2026, 11, 1), { year: 2027, month: 0 });
 });
