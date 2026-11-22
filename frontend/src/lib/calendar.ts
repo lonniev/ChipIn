@@ -4,7 +4,7 @@
  * list are both made from the same events.
  */
 
-import { dayKey } from "./browse.ts";
+import { eventsByDay as byDayOf } from "@tollbooth-dpyc/web";
 import { isFinished } from "./moves.ts";
 import type { Task } from "./tasks.ts";
 
@@ -64,7 +64,5 @@ export function eventsFor(events: JobEvent[], npub: string): JobEvent[] {
 
 /** The events on each day, keyed `YYYY-MM-DD`. */
 export function eventsByDay(events: JobEvent[]): Map<string, JobEvent[]> {
-  const days = new Map<string, JobEvent[]>();
-  for (const e of events) days.set(dayKey(e.at), [...(days.get(dayKey(e.at)) ?? []), e]);
-  return days;
+  return byDayOf(events, (e) => e.at);
 }

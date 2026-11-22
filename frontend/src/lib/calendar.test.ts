@@ -2,7 +2,7 @@ import { test } from "node:test";
 import assert from "node:assert/strict";
 import { samples as englishSamples } from "../content/en/samples.ts";
 import { eventsByDay, eventsFor, eventsOf, involves } from "./calendar.ts";
-import { dayKey } from "./browse.ts";
+import { dayKey } from "@tollbooth-dpyc/web";
 import { ADA, MOM, SAM, sampleTasks } from "./sampleFamily.ts";
 import { samplesIn } from "./samples.ts";
 

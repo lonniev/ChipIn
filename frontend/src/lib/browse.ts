@@ -1,8 +1,9 @@
 /**
- * Finding jobs in a long list: search them, order them, and lay them on a
- * month. Pure functions over the list Task Booth gave.
+ * Finding jobs in a long list: search them, order them, and put them on their
+ * days. Pure functions over the list Task Booth gave.
  */
 
+import { dayKey } from "@tollbooth-dpyc/web";
 import { splitPicture } from "./face.ts";
 import type { Standing } from "./moves.ts";
 
@@ -61,48 +62,9 @@ export function grouped<T extends Browsable>(tasks: T[], order: Order, name: (np
     .sort((a, b) => label(a.key).localeCompare(label(b.key)));
 }
 
-const two = (n: number) => String(n).padStart(2, "0");
-
-/** The local `YYYY-MM-DD` a time falls on. */
-export function dayKey(seconds: number): string {
-  const d = new Date(seconds * 1000);
-  return `${d.getFullYear()}-${two(d.getMonth() + 1)}-${two(d.getDate())}`;
-}
-
-export interface MonthDay {
-  /** `YYYY-MM-DD`. */
-  key: string;
-  day: number;
-  /** Belongs to the month shown, as against the days that pad its first and last weeks. */
-  inMonth: boolean;
-}
-
-/** The weeks of a month, Sunday first, padded to whole weeks. `month` is 0 to 11. */
-export function monthWeeks(year: number, month: number): MonthDay[][] {
-  const first = new Date(year, month, 1);
-  const start = new Date(year, month, 1 - first.getDay());
-  const weeks: MonthDay[][] = [];
-  for (let d = new Date(start); weeks.length < 6; ) {
-    const week: MonthDay[] = [];
-    for (let i = 0; i < 7; i++) {
-      week.push({ key: `${d.getFullYear()}-${two(d.getMonth() + 1)}-${two(d.getDate())}`, day: d.getDate(), inMonth: d.getMonth() === month });
-      d = new Date(d.getFullYear(), d.getMonth(), d.getDate() + 1);
-    }
-    if (weeks.length >= 4 && !week.some((x) => x.inMonth)) break;
-    weeks.push(week);
-  }
-  return weeks;
-}
-
 /** The jobs due on each day, keyed `YYYY-MM-DD`. */
 export function byDay<T extends Pick<Browsable, "needed_by">>(tasks: T[]): Map<string, T[]> {
   const days = new Map<string, T[]>();
   for (const t of tasks) days.set(dayKey(t.needed_by), [...(days.get(dayKey(t.needed_by)) ?? []), t]);
   return days;
-}
-
-/** The month before or after: `{ year, month }` with month 0 to 11. */
-export function shiftMonth(year: number, month: number, by: number): { year: number; month: number } {
-  const d = new Date(year, month + by, 1);
-  return { year: d.getFullYear(), month: d.getMonth() };
 }
